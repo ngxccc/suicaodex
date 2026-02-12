@@ -1,4 +1,4 @@
-import { Chapter } from "@/types/types";
+import type { Chapter } from "@/types/types";
 import { getChaptersByIds, getMangasByIDs } from "./mangadex/history";
 
 export async function getUnreadChapters(ids: string[]): Promise<Chapter[]> {
