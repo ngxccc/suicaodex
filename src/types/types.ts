@@ -1,21 +1,21 @@
-export type Tag = {
+export interface Tag {
   id: string;
   name: string;
   group: string;
-};
+}
 
-export type TagsGroup = {
+export interface TagsGroup {
   group: string;
   name: string;
   tags: Tag[];
-};
+}
 
-export type Author = {
+export interface Author {
   id: string;
   name: string;
-};
+}
 
-export type AuthorDetail = {
+export interface AuthorDetail {
   id: string;
   name: string;
   imageUrl: string | null;
@@ -37,54 +37,14 @@ export type AuthorDetail = {
     website: string | null;
   };
   mangas: string[];
-};
-
-export type Artist = {
-  id: string;
-  name: string;
-};
-
-export type Language = "vi" | "ar" | "en";
-
-export type Role =
-  | "ROLE_GROUP_LEADER"
-  | "ROLE_GROUP_MEMBER"
-  | "ROLE_POWER_UPLOADER"
-  | "ROLE_USER";
-
-export type LeaderRelationship = {
-  id: string;
-  type: "leader";
-  attributes: {
-    username: string;
-    roles: Role[];
-    version: number;
-  };
-};
-
-export type MemberRelationship = {
-  id: string;
-  type: "member";
-  attributes?: {
-    username: string;
-    roles: Role[];
-    version: number;
-  };
-};
-
-export type Relationships = Array<LeaderRelationship | MemberRelationship>;
-export interface OriginalGroup {
-  attributes: Group & {
-    contactEmail: string | null;
-    focusedLanguages: Language[];
-    altNames: [];
-  };
-  id: string;
-  relationships: Relationships;
-  type: "scanlation_group";
 }
 
-export type Group = {
+export interface Artist {
+  id: string;
+  name: string;
+}
+
+export interface Group {
   id: string;
   name: string;
   description: string | null;
@@ -99,12 +59,12 @@ export type Group = {
   } | null;
   repliesCount?: number;
   totalUploaded?: number;
-};
+}
 
-export type GroupStats = {
+export interface GroupStats {
   repliesCount: number;
   totalUploaded: number;
-};
+}
 
 export type ContentRating = "safe" | "suggestive" | "erotica" | "pornographic";
 export type Status = "ongoing" | "completed" | "cancelled" | "hiatus";
@@ -112,7 +72,7 @@ export type OriginLanguge = "en" | "vi" | "ja" | "ko" | "zh";
 export type Demosgraphic = "shounen" | "shoujo" | "jousei" | "seinen";
 export type TranslatedLanguage = "en" | "vi";
 
-export type Manga = {
+export interface Manga {
   id: string;
   title: string;
   altTitle: string | null;
@@ -136,9 +96,9 @@ export type Manga = {
   finalChapter?: string;
   latestChapter?: string;
   stats?: MangaStats;
-};
+}
 
-export type MangaStats = {
+export interface MangaStats {
   rating: {
     bayesian: number;
     distribution: {
@@ -157,17 +117,17 @@ export type MangaStats = {
   };
   follows: number;
   comments?: number;
-};
+}
 
-export type MangasStats = {
+export interface MangasStats {
   rating: {
     bayesian: number;
   };
   follows: number;
   comments?: number;
-};
+}
 
-export type Chapter = {
+export interface Chapter {
   id: string;
   vol: string;
   chapter: string;
@@ -183,43 +143,43 @@ export type Chapter = {
     cover?: string;
   };
   isUnavailable?: boolean;
-};
+}
 
-export type ChapterVolume = {
+export interface ChapterVolume {
   chapters: Chapter[];
   total: number;
-};
-export type ChapterGroup = {
+}
+export interface ChapterGroup {
   chapter: string;
   group: Chapter[];
-};
-export type Volume = {
+}
+export interface Volume {
   vol: string;
   chapters: ChapterGroup[];
-};
+}
 
-export type LastestManga = {
+export interface LastestManga {
   info: Manga;
   lastestChap: Chapter[];
   total?: number;
-};
+}
 
-export type ChapterAggregate = {
+export interface ChapterAggregate {
   vol: string;
   chapters: {
     id: string;
     chapter: string;
     other?: string[];
   }[];
-};
+}
 
-export type Cover = {
+export interface Cover {
   id: string;
   volume: string;
   description: string;
   locale: string;
   fileName: string;
-};
+}
 
 export type LibraryType =
   | "none"
