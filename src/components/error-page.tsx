@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -45,7 +45,6 @@ export default function ErrorPage({
 }: ErrorPageProps) {
   const router = useRouter();
   const [isRetrying, setIsRetrying] = useState(false);
-  const [randomQuote, setRandomQuote] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
   const quotes = [
     "Trang này đã biến mất như anime season 2 mà bạn đang chờ đợi...",
@@ -67,10 +66,11 @@ export default function ErrorPage({
     "Omae wa mou shindeiru... và cả trang bạn đang tìm kiếm cũng vậy",
     "Đừng lo, đây chỉ là một filler arc, trang bạn cần sẽ xuất hiện ở season sau",
   ];
-  useEffect(() => {
+
+  const [randomQuote] = useState(() => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
-    setRandomQuote(quotes[randomIndex]);
-  }, []);
+    return quotes[randomIndex];
+  });
 
   const handleRetry = () => {
     setIsRetrying(true);
@@ -82,55 +82,56 @@ export default function ErrorPage({
     setTimeout(() => setIsRetrying(false), 1000);
   };
 
-  const handleCopyError = () => {
+  const handleCopyError = async () => {
     if (error) {
-      navigator.clipboard.writeText(error.message);
+      await navigator.clipboard.writeText(error.message);
       setHasCopied(true);
       toast.success("Đã sao chép chi tiết lỗi vào clipboard");
       setTimeout(() => setHasCopied(false), 2000);
     }
   };
+
   return (
-    <div className="flex min-h-[calc(100vh-80px)] w-full items-center justify-center p-4 opacity-0 animate-fadeIn">
-      <Card className="max-w-2xl w-full shadow-lg overflow-hidden border-2 border-primary/10">
-        <CardHeader className="bg-linear-to-r from-primary/10 to-secondary/10 pb-8 text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-white/10 mask-[linear-gradient(0deg,transparent,rgba(255,255,255,0.5),transparent)] -z-10"></div>
-          <div className="mx-auto mb-4 text-6xl font-bold text-primary">
+    <div className="animate-fadeIn flex min-h-[calc(100vh-80px)] w-full items-center justify-center p-4 opacity-0">
+      <Card className="border-primary/10 w-full max-w-2xl overflow-hidden border-2 shadow-lg">
+        <CardHeader className="from-primary/10 to-secondary/10 relative overflow-hidden bg-linear-to-r pb-8 text-center">
+          <div className="bg-grid-white/10 absolute inset-0 -z-10 mask-[linear-gradient(0deg,transparent,rgba(255,255,255,0.5),transparent)]"></div>
+          <div className="text-primary mx-auto mb-4 text-6xl font-bold">
             {statusCode}
           </div>
           <CardTitle className="text-2xl font-bold">{title}</CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="relative h-60 w-60 shrink-0 mx-auto md:mx-0 animate-gentle-pulse">
+          <div className="flex flex-col items-center gap-8 md:flex-row">
+            <div className="animate-gentle-pulse relative mx-auto h-60 w-60 shrink-0 md:mx-0">
               <Image
                 src="/images/doro_think.webp"
                 alt="Error Illustration"
                 fill
-                className="object-contain drop-shadow-md hover:scale-105 transition-transform duration-300 rounded-md"
+                className="rounded-md object-contain drop-shadow-md transition-transform duration-300 hover:scale-105"
                 priority
                 unoptimized
               />
             </div>
             <div className="space-y-4 text-center md:text-left">
               <p className="text-muted-foreground">{message}</p>
-              <p className="text-sm italic text-muted-foreground">
+              <p className="text-muted-foreground text-sm italic">
                 {randomQuote}
               </p>
               {error && (
-                <div className="mt-4 p-3 bg-destructive/10 rounded-md text-sm text-destructive border border-destructive/20 shadow-xs hover:bg-destructive/15 transition-colors">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/15 mt-4 rounded-md border p-3 text-sm shadow-xs transition-colors">
+                  <div className="mb-1 flex items-center justify-between">
                     <p className="font-semibold">Chi tiết lỗi:</p>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-6 w-6 hover:bg-destructive/10 hover:text-destructive transition-colors"
-                      onClick={handleCopyError}
+                      className="hover:bg-destructive/10 hover:text-destructive h-6 w-6 transition-colors"
+                      onClick={void handleCopyError}
                     >
                       {hasCopied ? (
                         <Check className="h-3.5 w-3.5 text-green-500" />
                       ) : (
-                        <Clipboard className="h-3.5 w-3.5 text-muted-foreground" />
+                        <Clipboard className="text-muted-foreground h-3.5 w-3.5" />
                       )}
                     </Button>
                   </div>
@@ -140,12 +141,12 @@ export default function ErrorPage({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-wrap gap-2 justify-center pt-2 pb-6">
+        <CardFooter className="flex flex-wrap justify-center gap-2 pt-2 pb-6">
           <Button
             variant="outline"
             size="sm"
             onClick={() => router.back()}
-            className="gap-1 hover:bg-primary/10 hover:-translate-x-1 transition-all"
+            className="hover:bg-primary/10 gap-1 transition-all hover:-translate-x-1"
           >
             <ArrowLeft className="h-4 w-4" />
             Quay lại
@@ -154,7 +155,7 @@ export default function ErrorPage({
             variant="outline"
             size="sm"
             onClick={handleRetry}
-            className="gap-1 hover:shadow-md transition-all hover:bg-primary/90 group"
+            className="hover:bg-primary/90 group gap-1 transition-all hover:shadow-md"
             disabled={isRetrying}
           >
             <RefreshCw
@@ -169,7 +170,7 @@ export default function ErrorPage({
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-1 hover:bg-secondary/70 transition-colors"
+                className="hover:bg-secondary/70 gap-1 transition-colors"
               >
                 <Bug className="h-4 w-4" />
                 Báo lỗi
@@ -181,7 +182,7 @@ export default function ErrorPage({
                   href={siteConfig.links.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                  className="flex items-center gap-2 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20"
                 >
                   <SiFacebook className="h-4 w-4 text-blue-600" />
                   <span>Facebook</span>
@@ -192,7 +193,7 @@ export default function ErrorPage({
                   href={siteConfig.links.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
+                  className="flex items-center gap-2 transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
                 >
                   <SiDiscord className="h-4 w-4 text-indigo-600" />
                   <span>Discord</span>
@@ -203,7 +204,7 @@ export default function ErrorPage({
                   href={siteConfig.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <SiGithub className="h-4 w-4" />
                   <span>GitHub</span>
