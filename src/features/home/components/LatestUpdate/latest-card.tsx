@@ -5,7 +5,7 @@ import MangaCover from "@/features/manga/components/manga-cover";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatTimeToNow, generateSlug } from "@/lib/utils";
-import { Chapter } from "@/types/types";
+import type { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { Clock, ExternalLink, Users } from "lucide-react";
 
@@ -56,11 +56,7 @@ export default function LatestCard({ chapter }: LatestCardProps) {
                 )}
                 {chapter.externalUrl && <ExternalLink size={16} />}
                 <NoPrefetchLink
-                  href={
-                    chapter.externalUrl
-                      ? chapter.externalUrl
-                      : `/chapter/${chapter.id}`
-                  }
+                  href={chapter.externalUrl ?? `/chapter/${chapter.id}`}
                   className="hover:underline"
                   target={chapter.externalUrl ? "_blank" : "_self"}
                 >

@@ -7,11 +7,11 @@ export default function LatestSkeleton() {
   return (
     <Card className="rounded-sm shadow-xs transition-colors duration-200">
       <CardContent className="flex gap-2 p-1">
-        <Skeleton className="w-20 h-28 shrink-0 bg-gray-500 rounded-sm" />
-        <div className="flex flex-col justify-evenly w-full pr-1">
-          <Skeleton className="w-full h-5 bg-gray-500 rounded-sm" />
-          <Skeleton className="w-2/3 h-4 bg-gray-500 rounded-sm" />
-          <Skeleton className="w-1/3 h-3 bg-gray-500 rounded-sm" />
+        <Skeleton className="h-28 w-20 shrink-0 rounded-sm bg-gray-500" />
+        <div className="flex w-full flex-col justify-evenly pr-1">
+          <Skeleton className="h-5 w-full rounded-sm bg-gray-500" />
+          <Skeleton className="h-4 w-2/3 rounded-sm bg-gray-500" />
+          <Skeleton className="h-3 w-1/3 rounded-sm bg-gray-500" />
         </div>
       </CardContent>
     </Card>

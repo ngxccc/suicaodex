@@ -22,7 +22,7 @@ export default function TopRated() {
   if (isLoading)
     return (
       <div className="grid grid-cols-1 gap-1.5 rounded-sm">
-        {[...Array(4)].map((_, index) => (
+        {Array.from({ length: 4 }).map((_, index) => (
           <LeaderBoardCardSkeleton key={index} />
         ))}
       </div>

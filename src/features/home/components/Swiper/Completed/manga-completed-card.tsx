@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn, generateSlug, getCoverImageUrl } from "@/lib/utils";
-import { Manga } from "@/types/types";
+import type { Manga } from "@/types/types";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -16,15 +16,15 @@ interface MangaCompletedCardProps {
 }
 
 export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
-  const src = getCoverImageUrl(manga.id, manga.cover, "512");
+  const src = getCoverImageUrl(manga.id, manga.cover ?? "", "512");
   const [loaded, setLoaded] = useState(false);
   return (
-    <Card className="relative rounded-sm shadow-none transition-colors duration-200 w-full h-full border-none bg-background">
-      <CardContent className="relative p-0 rounded-sm">
-        <div className="z-10 flex rounded-sm opacity-0 hover:opacity-100 transition-opacity absolute inset-0 bg-black/75">
-          <div className="p-2.5 grid grid-cols-1 gap-2 justify-between">
+    <Card className="bg-background relative h-full w-full rounded-sm border-none shadow-none transition-colors duration-200">
+      <CardContent className="relative rounded-sm p-0">
+        <div className="absolute inset-0 z-10 flex rounded-sm bg-black/75 opacity-0 transition-opacity hover:opacity-100">
+          <div className="grid grid-cols-1 justify-between gap-2 p-2.5">
             <ReactMarkdown
-              className="text-sm text-white overflow-auto"
+              className="overflow-auto text-sm text-white"
               remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
               components={{
                 a: ({ href, children }) => (
@@ -38,12 +38,12 @@ export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
                   </a>
                 ),
                 table: ({ children }) => (
-                  <table className="table-auto border-collapse border border-secondary rounded-md w-fit">
+                  <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
                     {children}
                   </table>
                 ),
                 thead: ({ children }) => (
-                  <thead className="border-b border-secondary">
+                  <thead className="border-secondary border-b">
                     {children}
                   </thead>
                 ),
@@ -65,7 +65,9 @@ export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
               size="icon"
               variant="secondary"
             >
-              <NoPrefetchLink href={`/manga/${manga.id}/${generateSlug(manga.title)}`}>
+              <NoPrefetchLink
+                href={`/manga/${manga.id}/${generateSlug(manga.title)}`}
+              >
                 <ArrowRight />
               </NoPrefetchLink>
             </Button>
@@ -74,11 +76,11 @@ export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
         <LazyLoadImage
           wrapperClassName={cn(
             "block! rounded-sm object-cover w-full h-full",
-            !loaded && "aspect-5/7"
+            !loaded && "aspect-5/7",
           )}
           placeholderSrc="/images/place-doro.webp"
           className={cn(
-            "h-auto w-full rounded-sm block object-cover aspect-5/7"
+            "block aspect-5/7 h-auto w-full rounded-sm object-cover",
           )}
           src={src}
           alt={`Ảnh bìa ${manga.title}`}
@@ -89,9 +91,11 @@ export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
         />
       </CardContent>
 
-      <CardFooter className="py-2 px-0 w-full">
-        <NoPrefetchLink href={`/manga/${manga.id}/${generateSlug(manga.title)}`}>
-          <p className="text-base font-semibold line-clamp-2 drop-shadow-xs">
+      <CardFooter className="w-full px-0 py-2">
+        <NoPrefetchLink
+          href={`/manga/${manga.id}/${generateSlug(manga.title)}`}
+        >
+          <p className="line-clamp-2 text-base font-semibold drop-shadow-xs">
             {manga.title}
           </p>
         </NoPrefetchLink>

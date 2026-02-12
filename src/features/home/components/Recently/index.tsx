@@ -28,7 +28,7 @@ export default function RecentlyAdded() {
         <h1 className="text-2xl font-black uppercase">Truyện mới</h1>
 
         <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          {[...Array(6)].map((_, index) => (
+          {Array.from({ length: 6 }).map((_, index) => (
             <Skeleton
               key={index}
               className="h-[300px] w-full rounded-sm bg-gray-500"

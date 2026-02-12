@@ -1,4 +1,4 @@
-import HomePage from "@/components/Pages/Home";
+import HomePage from "@/features/home/components";
 import { siteConfig } from "@/config/site";
 
 export default function Home() {

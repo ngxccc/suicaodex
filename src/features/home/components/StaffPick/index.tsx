@@ -3,7 +3,6 @@
 import { useConfig } from "@/hooks/use-config";
 import { getStaffPickMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
-import { Skeleton } from "@/components/ui/skeleton";
 import RecentlyCard from "../Recently/recently-card";
 import { cn, generateSlug } from "@/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";

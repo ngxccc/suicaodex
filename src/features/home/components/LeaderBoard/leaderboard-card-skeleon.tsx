@@ -1,0 +1,19 @@
+"use client";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function LeaderBoardCardSkeleton() {
+  return (
+    <Card className="dark:bg-background rounded-sm border-none shadow-none transition-colors duration-200">
+      <CardContent className="flex gap-2 p-1">
+        <Skeleton className="h-28 w-20 shrink-0 rounded-sm bg-gray-500" />
+        <div className="flex w-full flex-col justify-evenly">
+          <Skeleton className="h-5 w-full rounded-sm bg-gray-500" />
+          <Skeleton className="h-4 w-2/3 rounded-sm bg-gray-500" />
+          <Skeleton className="h-3 w-1/3 rounded-sm bg-gray-500" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

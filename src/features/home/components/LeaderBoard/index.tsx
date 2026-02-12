@@ -44,7 +44,7 @@ export default function LeaderBoard() {
 
   return (
     <div className="flex flex-col">
-      <hr className="w-9 h-1 bg-primary border-none" />
+      <hr className="bg-primary h-1 w-9 border-none" />
       <h1 className="text-2xl font-black uppercase">Bảng xếp hạng</h1>
 
       <Tabs
@@ -60,12 +60,12 @@ export default function LeaderBoard() {
               : "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
         }}
       >
-        <TabsList className="rounded-sm w-full">
-          <TabsTrigger value="follow" className="rounded-sm w-full flex gap-1">
+        <TabsList className="w-full rounded-sm">
+          <TabsTrigger value="follow" className="flex w-full gap-1 rounded-sm">
             <Bookmark size={20} />
             Lượt theo dõi
           </TabsTrigger>
-          <TabsTrigger value="rating" className="rounded-sm w-full flex gap-1">
+          <TabsTrigger value="rating" className="flex w-full gap-1 rounded-sm">
             <Star size={20} />
             Điểm đánh giá
           </TabsTrigger>
@@ -81,13 +81,13 @@ export default function LeaderBoard() {
       {fullHeight > 700 && (
         <div
           className={cn(
-            "flex justify-center w-full h-full",
-            expanded && "mt-2"
+            "flex h-full w-full justify-center",
+            expanded && "mt-2",
           )}
         >
           <Button
             size="sm"
-            className="h-4 px-1! text-xs rounded-sm"
+            className="h-4 rounded-sm px-1! text-xs"
             onClick={toggleExpanded}
             variant={expanded ? "secondary" : "default"}
           >

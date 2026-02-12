@@ -4,7 +4,7 @@ import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn, generateSlug } from "@/lib/utils";
-import { Artist, Author, Manga } from "@/types/types";
+import type { Artist, Author, Manga } from "@/types/types";
 import { Bookmark } from "lucide-react";
 
 interface TopFollowedCardProps {
@@ -20,7 +20,7 @@ export default function TopFollowedCard({ manga }: TopFollowedCardProps) {
         >
           <MangaCover
             id={manga.id}
-            cover={manga.cover}
+            cover={manga.cover ?? ""}
             alt={manga.title}
             placeholder="/images/place-doro.webp"
             wrapper="w-20 h-auto border"

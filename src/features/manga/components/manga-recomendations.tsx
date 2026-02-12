@@ -10,7 +10,7 @@ import {
   AlertTitle,
 } from "../../../components/ui/alert";
 import NoPrefetchLink from "../../../components/Custom/no-prefetch-link";
-import RecentlyCard from "../../../components/Pages/Home/Recently/recently-card";
+import RecentlyCard from "../../home/components/Recently/recently-card";
 import { generateSlug } from "@/lib/utils";
 
 interface MangaRecommendationsProps {
