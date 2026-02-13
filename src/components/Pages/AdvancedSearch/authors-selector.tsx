@@ -4,7 +4,7 @@
 import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { SearchAuthor, SearchAuthorByIds } from "@/lib/mangadex/author";
-import { AsyncMultiSelect } from "@/components/ui/async-multi-select";
+import { AsyncMultiSelect } from "@/shared/components/ui/async-multi-select";
 import { cn } from "@/shared/lib/utils";
 import { Author } from "@/types/types";
 

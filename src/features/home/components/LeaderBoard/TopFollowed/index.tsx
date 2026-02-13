@@ -4,7 +4,7 @@ import { useConfig } from "@/shared/hooks/use-config";
 import { getTopFollowedMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import TopFollowedCard from "./top-followed-card";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/shared/components/ui/separator";
 import { cn } from "@/shared/lib/utils";
 import LeaderBoardCardSkeleton from "../leaderboard-card-skeleon";
 

@@ -3,7 +3,7 @@
 import { getGroup } from "@/lib/mangadex/group";
 import Image from "next/image";
 import useSWR from "swr";
-import { Button } from "../ui/button";
+import { Button } from "../../shared/components/ui/button";
 import { Archive, Ban, Bookmark, Globe, Mail, ShieldUser } from "lucide-react";
 import { toast } from "sonner";
 import GroupStats from "./group-stats";
@@ -11,8 +11,13 @@ import Link from "next/link";
 import { siteConfig } from "@/shared/config/site";
 import { cn, isFacebookUrl } from "@/shared/lib/utils";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "../ui/label";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
+import { Label } from "../../shared/components/ui/label";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import { SiDiscord, SiFacebook, SiX } from "@icons-pack/react-simple-icons";

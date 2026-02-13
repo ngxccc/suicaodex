@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,13 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/shared/components/ui/accordion";
 import { CircleHelp, Minus, Plus } from "lucide-react";
 
 export default function AdvancedSearchGuide() {
@@ -35,10 +35,10 @@ export default function AdvancedSearchGuide() {
 
         <Accordion type="multiple" className="w-full">
           <AccordionItem value="tags">
-            <AccordionTrigger className="hover:no-underline py-2">
+            <AccordionTrigger className="py-2 hover:no-underline">
               <div className="flex flex-col">
                 <span className="text-base">Thể loại</span>
-                <span className="text-sm text-muted-foreground font-normal">
+                <span className="text-muted-foreground text-sm font-normal">
                   Mặc định: Tất cả
                 </span>
               </div>
@@ -52,7 +52,7 @@ export default function AdvancedSearchGuide() {
               </div>
               <div className="flex items-center gap-1">
                 Click 2 lần để loại trừ
-                <span className="flex items-center text-destructive">
+                <span className="text-destructive flex items-center">
                   <Minus size={18} /> Tag
                 </span>
               </div>
@@ -63,10 +63,10 @@ export default function AdvancedSearchGuide() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="content">
-            <AccordionTrigger className="hover:no-underline py-2">
+            <AccordionTrigger className="py-2 hover:no-underline">
               <div className="flex flex-col">
                 <span className="text-base">Giới hạn nội dung</span>
-                <span className="text-sm text-muted-foreground font-normal">
+                <span className="text-muted-foreground text-sm font-normal">
                   Mặc định: Safe → Erotica
                 </span>
               </div>
@@ -83,16 +83,17 @@ export default function AdvancedSearchGuide() {
                   <span className="text-red-400">Erotica</span> - Cũng tạm
                 </li>
                 <li>
-                  <span className="text-red-600">Pornographic</span> - SEGGGGG!!!
+                  <span className="text-red-600">Pornographic</span> -
+                  SEGGGGG!!!
                 </li>
               </ol>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="other" className="border-none">
-            <AccordionTrigger className="hover:no-underline py-2">
+            <AccordionTrigger className="py-2 hover:no-underline">
               <div className="flex flex-col">
                 <span className="text-base">Còn lại</span>
-                <span className="text-sm text-muted-foreground font-normal">
+                <span className="text-muted-foreground text-sm font-normal">
                   Mặc định: Tất cả
                 </span>
               </div>

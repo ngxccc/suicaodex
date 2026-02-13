@@ -1,9 +1,9 @@
 "use client";
 
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import { formatTimeToNow, generateSlug } from "@/shared/lib/utils";
 import type { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";

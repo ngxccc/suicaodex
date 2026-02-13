@@ -1,7 +1,7 @@
 "use client"; // Error boundaries must be Client Components
 
 import { useEffect } from "react";
-import ErrorPage from "@/components/error-page";
+import ErrorPage from "@/shared/components/error-page";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

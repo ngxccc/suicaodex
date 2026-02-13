@@ -1,13 +1,13 @@
 "use client";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/shared/components/ui/alert";
 import { getTags, groupTags } from "@/lib/mangadex/tag";
 import Image from "next/image";
 import useSWR from "swr";
 import DoroLoading from "#/images/doro-loading.gif";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import { Label } from "@/shared/components/ui/label";
+import { Button } from "@/shared/components/ui/button";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { generateSlug } from "@/shared/lib/utils";
 
 export default function TagsPage() {

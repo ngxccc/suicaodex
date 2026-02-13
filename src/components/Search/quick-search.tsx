@@ -1,15 +1,15 @@
 "use client";
 
 import { cn, generateSlug } from "@/shared/lib/utils";
-import { Button } from "../ui/button";
+import { Button } from "../../shared/components/ui/button";
 import { ArrowRight, Search, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../shared/components/ui/input";
 import { useConfig } from "@/shared/hooks/use-config";
 import type { Manga } from "@/types/types";
 import CompactCard from "./Result/compact-card";
 import Link from "next/link";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../shared/components/ui/skeleton";
 import {
   Dialog,
   DialogClose,
@@ -19,9 +19,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "../../shared/components/ui/dialog";
 import useKeyDown from "@/shared/hooks/use-keydown";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../shared/components/ui/badge";
 import { SearchManga } from "@/features/manga/api/manga";
 
 export default function QuickSearch() {

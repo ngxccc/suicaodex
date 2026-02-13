@@ -1,9 +1,14 @@
 "use client";
 
 import { Manga } from "@/types/types";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import { LayoutGrid, List, Loader2 } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/components/ui/card";
 import MangaCompletedCard from "@/features/home/components/Swiper/Completed/manga-completed-card";
 import DetailsCard from "@/components/Search/Result/details-card";
 

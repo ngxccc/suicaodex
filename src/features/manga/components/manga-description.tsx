@@ -4,7 +4,7 @@ import { cn } from "@/shared/lib/utils";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import { SiGoogletranslate } from "@icons-pack/react-simple-icons";
-import { Button } from "../../../components/ui/button";
+import { Button } from "../../../shared/components/ui/button";
 import useContentHeight from "@/shared/hooks/use-content-height";
 import type { Manga } from "@/types/types";
 import MangaSubInfo from "./manga-subinfo";

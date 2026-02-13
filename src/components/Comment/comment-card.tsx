@@ -1,8 +1,12 @@
 "use client";
 
 import { CommentWithUser } from "@/shared/lib/serializers";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../shared/components/ui/avatar";
+import { Button } from "../../shared/components/ui/button";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";

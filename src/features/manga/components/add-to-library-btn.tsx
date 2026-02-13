@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+} from "@/shared/components/ui/dialog";
+import { Label } from "@/shared/components/ui/label";
 import { useConfig } from "@/shared/hooks/use-config";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import type { LibraryType, Manga } from "@/types/types";
@@ -34,7 +34,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 import { useLocalLibrary } from "@/shared/hooks/use-local-library";

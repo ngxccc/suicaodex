@@ -1,7 +1,7 @@
 import { ChapterTitle } from "@/components/Chapter/ChapterReader/chapter-info";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { Button } from "@/components/ui/button";
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardFooter, CardHeader } from "@/shared/components/ui/card";
 import { formatTimeToNow } from "@/shared/lib/utils";
 import { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";

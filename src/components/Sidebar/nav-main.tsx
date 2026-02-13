@@ -6,7 +6,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/shared/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,9 +17,9 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { ThemeCustomizer } from "../Theme/theme-customizer";
-import NoPrefetchLink from "../Custom/no-prefetch-link";
+} from "@/shared/components/ui/sidebar";
+import { ThemeCustomizer } from "../../shared/components/theme/theme-customizer";
+import NoPrefetchLink from "../../shared/components/custom/no-prefetch-link";
 
 export function NavMain({
   items,
@@ -55,8 +55,8 @@ export function NavMain({
                 <SidebarMenuButton
                   tooltip={item.title}
                   onClick={(e) => {
-                    if(open || openMobile) return;
-                    if(item.isActive) {
+                    if (open || openMobile) return;
+                    if (item.isActive) {
                       e.preventDefault();
                     }
                     toggleSidebar();

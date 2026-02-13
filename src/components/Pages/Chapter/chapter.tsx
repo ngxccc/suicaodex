@@ -2,7 +2,7 @@
 
 import ChapterInfo from "@/components/Chapter/ChapterReader/chapter-info";
 import Reader from "@/components/Chapter/ChapterReader/Reader";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 import { getChapterDetail } from "@/lib/mangadex/chapter";
 import useSWR from "swr";
 import ChapterNotFound from "./chapter-notfound";

@@ -1,14 +1,14 @@
 "use client";
 
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/components/ui/card";
+} from "@/shared/components/ui/card";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import {
   cn,

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../shared/components/ui/input";
 import { ArrowRight, Loader2, Search, X } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../shared/components/ui/button";
 import useSWR from "swr";
 import { searchGroups } from "@/lib/mangadex/group";
-import { Card } from "../ui/card";
+import { Card } from "../../shared/components/ui/card";
 import GroupCards from "./group-cards";
 import {
   Pagination,
@@ -16,7 +16,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/components/ui/pagination";
 import { useRouter } from "next/navigation";
 
 interface GroupsSearchProps {
@@ -35,11 +35,11 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
     }
-    
+
     // Set a new timeout to update the query after 500ms of inactivity
     debounceTimeoutRef.current = setTimeout(() => {
       setDebouncedQuery(inputValue);
-      
+
       // Update URL if needed
       if (inputValue !== q) {
         const params = new URLSearchParams();
@@ -48,7 +48,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
         router.push(`/groups?${params.toString()}`);
       }
     }, 500);
-    
+
     // Cleanup function to clear the timeout
     return () => {
       if (debounceTimeoutRef.current) {
@@ -64,7 +64,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,
-    }
+    },
   );
   const totalPages = Math.ceil((data?.total || 0) / 32);
   const handlePageChange = (newPage: number) => {
@@ -84,9 +84,9 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
   return (
     <>
       <div className="relative w-full">
-        <Search className="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2" />
+        <Search className="absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2 transform" />
         <Input
-          className="bg-secondary pl-7 w-full h-10"
+          className="bg-secondary h-10 w-full pl-7"
           placeholder="Nhập từ khóa..."
           autoComplete="off"
           value={inputValue}
@@ -95,7 +95,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
 
         <Button
           size="icon"
-          className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-primary rounded-sm size-8"
+          className="bg-primary absolute top-1/2 right-1 size-8 -translate-y-1/2 transform rounded-sm"
           onClick={() => {
             if (!!inputValue) {
               handleClear();
@@ -106,15 +106,15 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
         </Button>
       </div>
 
-      <div className="mt-4 w-full relative">
+      <div className="relative mt-4 w-full">
         {!!isLoading && (
-          <div className="flex justify-center items-center w-full h-16">
-            <Loader2 className="animate-spin w-8 h-8" />
+          <div className="flex h-16 w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin" />
           </div>
         )}
 
         {!!error && (
-          <Card className="mt-4 rounded-sm justify-center items-center flex h-16 w-full">
+          <Card className="mt-4 flex h-16 w-full items-center justify-center rounded-sm">
             Lỗi mất rồi 😭
           </Card>
         )}
@@ -126,7 +126,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -136,7 +136,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -150,7 +150,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -161,7 +161,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -173,7 +173,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -189,7 +189,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -203,7 +203,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -213,7 +213,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -224,7 +224,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -234,7 +234,7 @@ export default function GroupsSearch({ page, q }: GroupsSearchProps) {
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />

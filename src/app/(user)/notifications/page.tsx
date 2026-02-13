@@ -4,10 +4,15 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "@/shared/components/ui/accordion";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import { CircleHelp, MonitorCog, NotepadText } from "lucide-react";
-import { Alert } from "@/components/ui/alert";
+import { Alert } from "@/shared/components/ui/alert";
 import Notifications from "@/components/Notifications/notifications";
 
 interface pageProps {
@@ -39,7 +44,7 @@ export default async function Page({ searchParams }: pageProps) {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Thông báo</h1>
       </div>
 
@@ -48,7 +53,7 @@ export default async function Page({ searchParams }: pageProps) {
           {tabValues.map((tab) => (
             <TabsTrigger
               key={tab.value}
-              className="w-full flex items-center"
+              className="flex w-full items-center"
               value={tab.value}
             >
               {tab.icon}
@@ -60,7 +65,7 @@ export default async function Page({ searchParams }: pageProps) {
           <Accordion
             type="single"
             collapsible
-            className="bg-secondary rounded-md px-2 mb-2"
+            className="bg-secondary mb-2 rounded-md px-2"
           >
             <AccordionItem value="item-1" className="border-none">
               <AccordionTrigger className="py-2">
@@ -81,7 +86,7 @@ export default async function Page({ searchParams }: pageProps) {
           <Notifications page={page} />
         </TabsContent>
         <TabsContent value="system">
-          <Alert className="rounded-sm bg-secondary justify-center text-center">
+          <Alert className="bg-secondary justify-center rounded-sm text-center">
             Không có thông báo nào!
           </Alert>
         </TabsContent>

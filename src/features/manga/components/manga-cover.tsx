@@ -10,9 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "../../../components/ui/dialog";
+} from "../../../shared/components/ui/dialog";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Hover3DCard } from "../../../components/ui/hover-3d-card";
+import { Hover3DCard } from "../../../shared/components/ui/hover-3d-card";
 
 interface MangaCoverProps extends React.HTMLAttributes<HTMLImageElement> {
   id: string;

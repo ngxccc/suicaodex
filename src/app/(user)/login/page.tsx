@@ -1,7 +1,7 @@
 import { auth } from "@/shared/config/authjs";
-import { LoginForm } from "@/components/login-form";
-import { WarpBackground } from "@/components/ui/warp-background";
-import { Metadata } from "next";
+import { LoginForm } from "@/shared/components/login-form";
+import { WarpBackground } from "@/shared/components/ui/warp-background";
+import type { Metadata } from "next";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 

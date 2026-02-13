@@ -1,8 +1,8 @@
 import { Group } from "@/types/types";
-import { Card } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card } from "../../shared/components/ui/card";
+import { Button } from "../../shared/components/ui/button";
 import { Users } from "lucide-react";
-import NoPrefetchLink from "../Custom/no-prefetch-link";
+import NoPrefetchLink from "../../shared/components/custom/no-prefetch-link";
 import { generateSlug } from "@/shared/lib/utils";
 
 interface GroupCardsProps {

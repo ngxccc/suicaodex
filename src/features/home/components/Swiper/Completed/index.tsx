@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { useConfig } from "@/shared/hooks/use-config";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -8,12 +8,12 @@ import useSWR from "swr";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/shared/components/ui/alert";
 import Image from "next/image";
 import DoroLoading from "#/images/doro-loading.gif";
-import { Marquee } from "@/components/ui/marquee";
+import { Marquee } from "@/shared/components/ui/marquee";
 import RecentlyCard from "../../Recently/recently-card";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { generateSlug } from "@/shared/lib/utils";
 import { getCompletedMangas } from "@/features/manga/api/manga";
 

@@ -1,8 +1,11 @@
 import { Metadata } from "next";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/shared/components/ui/alert";
 import { Terminal } from "lucide-react";
 import History from "@/components/Pages/History";
-
 
 export function generateMetadata(): Metadata {
   return {
@@ -15,11 +18,11 @@ export default function Page() {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Lịch sử đọc</h1>
       </div>
 
-      <Alert className="mt-4 rounded-sm bg-secondary">
+      <Alert className="bg-secondary mt-4 rounded-sm">
         <Terminal size={18} />
         <AlertTitle>Có thể bạn cần biết:</AlertTitle>
         <AlertDescription>

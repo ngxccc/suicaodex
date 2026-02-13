@@ -1,6 +1,6 @@
 "use client";
 import { MainNav } from "@/components/Navbar/main-nav";
-import { SidebarTrigger } from "../ui/sidebar";
+import { SidebarTrigger } from "../../shared/components/ui/sidebar";
 import { cn } from "@/shared/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import useScrollOffset from "@/shared/hooks/use-scroll-offset";

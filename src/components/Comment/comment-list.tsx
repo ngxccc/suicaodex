@@ -3,9 +3,13 @@
 import useSWR from "swr";
 import CommentCard from "./comment-card";
 import { useImperativeHandle, useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Card, CardContent } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "../../shared/components/ui/alert";
+import { Card, CardContent } from "../../shared/components/ui/card";
+import { Skeleton } from "../../shared/components/ui/skeleton";
 import {
   Pagination,
   PaginationContent,
@@ -14,7 +18,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/components/ui/pagination";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const LIMIT = 10; // Limit for pagination
@@ -50,11 +54,11 @@ const CommentList = ({
         {Array.from({ length: 3 }).map((_, i) => (
           <Card
             key={i}
-            className="rounded-none shadow-none border-none p-0 bg-transparent"
+            className="rounded-none border-none bg-transparent p-0 shadow-none"
           >
             <CardContent className="p-0!">
               <div className="flex gap-2">
-                <Skeleton className="h-10 w-10 rounded-full shrink-0" />
+                <Skeleton className="h-10 w-10 shrink-0 rounded-full" />
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-4 w-32" />
                   <Skeleton className="h-4 w-full" />
@@ -68,7 +72,7 @@ const CommentList = ({
     );
   if (data.comments.length === 0)
     return (
-      <Alert className="rounded-sm bg-secondary">
+      <Alert className="bg-secondary rounded-sm">
         <AlertTitle className="flex justify-center text-center">
           Chưa có bình luận nào!
         </AlertTitle>
@@ -80,7 +84,7 @@ const CommentList = ({
 
   if (error)
     return (
-      <Alert className="rounded-sm bg-secondary">
+      <Alert className="bg-secondary rounded-sm">
         <AlertDescription className="flex justify-center">
           Lỗi mất rồi 😭
         </AlertDescription>
@@ -93,12 +97,12 @@ const CommentList = ({
   };
 
   return (
-    <div className="space-y-4 mt-4">
+    <div className="mt-4 space-y-4">
       <div className="space-y-4 px-1">
         {data.comments.map((comment: any) => (
           <Card
             key={comment.id}
-            className="rounded-none shadow-none border-none p-0 bg-transparent overflow-hidden"
+            className="overflow-hidden rounded-none border-none bg-transparent p-0 shadow-none"
           >
             <CardContent className="p-0!">
               <CommentCard comment={comment} />
@@ -110,7 +114,7 @@ const CommentList = ({
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -120,7 +124,7 @@ const CommentList = ({
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -134,7 +138,7 @@ const CommentList = ({
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -145,7 +149,7 @@ const CommentList = ({
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -157,7 +161,7 @@ const CommentList = ({
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -173,7 +177,7 @@ const CommentList = ({
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -187,7 +191,7 @@ const CommentList = ({
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -197,7 +201,7 @@ const CommentList = ({
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -208,7 +212,7 @@ const CommentList = ({
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -218,7 +222,7 @@ const CommentList = ({
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />

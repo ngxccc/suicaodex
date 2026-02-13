@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
 import { siteConfig } from "@/shared/config/site";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { GetAuthor } from "@/lib/mangadex/author";
@@ -23,8 +23,8 @@ import {
   SiX,
   SiYoutube,
 } from "@icons-pack/react-simple-icons";
-import { Icons } from "@/components/icons";
-import { Card } from "@/components/ui/card";
+import { Icons } from "@/shared/components/icons";
+import { Card } from "@/shared/components/ui/card";
 import AuthorTitles from "./author-titles";
 
 interface AuthorProps {

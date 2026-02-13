@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import useKeyDown from "@/shared/hooks/use-keydown";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { useScrollDirection } from "@/shared/hooks/use-scroll-direction";
@@ -40,10 +40,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+} from "@/shared/components/ui/dialog";
+import { Label } from "@/shared/components/ui/label";
 import { useConfig } from "@/shared/hooks/use-config";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/components/ui/input";
 
 interface ChapterNavProps {
   chapterData: Chapter;

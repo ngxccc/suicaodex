@@ -3,7 +3,7 @@
 import { getGroupStats } from "@/lib/mangadex/group";
 import { MessageSquare, Upload } from "lucide-react";
 import useSWR from "swr";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../shared/components/ui/skeleton";
 
 interface GroupStatsProps {
   id: string;
@@ -16,7 +16,7 @@ export default function GroupStats({ id }: GroupStatsProps) {
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,
-    }
+    },
   );
 
   if (isLoading || error || !data)
@@ -24,11 +24,11 @@ export default function GroupStats({ id }: GroupStatsProps) {
       <div className="flex flex-row items-center gap-4">
         <span className="flex flex-row items-center gap-1">
           <Upload size={18} />{" "}
-          <Skeleton className="w-6 h-[18px] rounded-sm bg-gray-300" />
+          <Skeleton className="h-[18px] w-6 rounded-sm bg-gray-300" />
         </span>
         <span className="flex flex-row items-center gap-1">
           <MessageSquare size={18} />{" "}
-          <Skeleton className="w-6 h-[18px] rounded-sm bg-gray-300" />
+          <Skeleton className="h-[18px] w-6 rounded-sm bg-gray-300" />
         </span>
       </div>
     );

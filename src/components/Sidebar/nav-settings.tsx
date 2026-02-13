@@ -6,10 +6,14 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { ThemeCustomizer } from "../Theme/theme-customizer";
-import { ContentCustomizer } from "../Theme/content-customizer";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+} from "@/shared/components/ui/sidebar";
+import { ThemeCustomizer } from "../../shared/components/theme/theme-customizer";
+import { ContentCustomizer } from "../../shared/components/theme/content-customizer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../../shared/components/ui/tooltip";
 
 export function NavSettings() {
   return (

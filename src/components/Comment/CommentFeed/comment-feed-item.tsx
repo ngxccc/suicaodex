@@ -1,12 +1,16 @@
 // "use client";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/components/ui/card";
 import { CommentWithUser } from "@/shared/lib/serializers";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import { formatShortTime } from "@/shared/lib/utils";
 import { getStickerByName } from "@/shared/lib/stickers-fn";
 import { LazyLoadImage } from "react-lazy-load-image-component";

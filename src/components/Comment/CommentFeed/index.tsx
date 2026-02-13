@@ -5,11 +5,11 @@ import CommentFeedItem from "./comment-feed-item";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/shared/components/ui/alert";
 
 import Image from "next/image";
 import DoroLoading from "#/images/doro-loading.gif";
-import { Marquee } from "@/components/ui/marquee";
+import { Marquee } from "@/shared/components/ui/marquee";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -24,17 +24,17 @@ export default function CommentFeed() {
     return (
       <>
         <div>
-          <hr className="w-9 h-1 bg-primary border-none" />
+          <hr className="bg-primary h-1 w-9 border-none" />
           <h1 className="text-2xl font-black uppercase">Bình luận gần đây</h1>
         </div>
-        <Alert className="rounded-sm border-none mt-4">
+        <Alert className="mt-4 rounded-sm border-none">
           <AlertDescription className="flex justify-center">
             <Image
               src={DoroLoading}
               alt="Loading..."
               unoptimized
               priority
-              className="w-20 h-auto"
+              className="h-auto w-20"
             />
           </AlertDescription>
         </Alert>
@@ -45,14 +45,14 @@ export default function CommentFeed() {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Bình luận gần đây</h1>
       </div>
 
       <Marquee
         pauseOnHover
         vertical
-        className="[--duration:55s] px-0 h-[450px] md:h-[650px] overflow-hidden"
+        className="h-[450px] overflow-hidden px-0 [--duration:55s] md:h-[650px]"
       >
         {comments.map((cmt: any, index: any) => (
           <CommentFeedItem key={cmt.id} comment={cmt} type={cmt.type} />

@@ -2,16 +2,16 @@
 
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { TooltipProvider } from "./ui/tooltip";
-import { ThemeWrapper } from "./Theme/theme-wrapper";
+import { ThemeWrapper } from "./theme/theme-wrapper";
 import {
   Bar,
   Progress,
   AppProgressProvider as ProgressProvider,
 } from "@bprogress/next";
-import { NotificationProvider } from "./notification-provider";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { NotificationProvider } from "./notification-provider";
 
 export function ThemeProvider({
   children,

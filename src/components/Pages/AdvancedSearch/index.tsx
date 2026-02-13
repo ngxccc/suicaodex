@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/shared/components/ui/collapsible";
 import {
   ChevronDown,
   Eraser,
@@ -16,14 +16,14 @@ import {
   Search,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { MultiSelect } from "@/components/ui/multi-select";
+import { MultiSelect } from "@/shared/components/ui/multi-select";
 import { cn } from "@/shared/lib/utils";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/shared/components/ui/label";
 import { getTags } from "@/lib/mangadex/tag";
 import useContentHeight from "@/shared/hooks/use-content-height";
 import { TagsSelector } from "./tags-selector";
 import { AuthorsSelector } from "./authors-selector";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/shared/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 import {
   ContentRating,
@@ -43,7 +43,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/components/ui/pagination";
 import AdvancedSearchGuide from "./advanded-search-guide";
 import { CN, GB, JP, KR, VN } from "country-flag-icons/react/3x2";
 

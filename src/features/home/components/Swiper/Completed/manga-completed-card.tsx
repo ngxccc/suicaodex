@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
 import type { Manga } from "@/types/types";
 import { ArrowRight } from "lucide-react";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 
 interface MangaCompletedCardProps {
   manga: Manga;

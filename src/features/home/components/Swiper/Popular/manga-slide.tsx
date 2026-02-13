@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 import Tags from "@/features/manga/components/Tags";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import Image from "next/image";
 
 interface MangaSlideProps {

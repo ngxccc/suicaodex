@@ -1,8 +1,8 @@
 "use client";
 
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import { generateSlug } from "@/shared/lib/utils";
 import { Artist, Author, Manga } from "@/types/types";
 import { Star } from "lucide-react";

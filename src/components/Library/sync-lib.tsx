@@ -2,14 +2,23 @@
 
 import { getMangasByIDs } from "@/lib/mangadex/history";
 import { getUserLibrary } from "@/shared/config/db";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 import { Album, BookmarkCheck, ListCheck, NotebookPen } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import DetailsCard from "../Search/Result/details-card";
 import Image from "next/image";
 import DoroLoading from "/images/doro-loading.gif";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/shared/components/ui/alert";
+import DetailsCard from "../Search/Result/details-card";
 
 interface SyncLibProps {
   session: any;

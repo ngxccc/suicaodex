@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertTitle } from "@/shared/components/ui/alert";
 import {
   Album,
   BookmarkCheck,
@@ -9,16 +9,21 @@ import {
   ListCheck,
   NotebookPen,
 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/shared/components/ui/accordion";
 import MyLibrary from "@/components/Pages/MyLibrary";
 import { auth } from "@/shared/config/authjs";
-import SyncLib from "@/components/Library/sync-lib";
+import SyncLib from "@/shared/components/library/sync-lib";
 
 export function generateMetadata(): Metadata {
   return {

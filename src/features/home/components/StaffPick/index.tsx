@@ -6,9 +6,9 @@ import useSWR from "swr";
 import RecentlyCard from "../Recently/recently-card";
 import { cn, generateSlug } from "@/shared/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { ChevronsDown, ChevronsUp } from "lucide-react";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import StaffPickSkeleton from "./staffpick-skeleton";
 
 export default function StaffPick() {

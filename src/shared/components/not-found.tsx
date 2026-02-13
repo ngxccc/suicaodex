@@ -4,8 +4,8 @@ import {
   Status,
   StatusIndicator,
   StatusLabel,
-} from "@/components/kibo-ui/status";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/kibo-ui/status";
+import { Button } from "@/shared/components/ui/button";
 import { siteConfig } from "@/shared/config/site";
 import { BugIcon, HomeIcon } from "lucide-react";
 import Link from "next/link";
@@ -16,23 +16,23 @@ const pixelify = Pixelify_Sans({ subsets: ["latin"] });
 
 export default function NotFoundPage() {
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <section className="relative isolate min-h-svh overflow-hidden bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       {/* Backdrop: gradient blobs */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-20 opacity-70 dark:opacity-60"
       >
-        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,theme(colors.blue.400),transparent)] blur-2xl" />
-        <div className="absolute -right-16 -bottom-16 h-96 w-96 rounded-full bg-[radial-gradient(closest-side,theme(colors.purple.500),transparent)] blur-3xl" />
-        <div className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,theme(colors.teal.400),transparent)] blur-2xl" />
+        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,var(--color-blue-400),transparent)] blur-2xl" />
+        <div className="absolute -right-16 -bottom-16 h-96 w-96 rounded-full bg-[radial-gradient(closest-side,var(--color-purple-500),transparent)] blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--color-teal-400),transparent)] blur-2xl" />
       </div>
 
       {/* Backdrop: animated grid using conic gradient mask */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(60%_60%_at_50%_40%,black,transparent)]"
+        className="pointer-events-none absolute inset-0 -z-10 mask-[radial-gradient(60%_60%_at_50%_40%,black,transparent)]"
       >
-        <div className="absolute inset-0 [animation:grid-pan_16s_linear_infinite] bg-[linear-gradient(to_right,rgba(120,120,120,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,120,120,0.12)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 animate-[grid-pan_16s_linear_infinite] bg-[linear-gradient(to_right,rgba(120,120,120,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,120,120,0.12)_1px,transparent_1px)] bg-size-[40px_40px]" />
       </div>
 
       {/* Backdrop: subtle film grain */}
@@ -64,7 +64,7 @@ export default function NotFoundPage() {
 
           <h1
             className={cn(
-              "mt-5 bg-gradient-to-br from-blue-600 via-purple-600 to-teal-500 bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl",
+              "mt-5 bg-linear-to-br from-blue-600 via-purple-600 to-teal-500 bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl",
               pixelify.className,
             )}
           >

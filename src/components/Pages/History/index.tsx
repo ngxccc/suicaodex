@@ -2,9 +2,14 @@
 
 import useReadingHistory from "@/shared/hooks/use-reading-history";
 import { LayoutGrid, List, Loader2 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/components/ui/card";
 import useSWR from "swr";
 import { fetchHistory } from "@/lib/mangadex/history";
 import HistoryCompactCard from "./history-compact-card";

@@ -2,7 +2,11 @@
 
 import { BadgeCheck, Bell, ChevronsUpDown, LogIn, LogOut } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +15,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/shared/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { Badge } from "../ui/badge";
+} from "@/shared/components/ui/sidebar";
+import { Badge } from "../../shared/components/ui/badge";
 import { useLocalNotification } from "@/shared/hooks/use-local-notification";
 import { cn } from "@/shared/lib/utils";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import { ChapterTitle } from "@/components/Chapter/ChapterReader/chapter-info";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
+import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";

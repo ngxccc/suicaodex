@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/shared/components/ui/accordion";
 import { Volume } from "@/types/types";
 import { ChapterCard } from "./chapter-card";
 import { ListTree, ListX } from "lucide-react";
@@ -33,8 +33,8 @@ export const VolumeCard = ({ volume, finalChapter }: VolumeCardProps) => {
   return (
     <Accordion type="multiple" defaultValue={["vol"]}>
       <AccordionItem value="vol" className="border-none">
-        <AccordionTrigger className="[&>svg]:w-5 [&>svg]:h-5 hover:no-underline">
-          <div className="flex gap-0.5 items-center text-base">
+        <AccordionTrigger className="hover:no-underline [&>svg]:h-5 [&>svg]:w-5">
+          <div className="flex items-center gap-0.5 text-base">
             {volumeLabel === "No Volume" ? <ListX /> : <ListTree />}
             {volumeLabel}
           </div>

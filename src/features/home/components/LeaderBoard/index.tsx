@@ -1,12 +1,17 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import TopFollowed from "./TopFollowed";
 import TopRated from "./TopRated";
 import { Bookmark, ChevronsDown, ChevronsUp, Star } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 
 export default function LeaderBoard() {
   const [expanded, setExpanded] = useState(false);

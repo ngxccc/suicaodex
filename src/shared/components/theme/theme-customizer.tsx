@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Check, MonitorCog, Moon, Palette, Repeat, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/shared/lib/utils";
@@ -15,19 +14,20 @@ import {
 } from "../ui/drawer";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ThemeWrapper } from "./theme-wrapper";
 import { Label } from "../ui/label";
 import { Skeleton } from "../ui/skeleton";
 import { baseColors } from "@/shared/config/base-colors";
 import { SidebarMenuButton } from "../ui/sidebar";
 import { presetThemes } from "@/shared/config/preset-themes";
+import { useEffect, useState } from "react";
+import { ThemeWrapper } from "./theme-wrapper";
 
 export function ThemeCustomizer() {
   // const [config, setConfig] = useConfig();
   // const { resolvedTheme: mode } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const [_mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -75,7 +75,7 @@ export function ThemeCustomizer() {
 }
 
 function Customizer() {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
   const {
     setTheme: setMode,
     resolvedTheme: mode,
@@ -83,7 +83,7 @@ function Customizer() {
   } = useTheme();
   const [config, setConfig] = useConfig();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -263,62 +263,3 @@ function Customizer() {
     </ThemeWrapper>
   );
 }
-
-// const BASE_STYLES_WITH_VARIABLES = `
-// @layer base {
-//   :root {
-//     --background: <%- colors.light["background"] %>;
-//     --foreground: <%- colors.light["foreground"] %>;
-//     --card: <%- colors.light["card"] %>;
-//     --card-foreground: <%- colors.light["card-foreground"] %>;
-//     --popover: <%- colors.light["popover"] %>;
-//     --popover-foreground: <%- colors.light["popover-foreground"] %>;
-//     --primary: <%- colors.light["primary"] %>;
-//     --primary-foreground: <%- colors.light["primary-foreground"] %>;
-//     --secondary: <%- colors.light["secondary"] %>;
-//     --secondary-foreground: <%- colors.light["secondary-foreground"] %>;
-//     --muted: <%- colors.light["muted"] %>;
-//     --muted-foreground: <%- colors.light["muted-foreground"] %>;
-//     --accent: <%- colors.light["accent"] %>;
-//     --accent-foreground: <%- colors.light["accent-foreground"] %>;
-//     --destructive: <%- colors.light["destructive"] %>;
-//     --destructive-foreground: <%- colors.light["destructive-foreground"] %>;
-//     --border: <%- colors.light["border"] %>;
-//     --input: <%- colors.light["input"] %>;
-//     --ring: <%- colors.light["ring-3"] %>;
-//     --radius: <%- radius %>rem;
-//     --chart-1: <%- colors.light["chart-1"] %>;
-//     --chart-2: <%- colors.light["chart-2"] %>;
-//     --chart-3: <%- colors.light["chart-3"] %>;
-//     --chart-4: <%- colors.light["chart-4"] %>;
-//     --chart-5: <%- colors.light["chart-5"] %>;
-//   }
-
-//   .dark {
-//     --background: <%- colors.dark["background"] %>;
-//     --foreground: <%- colors.dark["foreground"] %>;
-//     --card: <%- colors.dark["card"] %>;
-//     --card-foreground: <%- colors.dark["card-foreground"] %>;
-//     --popover: <%- colors.dark["popover"] %>;
-//     --popover-foreground: <%- colors.dark["popover-foreground"] %>;
-//     --primary: <%- colors.dark["primary"] %>;
-//     --primary-foreground: <%- colors.dark["primary-foreground"] %>;
-//     --secondary: <%- colors.dark["secondary"] %>;
-//     --secondary-foreground: <%- colors.dark["secondary-foreground"] %>;
-//     --muted: <%- colors.dark["muted"] %>;
-//     --muted-foreground: <%- colors.dark["muted-foreground"] %>;
-//     --accent: <%- colors.dark["accent"] %>;
-//     --accent-foreground: <%- colors.dark["accent-foreground"] %>;
-//     --destructive: <%- colors.dark["destructive"] %>;
-//     --destructive-foreground: <%- colors.dark["destructive-foreground"] %>;
-//     --border: <%- colors.dark["border"] %>;
-//     --input: <%- colors.dark["input"] %>;
-//     --ring: <%- colors.dark["ring-3"] %>;
-//     --chart-1: <%- colors.dark["chart-1"] %>;
-//     --chart-2: <%- colors.dark["chart-2"] %>;
-//     --chart-3: <%- colors.dark["chart-3"] %>;
-//     --chart-4: <%- colors.dark["chart-4"] %>;
-//     --chart-5: <%- colors.dark["chart-5"] %>;
-//   }
-// }
-// `;

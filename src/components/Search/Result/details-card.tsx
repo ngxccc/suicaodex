@@ -2,11 +2,11 @@ import MangaCover from "@/features/manga/components/manga-cover";
 import ContentRatingChip from "@/features/manga/components/Tags/content-rating-tag";
 import NormalTag from "@/features/manga/components/Tags/normal-tag";
 import StatusChip from "@/features/manga/components/Tags/status-tag";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import { Manga } from "@/types/types";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { generateSlug } from "@/shared/lib/utils";
 
 interface DetailsCardProps {

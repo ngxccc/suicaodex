@@ -5,7 +5,7 @@ import MangaDetailsSkeleton from "./manga-details-skeleton";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { getRandomManga } from "@/lib/mangadex/random";
-import ErrorPage from "@/components/error-page";
+import ErrorPage from "@/shared/components/error-page";
 
 export default function RandomManga() {
   const router = useRouter();

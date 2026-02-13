@@ -1,19 +1,19 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { Alert, AlertTitle } from "../ui/alert";
+import { Alert, AlertTitle } from "../../shared/components/ui/alert";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/shared/components/ui/form";
+import { Textarea } from "@/shared/components/ui/textarea";
 import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
 import { toast } from "sonner";
@@ -52,7 +52,7 @@ export default function CommentFormSimple({
 
   if (!session?.user?.id)
     return (
-      <Alert className="rounded-sm justify-center text-center">
+      <Alert className="justify-center rounded-sm text-center">
         <AlertTitle>Bạn cần đăng nhập để bình luận!</AlertTitle>
       </Alert>
     );
@@ -126,12 +126,12 @@ export default function CommentFormSimple({
                 <div className="relative">
                   <Textarea
                     placeholder="Viết bình luận...(hỗ trợ markdown)"
-                    className="bg-sidebar rounded-sm resize-none min-h-[100px]"
+                    className="bg-sidebar min-h-[100px] resize-none rounded-sm"
                     maxLength={2000}
                     disabled={loading}
                     {...field}
                   />
-                  <div className="absolute bottom-2 right-2">
+                  <div className="absolute right-2 bottom-2">
                     <StickerPicker onSelectSticker={insertSticker} />
                   </div>
                 </div>

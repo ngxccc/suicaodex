@@ -25,5 +25,5 @@ export const logos = {
 };
 
 export const getLogo = (name: string) => {
-  return logos[name as keyof typeof logos] || null;
+  return logos[name as keyof typeof logos] ?? null;
 };

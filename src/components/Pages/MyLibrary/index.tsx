@@ -1,7 +1,11 @@
 "use client";
 
 import DetailsCard from "@/components/Search/Result/details-card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/shared/components/ui/alert";
 import { useLocalLibrary } from "@/shared/hooks/use-local-library";
 import { getMangasByIDs } from "@/lib/mangadex/history";
 import type { LibraryType } from "@/types/types";
@@ -16,8 +20,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/ui/pagination";
+import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import Image from "next/image";
 import DoroLoading from "#/images/doro-loading.gif";

@@ -3,9 +3,9 @@
 import { useLocalNotification } from "@/shared/hooks/use-local-notification";
 import { getUnreadChapters } from "@/shared/lib/notifications";
 import useSWR from "swr";
-import { Button } from "../ui/button";
+import { Button } from "../../shared/components/ui/button";
 import { BellOff, CheckCheck, Loader2 } from "lucide-react";
-import { Alert, AlertDescription } from "../ui/alert";
+import { Alert, AlertDescription } from "../../shared/components/ui/alert";
 import { Chapter } from "@/types/types";
 import UnreadCard from "./unread-card";
 import {
@@ -16,7 +16,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/components/ui/pagination";
 import { useRouter } from "next/navigation";
 
 interface NotificationsProps {

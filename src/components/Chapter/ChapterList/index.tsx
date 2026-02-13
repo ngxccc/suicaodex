@@ -10,10 +10,10 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/shared/components/ui/pagination";
 import useSWR from "swr";
 import { Loader2 } from "lucide-react";
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertTitle } from "@/shared/components/ui/alert";
 
 interface ChapterListProps {
   mangaID: string;
@@ -43,7 +43,7 @@ export const ChapterList = ({
       getChapterVolume(mangaID, language, limit, offset, r18, showUnavailable),
     {
       refreshInterval: 1000 * 60 * 10,
-    }
+    },
   );
 
   useEffect(() => {
@@ -55,22 +55,26 @@ export const ChapterList = ({
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center w-full h-16">
-        <Loader2 className="animate-spin w-8 h-8" />
+      <div className="flex h-16 w-full items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
 
   if (error)
     return (
-      <Alert className="rounded-sm justify-center text-center mt-4">
-        <AlertTitle className="font-semibold">Có lỗi xảy ra, vui lòng thử lại sau!</AlertTitle>
+      <Alert className="mt-4 justify-center rounded-sm text-center">
+        <AlertTitle className="font-semibold">
+          Có lỗi xảy ra, vui lòng thử lại sau!
+        </AlertTitle>
       </Alert>
     );
 
   if (data?.total === 0)
     return (
-      <Alert className="rounded-sm justify-center text-center mt-4">
-        <AlertTitle className="font-semibold">Truyện này chưa có chương nào!</AlertTitle>
+      <Alert className="mt-4 justify-center rounded-sm text-center">
+        <AlertTitle className="font-semibold">
+          Truyện này chưa có chương nào!
+        </AlertTitle>
       </Alert>
     );
 
@@ -91,7 +95,7 @@ export const ChapterList = ({
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => prev - 1)}
               disabled={currentPage === 1}
             />
@@ -101,7 +105,7 @@ export const ChapterList = ({
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === currentPage}
                     onClick={() => setCurrentPage(i + 1)}
                   >
@@ -115,7 +119,7 @@ export const ChapterList = ({
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === currentPage}
                       onClick={() => setCurrentPage(num)}
                     >
@@ -126,7 +130,7 @@ export const ChapterList = ({
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => setCurrentPage(totalPages)}
                   >
                     {totalPages}
@@ -138,7 +142,7 @@ export const ChapterList = ({
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => setCurrentPage(1)}
                   >
                     1
@@ -154,7 +158,7 @@ export const ChapterList = ({
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === currentPage}
                       onClick={() => setCurrentPage(num)}
                     >
@@ -168,7 +172,7 @@ export const ChapterList = ({
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => setCurrentPage(1)}
                   >
                     1
@@ -178,7 +182,7 @@ export const ChapterList = ({
                 {[currentPage - 1, currentPage, currentPage + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === currentPage}
                       onClick={() => setCurrentPage(num)}
                     >
@@ -189,7 +193,7 @@ export const ChapterList = ({
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => setCurrentPage(totalPages)}
                   >
                     {totalPages}
@@ -199,7 +203,7 @@ export const ChapterList = ({
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => prev + 1)}
               disabled={currentPage === totalPages}
             />

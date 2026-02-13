@@ -1,7 +1,7 @@
 "use client";
 import { Chapter, ChapterGroup } from "@/types/types";
 import { Clock, ExternalLink, MessageSquare, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { cn, formatTimeToNow } from "@/shared/lib/utils";
 import { useRouter } from "next/navigation";
 import {
@@ -9,16 +9,16 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+} from "@/shared/components/ui/accordion";
+import { Badge } from "@/shared/components/ui/badge";
+import { Card } from "@/shared/components/ui/card";
 import { GB, VN } from "country-flag-icons/react/3x2";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/shared/components/ui/tooltip";
 
 interface ChapterCardProps {
   chapters: ChapterGroup;

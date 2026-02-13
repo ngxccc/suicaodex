@@ -8,7 +8,7 @@ import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/shared/components/ui/sidebar";
 import { siteConfig } from "@/shared/config/site";
 
 export function NavSupports() {

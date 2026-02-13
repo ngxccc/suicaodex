@@ -18,15 +18,20 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/ui/alert-dialog";
+import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "@/shared/components/ui/dropdown-menu";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/ui/tabs";
 import { siteConfig } from "@/shared/config/site";
 import { useConfig } from "@/shared/hooks/use-config";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
@@ -55,15 +60,15 @@ import MangaSubInfo from "@/features/manga/components/manga-subinfo";
 import CommentSection from "@/components/Comment/comment-section";
 import { useCommentCount } from "@/shared/hooks/use-comment-count";
 import MangaRecommendations from "@/features/manga/components/manga-recomendations";
-import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { WarpBackground } from "@/components/ui/warp-background";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
+import { WarpBackground } from "@/shared/components/ui/warp-background";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
-} from "@/components/ui/card";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+} from "@/shared/components/ui/card";
+import { RainbowButton } from "@/shared/components/ui/rainbow-button";
 import { MangaReadNowButton } from "@/features/manga/components/manga-readnow-button";
 
 interface MangaDetailsProps {

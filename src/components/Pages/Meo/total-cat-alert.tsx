@@ -1,6 +1,10 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/shared/components/ui/alert";
 import { CATAAS_BASE, getCatCount } from "@/shared/lib/cat";
 import { IdCardIcon } from "lucide-react";
 import useSWR from "swr";

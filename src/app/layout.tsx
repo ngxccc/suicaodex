@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/shared/styles/globals.css";
 import "@/shared/styles/themes.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { SiteHeader } from "@/components/Navbar/site-header";
-import { ThemeProvider } from "@/components/providers";
-import { ThemeSwitcher } from "@/components/Theme/theme-switcher";
+import { ThemeProvider } from "@/shared/components/providers";
+import { ThemeSwitcher } from "@/shared/components/theme/theme-switcher";
 import { META_THEME_COLORS, siteConfig } from "@/shared/config/site";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/shared/components/ui/sonner";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { ImageProxyInitializer } from "@/components/image-proxy-initializer";
+import { initImageProxy } from "@/shared/config/axios";
 
 const inter = Inter({
   preload: true,
@@ -49,6 +49,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  initImageProxy();
+
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
@@ -73,7 +75,6 @@ export default function RootLayout({
           enableColorScheme
           enableSystem
         >
-          <ImageProxyInitializer />
           <SidebarProvider defaultOpen={false}>
             <div className="border-grid flex flex-1 flex-col">
               <SiteHeader />

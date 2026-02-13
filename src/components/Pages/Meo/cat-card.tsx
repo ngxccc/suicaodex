@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { Cat, getCatImageUrl } from "@/shared/lib/cat";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
