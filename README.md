@@ -1,6 +1,6 @@
 ![StSuicaoDex](https://github.com/user-attachments/assets/3c8805d1-7a61-49d4-9aa6-4bfae337c550)
 
-> [better-suicaodex](https://github.com/TNTKien/better-suicaodex) vốn dĩ là 1 đống hổ lốn, [suicaodex](https://github.com/ngxccc/) sinh ra để giải quyết đống hổ đốn đó.
+> [TNTKien/better-suicaodex](https://github.com/TNTKien/better-suicaodex) vốn dĩ là 1 đống hổ lốn, [ngxccc/suicaodex](https://github.com/ngxccc/) sinh ra để giải quyết đống hổ đốn đó.
 > SuicaoDex chỉ xây dựng giao diện, trừ một số chức năng liên quan đến tài khoản, mọi dữ liệu khác đều thuộc về MangaDex.
 
 Như đã nói, SuicaoDex chỉ là 1 dự án "cho vui", phục vụ sở thích của cá nhân tôi, và tôi cũng chả cao siêu gì, nên nó sẽ không thể trọn vẹn như các web truyện chuyên nghiệp khác.
