@@ -6,7 +6,7 @@ import { Button } from "../../../shared/components/ui/button";
 import Link from "next/link";
 import { siteConfig } from "@/shared/config/site";
 import { LibraryBig } from "lucide-react";
-import { Icons } from "../../../shared/components/icons";
+import { Icons } from "../../../shared/components/graphics/icons";
 import { Separator } from "../../../shared/components/ui/separator";
 import { generateSlug } from "@/shared/lib/utils";
 

@@ -5,7 +5,7 @@ import "@/shared/styles/themes.css";
 import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { SiteHeader } from "@/components/Navbar/site-header";
-import { ThemeProvider } from "@/shared/components/providers";
+import { ThemeProvider } from "@/shared/components/providers/theme-provider";
 import { ThemeSwitcher } from "@/shared/components/theme/theme-switcher";
 import { META_THEME_COLORS, siteConfig } from "@/shared/config/site";
 import { Toaster } from "@/shared/components/ui/sonner";

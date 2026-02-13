@@ -23,7 +23,7 @@ import {
   SiX,
   SiYoutube,
 } from "@icons-pack/react-simple-icons";
-import { Icons } from "@/shared/components/icons";
+import { Icons } from "@/shared/components/graphics/icons";
 import { Card } from "@/shared/components/ui/card";
 import AuthorTitles from "./author-titles";
 

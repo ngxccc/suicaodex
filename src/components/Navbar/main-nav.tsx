@@ -5,7 +5,7 @@ import useScrollOffset from "@/shared/hooks/use-scroll-offset";
 import { cn } from "@/shared/lib/utils";
 // import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { logos } from "../../shared/components/logos";
+import { logos } from "../../shared/components/graphics/logos";
 
 export function MainNav() {
   const { isAtTop } = useScrollOffset();

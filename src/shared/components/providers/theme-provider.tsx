@@ -2,7 +2,7 @@
 
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ThemeWrapper } from "./theme/theme-wrapper";
+import { ThemeWrapper } from "../theme/theme-wrapper";
 import {
   Bar,
   Progress,
