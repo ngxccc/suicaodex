@@ -4,7 +4,7 @@ import LatestCard from "./latest-card";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { Chapter } from "@/types/types";
+import type { Chapter } from "@/shared/types/common";
 
 interface LatestUpdateProps {
   initialData: Chapter[];

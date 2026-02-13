@@ -1,4 +1,4 @@
-import Recent from "@/components/Pages/Recent";
+import Recent from "@/features/manga/components/lists/recent";
 import { Metadata } from "next";
 
 interface pageProps {
@@ -26,7 +26,7 @@ export default async function Page({ searchParams }: pageProps) {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Truyện mới</h1>
       </div>
 

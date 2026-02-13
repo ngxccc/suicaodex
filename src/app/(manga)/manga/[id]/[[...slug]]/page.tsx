@@ -1,7 +1,7 @@
 import MangaNotFound from "@/features/manga/components/manga-notfound";
-import MangaDetails from "@/components/Pages/MangaDetails/manga-details";
+import MangaDetails from "@/features/manga/components/details/manga-details";
 import { siteConfig } from "@/shared/config/site";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 import type { Metadata } from "next";
 import { validate as isValidUUID } from "uuid";
 import { cache } from "react";

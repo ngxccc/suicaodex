@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import GroupsSearch from "@/components/Groups/groups-search";
+import GroupsSearch from "@/features/groups/groups-search";
 
 interface pageProps {
   searchParams: Promise<{
@@ -20,7 +20,7 @@ export default async function Page({ searchParams }: pageProps) {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Nhóm dịch</h1>
       </div>
 
@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: pageProps) {
 const getSearchParams = async ({ searchParams }: pageProps) => {
   const params = await searchParams;
 
-   let page = params["page"] ? parseInt(params["page"]) : 1;
+  let page = params["page"] ? parseInt(params["page"]) : 1;
   const q = params["q"] || "";
 
   if (page < 1) page = 1;

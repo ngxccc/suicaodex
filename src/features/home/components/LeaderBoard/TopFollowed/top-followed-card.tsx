@@ -4,7 +4,7 @@ import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { cn, generateSlug } from "@/shared/lib/utils";
-import type { Artist, Author, Manga } from "@/types/types";
+import type { Artist, Author, Manga } from "@/shared/types/common";
 import { Bookmark } from "lucide-react";
 
 interface TopFollowedCardProps {

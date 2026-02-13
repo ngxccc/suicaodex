@@ -1,5 +1,5 @@
 import NotFound from "@/app/not-found";
-import TagPage from "@/components/Pages/Tags/Tag";
+import TagPage from "@/features/tag/components/Tag";
 import { getTagById } from "@/lib/mangadex/tag";
 import { Metadata } from "next";
 
@@ -48,7 +48,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     return (
       <>
         <div>
-          <hr className="w-9 h-1 bg-primary border-none" />
+          <hr className="bg-primary h-1 w-9 border-none" />
           <h1 className="text-2xl font-black uppercase">{tag.name}</h1>
         </div>
 
@@ -66,7 +66,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 }
 
 const getSearchParams = async (
-  searchParams: Promise<{ [key: string]: string | undefined }>
+  searchParams: Promise<{ [key: string]: string | undefined }>,
 ) => {
   const params = await searchParams;
   let page = params["page"] ? parseInt(params["page"]) : 1;

@@ -3,12 +3,12 @@
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 
 interface MangaCompletedCardProps {
@@ -23,41 +23,44 @@ export default function MangaCompletedCard({ manga }: MangaCompletedCardProps) {
       <CardContent className="relative rounded-sm p-0">
         <div className="absolute inset-0 z-10 flex rounded-sm bg-black/75 opacity-0 transition-opacity hover:opacity-100">
           <div className="grid grid-cols-1 justify-between gap-2 p-2.5">
-            <ReactMarkdown
-              className="overflow-auto text-sm text-white"
-              remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-              components={{
-                a: ({ href, children }) => (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    {children}
-                  </a>
-                ),
-                table: ({ children }) => (
-                  <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
-                    {children}
-                  </table>
-                ),
-                thead: ({ children }) => (
-                  <thead className="border-secondary border-b">
-                    {children}
-                  </thead>
-                ),
-                tr: ({ children }) => (
-                  <tr className="even:bg-secondary">{children}</tr>
-                ),
-                th: ({ children }) => (
-                  <th className="px-2 py-1 text-left">{children}</th>
-                ),
-                td: ({ children }) => <td className="px-2 py-1">{children}</td>,
-              }}
-            >
-              {manga.description.content}
-            </ReactMarkdown>
+            <div className="overflow-auto text-sm text-white">
+              <Markdown
+                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                components={{
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      {children}
+                    </a>
+                  ),
+                  table: ({ children }) => (
+                    <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
+                      {children}
+                    </table>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="border-secondary border-b">
+                      {children}
+                    </thead>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="even:bg-secondary">{children}</tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-2 py-1 text-left">{children}</th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-2 py-1">{children}</td>
+                  ),
+                }}
+              >
+                {manga.description.content}
+              </Markdown>
+            </div>
 
             <Button
               asChild

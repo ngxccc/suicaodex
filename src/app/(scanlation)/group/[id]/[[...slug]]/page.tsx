@@ -1,7 +1,7 @@
-import GroupInfo from "@/components/Groups/group-info";
+import { getGroup } from "@/features/groups/api/group";
+import GroupInfo from "@/features/groups/components/group-info";
 import { siteConfig } from "@/shared/config/site";
-import { getGroup } from "@/lib/mangadex/group";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { cache } from "react";
 
 interface PageProps {
@@ -33,7 +33,7 @@ export async function generateMetadata({
         description: group.description
           ? group.description
           : `Thông tin nhóm dịch ${group.name} - SuicaoDex`,
-        images: `${siteConfig.mangadexAPI.ogURL}/group/${group.id}`,
+        images: `${siteConfig.mangadexAPI.ogUrl}/group/${group.id}`,
       },
     };
   } catch (error) {

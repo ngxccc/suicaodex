@@ -21,7 +21,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
-import MyLibrary from "@/components/Pages/MyLibrary";
+import MyLibrary from "@/features/library/components/my-library";
 import { auth } from "@/shared/config/authjs";
 import SyncLib from "@/shared/components/library/sync-lib";
 

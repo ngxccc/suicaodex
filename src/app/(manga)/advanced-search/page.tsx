@@ -1,4 +1,4 @@
-import AdvancedSearch from "@/components/Pages/AdvancedSearch";
+import AdvancedSearch from "@/features/search/components/advanced";
 import { Metadata } from "next";
 
 interface pageProps {
@@ -68,7 +68,7 @@ const getSearchParams = async ({ searchParams }: pageProps) => {
 
   let page = params["page"] ? parseInt(params["page"]) : 1;
   let limit = params["limit"] ? parseInt(params["limit"]) : 30;
-  
+
   //Non-feed limit query param may not be >100
   if (limit > 100) limit = 100;
   if (page < 1) page = 1;

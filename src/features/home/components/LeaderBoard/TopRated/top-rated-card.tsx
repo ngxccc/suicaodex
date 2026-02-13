@@ -4,7 +4,7 @@ import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { generateSlug } from "@/shared/lib/utils";
-import { Artist, Author, Manga } from "@/types/types";
+import { Artist, Author, Manga } from "@/shared/types/common";
 import { Star } from "lucide-react";
 
 interface TopRatedCardProps {

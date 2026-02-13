@@ -1,4 +1,4 @@
-import { getCachedLatestChapters } from "@/lib/mangadex/latest";
+import { getCachedLatestChapters } from "@/features/manga/api/latest";
 import LatestUpdate from ".";
 
 const LatestUpdateContainer = async () => {

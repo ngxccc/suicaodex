@@ -5,10 +5,10 @@ import useSWR from "swr";
 import { useEffect } from "react";
 import { useLocalNotification } from "@/shared/hooks/use-local-notification";
 import { useRouter } from "next/navigation";
-import { fetchLatestChapters } from "@/lib/mangadex/latest";
+import { fetchLatestChapters } from "@/features/manga/api/latest";
 import { useConfig } from "@/shared/hooks/use-config";
 import { GB, VN } from "country-flag-icons/react/3x2";
-import { ChapterTitle } from "@/components/Chapter/ChapterReader/chapter-info";
+import { ChapterTitle } from "@/features/chapter/components/ChapterReader/chapter-info";
 
 export function NotificationProvider({
   children,

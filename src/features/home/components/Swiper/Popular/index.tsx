@@ -9,7 +9,7 @@ import MangaSlide from "./manga-slide";
 import SlideControl from "./slide-control";
 import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 
 interface PopularSwiperProps {
   initialData: Manga[];

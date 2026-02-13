@@ -1,9 +1,9 @@
 "use client";
 
 import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
-import type { Artist, Author, Manga } from "@/types/types";
+import type { Artist, Author, Manga } from "@/shared/types/common";
 import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import Tags from "@/features/manga/components/Tags";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
@@ -90,43 +90,44 @@ export default function MangaSlide({
 
           <div className="relative hidden min-h-0 overflow-auto md:block">
             <div className="relative overflow-hidden">
-              <ReactMarkdown
-                className="text-sm"
-                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-                components={{
-                  a: ({ href, children }) => (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline"
-                    >
-                      {children}
-                    </a>
-                  ),
-                  table: ({ children }) => (
-                    <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
-                      {children}
-                    </table>
-                  ),
-                  thead: ({ children }) => (
-                    <thead className="border-secondary border-b">
-                      {children}
-                    </thead>
-                  ),
-                  tr: ({ children }) => (
-                    <tr className="even:bg-secondary">{children}</tr>
-                  ),
-                  th: ({ children }) => (
-                    <th className="px-2 py-1 text-left">{children}</th>
-                  ),
-                  td: ({ children }) => (
-                    <td className="px-2 py-1">{children}</td>
-                  ),
-                }}
-              >
-                {manga.description.content}
-              </ReactMarkdown>
+              <div className="text-sm">
+                <Markdown
+                  remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                  components={{
+                    a: ({ href, children }) => (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {children}
+                      </a>
+                    ),
+                    table: ({ children }) => (
+                      <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
+                        {children}
+                      </table>
+                    ),
+                    thead: ({ children }) => (
+                      <thead className="border-secondary border-b">
+                        {children}
+                      </thead>
+                    ),
+                    tr: ({ children }) => (
+                      <tr className="even:bg-secondary">{children}</tr>
+                    ),
+                    th: ({ children }) => (
+                      <th className="px-2 py-1 text-left">{children}</th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="px-2 py-1">{children}</td>
+                    ),
+                  }}
+                >
+                  {manga.description.content}
+                </Markdown>
+              </div>
             </div>
           </div>
 

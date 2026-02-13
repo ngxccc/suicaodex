@@ -1,4 +1,4 @@
-import TagsPage from "@/components/Pages/Tags";
+import TagsPage from "@/features/tag/components";
 import { Metadata } from "next";
 
 export function generateMetadata(): Metadata {
@@ -13,11 +13,11 @@ export default function Page() {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Thể loại</h1>
       </div>
 
-      <div className="w-full mt-4">
+      <div className="mt-4 w-full">
         <TagsPage />
       </div>
     </>

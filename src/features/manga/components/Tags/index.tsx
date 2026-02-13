@@ -1,4 +1,4 @@
-import type { Tag } from "@/types/types";
+import type { Tag } from "@/shared/types/common";
 import StatusChip from "./status-tag";
 import ContentRatingChip from "./content-rating-tag";
 import NormalTag from "./normal-tag";

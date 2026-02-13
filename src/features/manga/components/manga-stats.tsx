@@ -1,19 +1,19 @@
 "use client";
 
-import type { MangaStats } from "@/types/types";
+import type { MangaStats } from "@/shared/types/common";
 import type { FC } from "react";
 import { Bookmark, MessageSquare, Star } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "../../../shared/components/ui/hover-card";
+} from "@/shared/components/ui/hover-card";
 import { RatingChart } from "./rating-chart";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../shared/components/ui/popover";
+} from "@/shared/components/ui/popover";
 import { useConfig } from "@/shared/hooks/use-config";
 import { cn, formatNumber } from "@/shared/lib/utils";
 import { useIsMobile } from "@/shared/hooks/use-mobile";

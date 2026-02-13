@@ -9,11 +9,14 @@ import PopularContainer from "./Swiper/Popular/popular-container";
 import LatestSkeleton from "./LatestUpdate/latest-skeleton";
 import LatestUpdateContainer from "./LatestUpdate/latest-update-container";
 
-const CommentFeed = dynamic(() => import("@/components/Comment/CommentFeed"), {
-  loading: () => (
-    <div className="bg-secondary/20 h-40 animate-pulse rounded-sm" />
-  ),
-});
+const CommentFeed = dynamic(
+  () => import("@/features/comment/components/comment-feed"),
+  {
+    loading: () => (
+      <div className="bg-secondary/20 h-40 animate-pulse rounded-sm" />
+    ),
+  },
+);
 
 export default function HomePage() {
   return (

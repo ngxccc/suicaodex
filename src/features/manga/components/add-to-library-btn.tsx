@@ -3,6 +3,7 @@
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,7 +14,7 @@ import {
 import { Label } from "@/shared/components/ui/label";
 import { useConfig } from "@/shared/hooks/use-config";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
-import type { LibraryType, Manga } from "@/types/types";
+import type { LibraryType, Manga } from "@/shared/types/common";
 import {
   Album,
   BellOff,
@@ -35,7 +36,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 import { useLocalLibrary } from "@/shared/hooks/use-local-library";
 import { useLocalNotification } from "@/shared/hooks/use-local-notification";

@@ -5,7 +5,7 @@ import MangaCover from "@/features/manga/components/manga-cover";
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { formatTimeToNow, generateSlug } from "@/shared/lib/utils";
-import type { Chapter } from "@/types/types";
+import type { Chapter } from "@/shared/types/common";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { Clock, ExternalLink, Users } from "lucide-react";
 

@@ -3,11 +3,7 @@
 import { getCovers } from "@/lib/mangadex/cover";
 import { Expand, Globe, Loader2 } from "lucide-react";
 import useSWR from "swr";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "../../../shared/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import { useState } from "react";
@@ -18,11 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "../../../shared/components/ui/dialog";
+} from "@/shared/components/ui/dialog";
 import { GB, JP, VN } from "country-flag-icons/react/3x2";
-import { MultiSelect } from "../../../shared/components/ui/multi-select";
+import { MultiSelect } from "@/shared/components/ui/multi-select";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
-import type { Cover } from "@/types/types";
+import type { Cover } from "@/shared/types/common";
 import Image from "next/image";
 
 interface MangaCoversTabProps {

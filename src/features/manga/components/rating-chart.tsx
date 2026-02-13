@@ -3,7 +3,7 @@
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import type { ChartConfig } from "@/shared/components/ui/chart";
 import { ChartContainer } from "@/shared/components/ui/chart";
-import type { MangaStats } from "@/types/types";
+import type { MangaStats } from "@/shared/types/common";
 import millify from "millify";
 
 interface RatingStats {

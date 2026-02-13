@@ -1,0 +1,83 @@
+"use client";
+
+import ChapterInfo from "@/features/chapter/components/ChapterReader/chapter-info";
+import Reader from "@/features/chapter/components/ChapterReader/Reader";
+import { Skeleton } from "@/shared/components/ui/skeleton";
+import useSWR from "swr";
+import ChapterNotFound from "./chapter-notfound";
+import MangaMaintain from "@/features/manga/components/manga-maintain";
+import useReadingHistory from "@/shared/hooks/use-reading-history";
+import { useEffect } from "react";
+import { cn } from "@/shared/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
+import { usePathname } from "next/navigation";
+import { type Chapter } from "@/shared/types/common";
+import { getChapterDetail } from "@/features/chapter/api/chapter";
+
+interface ChapterProps {
+  id: string;
+  initialData?: Chapter;
+}
+
+export default function ChapterPage({ id, initialData }: ChapterProps) {
+  const [config] = useConfig();
+  const pathName = usePathname();
+  const { addHistory } = useReadingHistory();
+  const { data, isLoading, error } = useSWR(
+    [`chapter-${id}`, id],
+    ([, id]) => getChapterDetail(id),
+    {
+      fallbackData: initialData, // Use server data as initial value
+      revalidateOnMount: !initialData, // Only revalidate on mount if no initial data
+      refreshInterval: 1000 * 60 * 30,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+
+  useEffect(() => {
+    try {
+      if (data && data.manga) {
+        addHistory(data.manga.id, {
+          chapterId: id,
+          chapter: data.chapter,
+          updatedAt: new Date().toISOString(),
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  }, [addHistory, data, id]);
+
+  useEffect(() => {
+    if (pathName.includes("/chapter/") && config.reader.type === "single") {
+      document.body.classList.add("page-no-padding");
+      return () => document.body.classList.remove("page-no-padding");
+    }
+  }, [config.reader.type]);
+
+  if (error) {
+    if (error.status === 404) return <ChapterNotFound />;
+    if (error.status === 503) return <MangaMaintain />;
+    // console.log(error)
+    return <div>Lỗi mất rồi 😭</div>;
+  }
+
+  if (isLoading || !data)
+    return (
+      <div className="grid grid-cols-1 gap-2 pb-2">
+        <Skeleton className="h-5 w-1/2 rounded-sm bg-gray-500 md:w-1/5" />
+        <Skeleton className="h-5 w-3/4 rounded-sm bg-gray-500 md:w-1/3" />
+        <Skeleton className="h-5 w-1/4 rounded-sm bg-gray-500" />
+      </div>
+    );
+
+  return (
+    <div className={cn()}>
+      <ChapterInfo chapter={data} />
+
+      {!!data.pages && <Reader images={data.pages} chapterData={data} />}
+    </div>
+  );
+}

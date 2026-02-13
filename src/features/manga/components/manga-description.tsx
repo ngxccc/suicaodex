@@ -2,11 +2,11 @@ import { ChevronsDown, ChevronsUp, Loader2, Undo2 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/shared/lib/utils";
 import remarkGfm from "remark-gfm";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import { SiGoogletranslate } from "@icons-pack/react-simple-icons";
-import { Button } from "../../../shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import useContentHeight from "@/shared/hooks/use-content-height";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 import MangaSubInfo from "./manga-subinfo";
 
 interface MangaDescriptionProps {
@@ -80,43 +80,46 @@ const MangaDescription = ({
       >
         <div ref={contentRef}>
           {!!content && (
-            <ReactMarkdown
-              className="flex flex-col gap-3"
-              remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
-              components={{
-                a: ({ href, children }) => (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    {children}
-                  </a>
-                ),
-                table: ({ children }) => (
-                  <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
-                    {children}
-                  </table>
-                ),
-                thead: ({ children }) => (
-                  <thead className="border-secondary border-b">
-                    {children}
-                  </thead>
-                ),
-                tr: ({ children }) => (
-                  <tr className="even:bg-secondary">{children}</tr>
-                ),
-                th: ({ children }) => (
-                  <th className="px-2 py-1 text-left">{children}</th>
-                ),
-                td: ({ children }) => <td className="px-2 py-1">{children}</td>,
-              }}
-            >
-              {state.translated && state.translatedDesc
-                ? state.translatedDesc
-                : content}
-            </ReactMarkdown>
+            <div className="flex flex-col gap-3">
+              <Markdown
+                remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                components={{
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      {children}
+                    </a>
+                  ),
+                  table: ({ children }) => (
+                    <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
+                      {children}
+                    </table>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="border-secondary border-b">
+                      {children}
+                    </thead>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="even:bg-secondary">{children}</tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-2 py-1 text-left">{children}</th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-2 py-1">{children}</td>
+                  ),
+                }}
+              >
+                {state.translated && state.translatedDesc
+                  ? state.translatedDesc
+                  : content}
+              </Markdown>
+            </div>
           )}
 
           {language === "en" && (

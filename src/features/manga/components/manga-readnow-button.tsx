@@ -2,9 +2,9 @@
 
 import { useConfig } from "@/shared/hooks/use-config";
 import { FirstChapters } from "@/features/manga/api/manga";
-import { getChapterAggregate } from "@/lib/mangadex/chapter";
+import { getChapterAggregate } from "@/features/chapter/api/chapter";
 import { useState, memo } from "react";
-import { Button } from "../../../shared/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { BookOpen, BookX, Loader2 } from "lucide-react";
 import useReadingHistory from "@/shared/hooks/use-reading-history";
 import useSWR from "swr";
@@ -14,9 +14,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "../../../shared/components/ui/dialog";
-import { SingleCard } from "../../../components/Chapter/ChapterList/chapter-card";
-import NoPrefetchLink from "../../../shared/components/custom/no-prefetch-link";
+} from "@/shared/components/ui/dialog";
+import { SingleCard } from "../../chapter/components/ChapterList/chapter-card";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { useRouter } from "next/navigation";
 
 interface MangaReadNowButtonProps {

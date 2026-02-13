@@ -8,8 +8,8 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "../../../shared/components/ui/alert";
-import NoPrefetchLink from "../../../shared/components/custom/no-prefetch-link";
+} from "@/shared/components/ui/alert";
+import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import RecentlyCard from "../../home/components/Recently/recently-card";
 import { generateSlug } from "@/shared/lib/utils";
 

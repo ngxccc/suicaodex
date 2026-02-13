@@ -10,7 +10,7 @@ import {
 } from "@bprogress/next";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { NotificationProvider } from "./notification-provider";
 
 export function ThemeProvider({

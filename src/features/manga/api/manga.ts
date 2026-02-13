@@ -6,7 +6,7 @@ import type {
   MangasStats,
   MangaStats,
   Tag,
-} from "@/types/types";
+} from "@/shared/types/common";
 import { siteConfig } from "@/shared/config/site";
 import type { MangaDexApiResponse } from "@/types/mangadex-api";
 import type {
@@ -17,7 +17,7 @@ import type {
   Relationship,
 } from "@/features/manga/types";
 import { axiosWithProxy } from "@/shared/config/axios";
-import { ChaptersParser } from "@/lib/mangadex/chapter";
+import { ChaptersParser } from "@/features/chapter/api/chapter";
 import { cacheRequest } from "@/shared/lib/cache";
 
 function getPreferredTitle(

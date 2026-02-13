@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
-import type { Manga } from "@/types/types";
+import type { Manga } from "@/shared/types/common";
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
