@@ -39,7 +39,7 @@ Tuy vậy, SuicaoDex sẽ luôn:
 
 Cần góp ý, thêm chức năng mới, báo lỗi hoặc bất cứ lý do gì bạn nghĩ ra được, hãy tìm tôi tại:
 
- <a target="_blank" href="https://www.facebook.com/ngxc"><img src="https://img.shields.io/badge/Ngoc%20Tran-1877F2?style=flat&logo=facebook&logoColor=white" alt="" /></a>
+ <a target="_blank" href="https://www.facebook.com/ngxccc"><img src="https://img.shields.io/badge/Ngoc%20Tran-1877F2?style=flat&logo=facebook&logoColor=white" alt="" /></a>
  ![Discord Badge](https://dcbadge.limes.pink/api/shield/840920033592999948?style=flat)
 
   hoặc tạo:
