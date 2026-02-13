@@ -81,7 +81,7 @@ export default function NotFoundPage() {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={siteConfig.links.facebook} target="_blank">
+              <Link href={siteConfig.social.facebook.href} target="_blank">
                 <BugIcon />
                 Báo lỗi
               </Link>

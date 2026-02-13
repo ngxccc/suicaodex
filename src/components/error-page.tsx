@@ -179,7 +179,7 @@ export default function ErrorPage({
             <DropdownMenuContent align="end" className="animate-fadeScale">
               <DropdownMenuItem asChild>
                 <Link
-                  href={siteConfig.links.facebook}
+                  href={siteConfig.social.facebook.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 transition-colors hover:bg-blue-50 dark:hover:bg-blue-900/20"
@@ -190,7 +190,7 @@ export default function ErrorPage({
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href={siteConfig.links.discord}
+                  href={siteConfig.social.discord.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
@@ -201,7 +201,7 @@ export default function ErrorPage({
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href={siteConfig.links.github}
+                  href={siteConfig.social.github.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"

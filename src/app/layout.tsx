@@ -17,10 +17,6 @@ const inter = Inter({
   subsets: ["vietnamese"],
 });
 
-// const leagueSpartan = League_Spartan({
-//   subsets: ["vietnamese"],
-// });
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://suicaodex.com"),
   title: siteConfig.name,
@@ -69,7 +65,6 @@ export default function RootLayout({
         />
         <meta name="theme-color" content={META_THEME_COLORS.dark} />
       </head>
-      {/* <body className={`${leagueSpartan.className} antialiased`}> */}
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"

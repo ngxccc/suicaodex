@@ -1,13 +1,6 @@
 "use client";
 
-import * as React from "react";
 import { Bookmark, BookOpen, Gamepad2, Users } from "lucide-react";
-import {
-  SiDiscord,
-  SiFacebook,
-  SiGithub,
-} from "@icons-pack/react-simple-icons";
-
 import {
   Sidebar,
   SidebarContent,
@@ -17,12 +10,10 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav-user";
 import { NavMain } from "./nav-main";
-import { siteConfig } from "@/shared/config/site";
 import { NavSupports } from "./nav-supports";
 import { NavSettings } from "./nav-settings";
 // import { signOut, useSession } from "next-auth/react";
 
-// This is sample data.
 const data = {
   user: {
     name: "Dorothy",
@@ -106,24 +97,6 @@ const data = {
       ],
     },
   ],
-
-  supports: [
-    {
-      name: "Facebook",
-      url: siteConfig.links.facebook,
-      icon: SiFacebook,
-    },
-    {
-      name: "Discord",
-      url: siteConfig.links.discord,
-      icon: SiDiscord,
-    },
-    {
-      name: "Github",
-      url: siteConfig.links.github,
-      icon: SiGithub,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -140,7 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSettings />
       </SidebarContent>
       <SidebarFooter className="p-0">
-        <NavSupports supports={data.supports} />
+        <NavSupports />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

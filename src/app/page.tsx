@@ -16,9 +16,9 @@ export default function Home() {
           url: `${siteConfig.url}/logo.png`, // Đảm bảo logo size chuẩn 112x112px trở lên
         },
         sameAs: [
-          siteConfig.links.discord,
-          siteConfig.links.github,
-          siteConfig.links.facebook,
+          siteConfig.social.discord.href,
+          siteConfig.social.github.href,
+          siteConfig.social.facebook.href,
         ].filter(Boolean), // Lọc bỏ link rỗng nếu có
       },
       // Khai báo Website & Search Box

@@ -1,6 +1,6 @@
 "use client";
 
-import { SquareArrowOutUpRight, type LucideIcon } from "lucide-react";
+import { SquareArrowOutUpRight } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -9,28 +9,21 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { siteConfig } from "@/shared/config/site";
 
-export function NavSupports({
-  supports,
-}: {
-  supports: {
-    name: string;
-    url: string;
-    icon: LucideIcon;
-  }[];
-}) {
+export function NavSupports() {
   //   const { isMobile } = useSidebar();
 
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Góp ý/Báo lỗi</SidebarGroupLabel>
       <SidebarMenu>
-        {supports.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild tooltip={item.name}>
-              <a href={item.url} target="_blank">
+        {Object.values(siteConfig.social).map((item) => (
+          <SidebarMenuItem key={item.label}>
+            <SidebarMenuButton asChild tooltip={item.label}>
+              <a href={item.href} target="_blank">
                 <item.icon />
-                <span>{item.name}</span>
+                <span>{item.label}</span>
               </a>
             </SidebarMenuButton>
             <SidebarMenuAction>

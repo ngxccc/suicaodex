@@ -266,7 +266,7 @@ export default function MangaDetails({ id, initialData }: MangaDetailsProps) {
 
                     <DropdownMenuItem>
                       <Link
-                        href={`${siteConfig.links.facebook}`}
+                        href={`${siteConfig.social.facebook.href}`}
                         target="_blank"
                         className="flex items-center gap-2"
                       >
@@ -376,7 +376,7 @@ export default function MangaDetails({ id, initialData }: MangaDetailsProps) {
 
               <DropdownMenuItem>
                 <Link
-                  href={`${siteConfig.links.facebook}`}
+                  href={`${siteConfig.social.facebook.href}`}
                   target="_blank"
                   className="flex items-center gap-2"
                 >
