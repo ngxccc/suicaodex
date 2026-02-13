@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { cn, getCoverImageUrl } from "@/lib/utils";
+import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import type { Manga } from "@/types/types";
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";

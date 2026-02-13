@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import MangaSlide from "./manga-slide";
 import SlideControl from "./slide-control";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
 import type { Manga } from "@/types/types";
 

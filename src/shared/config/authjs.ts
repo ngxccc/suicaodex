@@ -1,10 +1,14 @@
-import type { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/shared/config/prisma";
 import Discord from "next-auth/providers/discord";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import Facebook from "next-auth/providers/facebook";
 
-export default {
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
   providers: [Discord, Google, GitHub, Facebook],
   trustHost: true,
   // đặt callbacks logic ở đây để cả Middleware và App đều dùng được logic này
@@ -15,12 +19,14 @@ export default {
       }
       return token;
     },
+
     session({ session, token }) {
       if (token && typeof token.id === "string") {
         session.user.id = token.id;
       }
       return session;
     },
+
     // Middleware auth
     // authorized({ auth, request: { nextUrl } }) {
     //   const isLoggedIn = !!auth?.user;
@@ -48,4 +54,4 @@ export default {
   pages: {
     signIn: "/login",
   },
-} satisfies NextAuthConfig;
+});

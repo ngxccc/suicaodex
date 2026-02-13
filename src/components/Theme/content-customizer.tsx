@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { Eye, EyeOff, Globe, Repeat, SlidersHorizontal } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useConfig } from "@/hooks/use-config";
-import "@/styles/mdx.css";
+import { cn } from "@/shared/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
+import "@/shared/styles/mdx.css";
 import {
   Drawer,
   DrawerContent,
@@ -44,7 +44,7 @@ export function ContentCustomizer() {
           <Customizer />
         </DrawerContent>
       </Drawer>
-      <div className="hidden items-center md:flex grow">
+      <div className="hidden grow items-center md:flex">
         <Popover>
           <PopoverTrigger asChild>
             <SidebarMenuButton
@@ -60,7 +60,7 @@ export function ContentCustomizer() {
           </PopoverTrigger>
           <PopoverContent
             align="start"
-            className="z-40 w-[340px] rounded-xl bg-white p-6 dark:bg-zinc-950 mr-2"
+            className="z-40 mr-2 w-[340px] rounded-xl bg-white p-6 dark:bg-zinc-950"
           >
             <Customizer />
           </PopoverContent>
@@ -85,10 +85,10 @@ function Customizer() {
     >
       <div className="flex items-start pt-4 md:pt-0">
         <div className="space-y-1 pr-2">
-          <div className="font-semibold leading-none tracking-tight">
+          <div className="leading-none font-semibold tracking-tight">
             Tuỳ chỉnh nội dung
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div className="text-muted-foreground text-xs">
             Lọc truyện theo sở thích của bạn
           </div>
         </div>
@@ -126,7 +126,7 @@ function Customizer() {
                   className={cn(
                     "justify-start",
                     JSON.stringify(config.translatedLanguage) ===
-                      JSON.stringify(["vi"]) && "border-2 border-primary!"
+                      JSON.stringify(["vi"]) && "border-primary! border-2",
                   )}
                 >
                   <VN className="h-5 w-5" />
@@ -145,7 +145,7 @@ function Customizer() {
                   className={cn(
                     "justify-start",
                     JSON.stringify(config.translatedLanguage) ===
-                      JSON.stringify(["en"]) && "border-2 border-primary!"
+                      JSON.stringify(["en"]) && "border-primary! border-2",
                   )}
                 >
                   <GB className="h-5 w-5" />
@@ -164,10 +164,11 @@ function Customizer() {
                   className={cn(
                     "justify-start",
                     JSON.stringify(config.translatedLanguage) ===
-                      JSON.stringify(["vi", "en"]) && "border-2 border-primary!"
+                      JSON.stringify(["vi", "en"]) &&
+                      "border-primary! border-2",
                   )}
                 >
-                  <Globe className="w-5 h-5" />
+                  <Globe className="h-5 w-5" />
                   Cả 2
                 </Button>
               </>
@@ -194,7 +195,7 @@ function Customizer() {
                       r18: true,
                     })
                   }
-                  className={cn(config.r18 && "border-2 border-primary!")}
+                  className={cn(config.r18 && "border-primary! border-2")}
                 >
                   <Eye className="mr-1 -translate-x-1" />
                   Hiện
@@ -208,7 +209,7 @@ function Customizer() {
                       r18: false,
                     })
                   }
-                  className={cn(!config.r18 && "border-2 border-primary!")}
+                  className={cn(!config.r18 && "border-primary! border-2")}
                 >
                   <EyeOff className="mr-1 -translate-x-1" />
                   Ẩn

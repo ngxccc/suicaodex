@@ -1,11 +1,11 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getTopRatedMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import { Separator } from "@/components/ui/separator";
 import TopRatedCard from "./top-rated-card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import LeaderBoardCardSkeleton from "../leaderboard-card-skeleon";
 
 export default function TopRated() {

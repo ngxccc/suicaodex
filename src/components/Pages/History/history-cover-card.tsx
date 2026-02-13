@@ -1,7 +1,7 @@
 import { ChapterTitle } from "@/components/Chapter/ChapterReader/chapter-info";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { cn, getCoverImageUrl } from "@/lib/utils";
+import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { useState } from "react";
@@ -12,21 +12,25 @@ interface HistoryCoverCardProps {
 }
 
 export default function HistoryCoverCard({ chapter }: HistoryCoverCardProps) {
-  const src = getCoverImageUrl(chapter.manga.id || "", chapter.manga.cover || "", "512");
+  const src = getCoverImageUrl(
+    chapter.manga.id || "",
+    chapter.manga.cover || "",
+    "512",
+  );
   const [loaded, setLoaded] = useState(false);
   const title = ChapterTitle(chapter);
   return (
-    <Card className="relative rounded-sm shadow-none transition-colors duration-200 w-full h-full border-none bg-background">
+    <Card className="bg-background relative h-full w-full rounded-sm border-none shadow-none transition-colors duration-200">
       <NoPrefetchLink href={`/manga/${chapter.manga.id}`}>
-        <CardContent className="relative p-0 rounded-sm">
+        <CardContent className="relative rounded-sm p-0">
           <LazyLoadImage
             wrapperClassName={cn(
               "block! rounded-sm object-cover w-full h-full",
-              !loaded && "aspect-5/7"
+              !loaded && "aspect-5/7",
             )}
             placeholderSrc="/images/place-doro.webp"
             className={cn(
-              "h-auto w-full rounded-sm block object-cover aspect-5/7"
+              "block aspect-5/7 h-auto w-full rounded-sm object-cover",
             )}
             src={src}
             alt={`Ảnh bìa ${chapter.manga.title}`}
@@ -38,23 +42,23 @@ export default function HistoryCoverCard({ chapter }: HistoryCoverCardProps) {
         </CardContent>
       </NoPrefetchLink>
 
-      <CardFooter className="py-2 px-0 w-full flex flex-col gap-1 items-start">
+      <CardFooter className="flex w-full flex-col items-start gap-1 px-0 py-2">
         <NoPrefetchLink
           href={`/manga/${chapter.manga.id}`}
-          className="font-bold line-clamp-2 break-all"
+          className="line-clamp-2 font-bold break-all"
         >
           {chapter.manga.title}
         </NoPrefetchLink>
         <NoPrefetchLink
           href={`/chapter/${chapter.id}`}
-          className="items-center flex gap-1"
+          className="flex items-center gap-1"
         >
           {chapter.language === "vi" ? (
             <VN className="size-4 shrink-0" />
           ) : (
             <GB className="size-4 shrink-0" />
           )}
-          <span className="font-bold text-sm line-clamp-1 break-all hover:underline">
+          <span className="line-clamp-1 text-sm font-bold break-all hover:underline">
             {title}
           </span>
         </NoPrefetchLink>

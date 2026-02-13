@@ -5,8 +5,8 @@ export const siteConfig = {
   description: "SuicaoDex - Trang web truyện tranh đầu hàng VN",
   links: {
     discord: "https://discord.gg/dongmoe",
-    github: "https://github.com/TNTKien/better-suicaodex",
-    facebook: "https://facebook.com/suicaodex",
+    github: "https://github.com/ngxccc/suicaodex",
+    facebook: "https://facebook.com/ngxccc",
   },
   mangadexAPI: {
     webURL: "https://mangadex.org",

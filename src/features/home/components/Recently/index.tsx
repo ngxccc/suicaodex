@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getRecentlyMangas } from "@/features/manga/api/manga";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import useSWR from "swr";
 import RecentlyCard from "./recently-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 export default function RecentlyAdded() {
   const [config] = useConfig();

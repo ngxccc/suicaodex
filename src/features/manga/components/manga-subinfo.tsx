@@ -4,11 +4,11 @@ import type { Manga } from "@/types/types";
 import { Label } from "../../../components/ui/label";
 import { Button } from "../../../components/ui/button";
 import Link from "next/link";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import { LibraryBig } from "lucide-react";
 import { Icons } from "../../../components/icons";
 import { Separator } from "../../../components/ui/separator";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 interface MangaSubInfoProps {
   manga: Manga;

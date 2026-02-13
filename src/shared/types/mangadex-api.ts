@@ -1,4 +1,4 @@
-import type { MangaData } from "../features/manga/types";
+import type { MangaData } from "@/features/manga/types";
 
 export interface MangaDexApiResponse {
   result: "ok" | "error";

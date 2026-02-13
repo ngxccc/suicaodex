@@ -3,7 +3,7 @@
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn, generateSlug } from "@/lib/utils";
+import { cn, generateSlug } from "@/shared/lib/utils";
 import type { Artist, Author, Manga } from "@/types/types";
 import { Bookmark } from "lucide-react";
 

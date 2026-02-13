@@ -1,5 +1,5 @@
 import HomePage from "@/features/home/components";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 
 export default function Home() {
   const jsonLd = {

@@ -7,10 +7,10 @@ import { getChapterDetail } from "@/lib/mangadex/chapter";
 import useSWR from "swr";
 import ChapterNotFound from "./chapter-notfound";
 import MangaMaintain from "@/features/manga/components/manga-maintain";
-import useReadingHistory from "@/hooks/use-reading-history";
+import useReadingHistory from "@/shared/hooks/use-reading-history";
 import { useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { useConfig } from "@/hooks/use-config";
+import { cn } from "@/shared/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
 import { usePathname } from "next/navigation";
 import { type Chapter } from "@/types/types";
 

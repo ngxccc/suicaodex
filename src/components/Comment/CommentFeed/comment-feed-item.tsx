@@ -1,14 +1,14 @@
 // "use client";
 import { Card } from "@/components/ui/card";
-import { CommentWithUser } from "@/lib/suicaodex/serializers";
+import { CommentWithUser } from "@/shared/lib/serializers";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatShortTime } from "@/lib/utils";
-import { getStickerByName } from "@/lib/stickers-fn";
+import { formatShortTime } from "@/shared/lib/utils";
+import { getStickerByName } from "@/shared/lib/stickers-fn";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -71,17 +71,17 @@ export default function CommentFeedItem({
   const { text, stickers, isLegacyHTML } = parseCommentContent(comment.content);
 
   return (
-    <Card className="rounded-sm p-3 h-full bg-transparent shadow-none border-none">
+    <Card className="h-full rounded-sm border-none bg-transparent p-3 shadow-none">
       <NoPrefetchLink
         href={commentLink}
-        className="font-bold line-clamp-1 break-all border-b pb-2 block hover:text-primary"
+        className="hover:text-primary line-clamp-1 block border-b pb-2 font-bold break-all"
       >
         {!!comment.chapterNumber && <span>{comment.chapterNumber} - </span>}
         <span>{comment.title}</span>
       </NoPrefetchLink>
 
-      <div className="flex gap-2 mt-2">
-        <Avatar className="h-10 w-10 relative z-10 shrink-0">
+      <div className="mt-2 flex gap-2">
+        <Avatar className="relative z-10 h-10 w-10 shrink-0">
           <AvatarImage
             src={comment.user.image || ""}
             alt={comment.user.name || "User"}
@@ -91,14 +91,14 @@ export default function CommentFeedItem({
           </AvatarFallback>
         </Avatar>
 
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold text-sm line-clamp-1 hover:underline">
+            <span className="line-clamp-1 text-sm font-semibold hover:underline">
               {comment.user.name}
             </span>
           </div>
           {text && (
-            <div className="bg-muted rounded-2xl px-3 py-2 mt-1 inline-block max-w-full">
+            <div className="bg-muted mt-1 inline-block max-w-full rounded-2xl px-3 py-2">
               <ReactMarkdown
                 className="prose prose-sm prose-img:my-1 prose-img:max-w-[120px] dark:prose-invert max-w-full"
                 remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
@@ -117,12 +117,12 @@ export default function CommentFeedItem({
                     </a>
                   ),
                   table: ({ children }) => (
-                    <table className="table-auto border-collapse border border-secondary rounded-md w-fit">
+                    <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
                       {children}
                     </table>
                   ),
                   thead: ({ children }) => (
-                    <thead className="border-b border-secondary">
+                    <thead className="border-secondary border-b">
                       {children}
                     </thead>
                   ),
@@ -136,7 +136,7 @@ export default function CommentFeedItem({
                     <td className="px-2 py-1">{children}</td>
                   ),
                   p: ({ children }) => (
-                    <p className="whitespace-pre-wrap wrap-break-word">
+                    <p className="wrap-break-word whitespace-pre-wrap">
                       {children}
                     </p>
                   ),
@@ -147,20 +147,20 @@ export default function CommentFeedItem({
             </div>
           )}
           {stickers.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2 max-w-full">
+            <div className="mt-2 flex max-w-full flex-wrap gap-2">
               {stickers.map((sticker, index) => (
                 <LazyLoadImage
                   key={`${sticker.name}-${index}`}
                   src={sticker.url}
                   alt={sticker.name}
-                  className="rounded-md w-full max-w-[80px] sm:max-w-[100px] h-auto object-contain aspect-square"
+                  className="aspect-square h-auto w-full max-w-[80px] rounded-md object-contain sm:max-w-[100px]"
                   effect="blur"
                 />
               ))}
             </div>
           )}
 
-          <span className="mt-1 text-xs text-muted-foreground line-clamp-1 block">
+          <span className="text-muted-foreground mt-1 line-clamp-1 block text-xs">
             {formatShortTime(new Date(comment.createdAt))}
             {comment.isEdited ? " (Đã chỉnh sửa)" : ""}
           </span>

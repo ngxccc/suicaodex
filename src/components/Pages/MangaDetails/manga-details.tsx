@@ -27,9 +27,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { siteConfig } from "@/config/site";
-import { useConfig } from "@/hooks/use-config";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { siteConfig } from "@/shared/config/site";
+import { useConfig } from "@/shared/hooks/use-config";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { fetchMangaDetail } from "@/features/manga/api/manga";
 import type { Artist, Author, Manga } from "@/types/types";
 import {
@@ -53,7 +53,7 @@ import AddToLibraryBtn from "@/features/manga/components/add-to-library-btn";
 import MangaCoversTab from "@/features/manga/components/manga-covers-tab";
 import MangaSubInfo from "@/features/manga/components/manga-subinfo";
 import CommentSection from "@/components/Comment/comment-section";
-import { useCommentCount } from "@/hooks/use-comment-count";
+import { useCommentCount } from "@/shared/hooks/use-comment-count";
 import MangaRecommendations from "@/features/manga/components/manga-recomendations";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import { WarpBackground } from "@/components/ui/warp-background";

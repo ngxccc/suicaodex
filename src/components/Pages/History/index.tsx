@@ -1,6 +1,6 @@
 "use client";
 
-import useReadingHistory from "@/hooks/use-reading-history";
+import useReadingHistory from "@/shared/hooks/use-reading-history";
 import { LayoutGrid, List, Loader2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ export default function History() {
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,
-    }
+    },
   );
 
   if (isLoading || swrLoading) {
@@ -47,7 +47,7 @@ export default function History() {
   if (error || !data) {
     return (
       <DefaultTabs>
-        <Card className="mt-4 rounded-sm justify-center items-center flex h-16 w-full">
+        <Card className="mt-4 flex h-16 w-full items-center justify-center rounded-sm">
           Lỗi mất rồi 😭
         </Card>
       </DefaultTabs>
@@ -56,7 +56,7 @@ export default function History() {
   if (data.length === 0) {
     return (
       <DefaultTabs>
-        <Card className="mt-4 rounded-sm justify-center items-center flex h-16 w-full">
+        <Card className="mt-4 flex h-16 w-full items-center justify-center rounded-sm">
           Bạn chưa đọc gì cả!
         </Card>
       </DefaultTabs>
@@ -64,7 +64,7 @@ export default function History() {
   }
 
   const compactView = (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex w-full flex-col gap-3">
       {data.map((chapter) => (
         <HistoryCompactCard key={chapter.id} chapter={chapter} />
       ))}
@@ -72,7 +72,7 @@ export default function History() {
   );
 
   const coverView = (
-    <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3">
+    <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {data.map((chapter) => (
         <HistoryCoverCard key={chapter.id} chapter={chapter} />
       ))}
@@ -95,7 +95,7 @@ function DefaultTabs({ children, compactView, coverView }: DefaultTabsProps) {
 
   return (
     <Tabs defaultValue="compact" className="w-full justify-items-end">
-      <TabsList className="rounded-sm gap-1.5 h-10">
+      <TabsList className="h-10 gap-1.5 rounded-sm">
         {tabValues.map((tab) => (
           <TabsTrigger key={tab.value} className="rounded-sm" value={tab.value}>
             {tab.icon}

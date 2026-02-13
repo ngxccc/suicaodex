@@ -1,8 +1,8 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
-import { usePreloadImages } from "@/hooks/use-preload-images";
-import { cn } from "@/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
+import { usePreloadImages } from "@/shared/hooks/use-preload-images";
+import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
 import MangaImage from "./manga-image";
 
@@ -15,22 +15,27 @@ export default function LongStrip({ images }: LongStripProps) {
   const [loadedCount, setLoadedCount] = useState(0);
   const allLoaded = loadedCount === images.length;
 
-  const { registerImageElement, preloadedImages, markImageAsLoaded, isImageLoaded } = usePreloadImages({
+  const {
+    registerImageElement,
+    preloadedImages,
+    markImageAsLoaded,
+    isImageLoaded,
+  } = usePreloadImages({
     images,
     preloadCount: 6,
-    visibilityThreshold: 0.1
+    visibilityThreshold: 0.1,
   });
 
   return (
     <div
       className={cn(
-        "min-w-0 relative mt-2",
-        allLoaded ? "min-h-0" : "min-h-lvh"
+        "relative mt-2 min-w-0",
+        allLoaded ? "min-h-0" : "min-h-lvh",
       )}
     >
       <div
         className={cn(
-          "overflow-x-auto flex flex-col items-center h-full select-none bg-transparent justify-center"
+          "flex h-full flex-col items-center justify-center overflow-x-auto bg-transparent select-none",
         )}
         style={{
           gap: `${config.reader.imageGap}px`,

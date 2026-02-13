@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { siteConfig } from "@/config/site";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { siteConfig } from "@/shared/config/site";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { GetAuthor } from "@/lib/mangadex/author";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Archive, Bookmark, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,18 +48,18 @@ export default function Author({ id, initialData }: AuthorProps) {
 
   if (isLoading)
     return (
-      <div className="absolute h-50 md:h-64 z-[-2] w-auto left-0 right-0 top-0 block bg-gray-300 ease-in-out">
+      <div className="absolute top-0 right-0 left-0 z-[-2] block h-50 w-auto bg-gray-300 ease-in-out md:h-64">
         <div
           className={cn(
-            "absolute h-50 md:h-64 w-full",
+            "absolute h-50 w-full md:h-64",
             "transition-[width] duration-150 ease-in-out",
-            "bg-no-repeat bg-cover bg-position-[center_top_25%]",
+            "bg-cover bg-position-[center_top_25%] bg-no-repeat",
           )}
           // style={{ backgroundImage: `url('/images/frieren.webp')` }}
         ></div>
         <div
           className={cn(
-            "absolute h-50 md:h-64 w-auto inset-0 pointer-events-none",
+            "pointer-events-none absolute inset-0 h-50 w-auto md:h-64",
             // "backdrop-blur-none md:backdrop-blur-xs",
             "bg-linear-to-r from-black/25 to-transparent",
           )}
@@ -89,35 +89,35 @@ export default function Author({ id, initialData }: AuthorProps) {
   };
   return (
     <>
-      <div className="absolute h-50 md:h-64 z-[-2] w-auto left-0 right-0 top-0 block">
+      <div className="absolute top-0 right-0 left-0 z-[-2] block h-50 w-auto md:h-64">
         <div
           className={cn(
-            "absolute h-50 md:h-64 w-full",
+            "absolute h-50 w-full md:h-64",
             "transition-[width] duration-150 ease-in-out",
-            "bg-no-repeat bg-cover bg-position-[center_top_25%]",
+            "bg-cover bg-position-[center_top_25%] bg-no-repeat",
           )}
           style={{ backgroundImage: `url('/images/frieren.webp')` }}
         ></div>
         <div
           className={cn(
-            "absolute h-50 md:h-64 w-auto inset-0 pointer-events-none",
+            "pointer-events-none absolute inset-0 h-50 w-auto md:h-64",
             // "backdrop-blur-none md:backdrop-blur-xs",
             "bg-linear-to-r from-black/25 to-transparent",
           )}
         ></div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 mt-16 md:mt-20">
-        <div className="flex flex-row md:flex-col gap-2 md:shrink-0 items-end">
+      <div className="mt-16 flex flex-col gap-4 md:mt-20 md:flex-row">
+        <div className="flex flex-row items-end gap-2 md:shrink-0 md:flex-col">
           <Image
             src={data.imageUrl || "/images/hoxilo.webp"}
             alt={data.name}
             width={isMobile ? 120 : 200}
             height={isMobile ? 120 : 200}
-            className="rounded border-4 border-primary object-cover shrink-0 w-[120px] h-[120px] md:w-[200px] md:h-[200px]"
+            className="border-primary h-[120px] w-[120px] shrink-0 rounded border-4 object-cover md:h-[200px] md:w-[200px]"
             unoptimized
           />
-          <div className="flex flex-row md:flex-col gap-2 w-full overflow-auto scrollbar-hidden">
+          <div className="scrollbar-hidden flex w-full flex-row gap-2 overflow-auto md:flex-col">
             <Button
               className="w-full"
               // size={isMobile ? "lg" : "default"}
@@ -143,11 +143,11 @@ export default function Author({ id, initialData }: AuthorProps) {
           </div>
         </div>
 
-        <div className="md:mt-[120px] flex flex-col gap-3 w-full">
-          <p className="text-4xl md:text-5xl font-bold">{data.name}</p>
+        <div className="flex w-full flex-col gap-3 md:mt-[120px]">
+          <p className="text-4xl font-bold md:text-5xl">{data.name}</p>
 
           {!data.bio && socialEntries.length === 0 && (
-            <Card className="rounded-sm justify-center items-center flex h-16 w-full">
+            <Card className="flex h-16 w-full items-center justify-center rounded-sm">
               Hổng có thông tin gì hết trơn!
             </Card>
           )}
@@ -170,12 +170,12 @@ export default function Author({ id, initialData }: AuthorProps) {
                     </a>
                   ),
                   table: ({ children }) => (
-                    <table className="table-auto border-collapse border border-secondary rounded-md w-fit">
+                    <table className="border-secondary w-fit table-auto border-collapse rounded-md border">
                       {children}
                     </table>
                   ),
                   thead: ({ children }) => (
-                    <thead className="border-b border-secondary">
+                    <thead className="border-secondary border-b">
                       {children}
                     </thead>
                   ),
@@ -207,13 +207,13 @@ export default function Author({ id, initialData }: AuthorProps) {
                       key={item.name}
                       asChild
                       variant="secondary"
-                      className="w-full md:w-auto justify-start hover:bg-primary/25"
+                      className="hover:bg-primary/25 w-full justify-start md:w-auto"
                     >
                       <Link
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex flex-row gap-2 items-center capitalize"
+                        className="flex flex-row items-center gap-2 capitalize"
                       >
                         {icon}
                         {item.name}

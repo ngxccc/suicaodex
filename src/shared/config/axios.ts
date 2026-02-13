@@ -5,8 +5,8 @@ import {
   setCurrentImageProxyUrl,
   getCurrentImageProxyUrl,
   createProxyUrl,
-} from "./utils";
-import { siteConfig } from "@/config/site";
+} from "../lib/utils";
+import { siteConfig } from "@/shared/config/site";
 
 const BASE_API_URL = createProxyUrl(siteConfig.mangadexAPI.baseUrl);
 

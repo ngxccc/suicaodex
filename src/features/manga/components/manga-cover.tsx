@@ -1,5 +1,5 @@
 "use client";
-import { cn, getCoverImageUrl } from "@/lib/utils";
+import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import { Expand, Loader2 } from "lucide-react";
 import type { FC } from "react";
 import { useState } from "react";

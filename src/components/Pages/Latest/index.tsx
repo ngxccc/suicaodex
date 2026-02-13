@@ -1,6 +1,6 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getLatestManga } from "@/lib/mangadex/latest";
 import useSWR from "swr";
 import LatestMangaCard from "./latest-manga-card";
@@ -31,7 +31,7 @@ export default function Latest({ page, limit }: LatestProps) {
   const { data, isLoading, error } = useSWR(
     ["latest_page", limit, offset, config.translatedLanguage, config.r18],
     ([, limit, offset, translatedLanguage, r18]) =>
-      getLatestManga(limit, offset, translatedLanguage, r18)
+      getLatestManga(limit, offset, translatedLanguage, r18),
   );
   if (isLoading)
     return (
@@ -44,7 +44,7 @@ export default function Latest({ page, limit }: LatestProps) {
   if (error || !data) {
     return (
       <DefaultTabs>
-        <Card className="mt-4 rounded-sm justify-center items-center flex h-16 w-full">
+        <Card className="mt-4 flex h-16 w-full items-center justify-center rounded-sm">
           Lỗi mất rồi 😭
         </Card>
       </DefaultTabs>
@@ -58,7 +58,7 @@ export default function Latest({ page, limit }: LatestProps) {
   };
 
   const compactView = (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex w-full flex-col gap-3">
       {formattedData.map((item) => (
         <LatestMangaCard
           key={item.manga.id}
@@ -70,7 +70,7 @@ export default function Latest({ page, limit }: LatestProps) {
   );
 
   const coverView = (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 w-full">
+    <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       {formattedData.map((item) => (
         <LatestMangaCard
           key={item.manga.id}
@@ -90,7 +90,7 @@ export default function Latest({ page, limit }: LatestProps) {
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -100,7 +100,7 @@ export default function Latest({ page, limit }: LatestProps) {
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -114,7 +114,7 @@ export default function Latest({ page, limit }: LatestProps) {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -125,7 +125,7 @@ export default function Latest({ page, limit }: LatestProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -137,7 +137,7 @@ export default function Latest({ page, limit }: LatestProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -153,7 +153,7 @@ export default function Latest({ page, limit }: LatestProps) {
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -167,7 +167,7 @@ export default function Latest({ page, limit }: LatestProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -177,7 +177,7 @@ export default function Latest({ page, limit }: LatestProps) {
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -188,7 +188,7 @@ export default function Latest({ page, limit }: LatestProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -198,7 +198,7 @@ export default function Latest({ page, limit }: LatestProps) {
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />
@@ -223,7 +223,7 @@ function DefaultTabs({ children, compactView, coverView }: DefaultTabsProps) {
 
   return (
     <Tabs defaultValue="compact" className="w-full justify-items-end">
-      <TabsList className="rounded-sm gap-1.5 h-10">
+      <TabsList className="h-10 gap-1.5 rounded-sm">
         {tabValues.map((tab) => (
           <TabsTrigger key={tab.value} className="rounded-sm" value={tab.value}>
             {tab.icon}

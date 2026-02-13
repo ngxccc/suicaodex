@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocalNotification } from "@/hooks/use-local-notification";
-import { generateSlug } from "@/lib/utils";
+import { useLocalNotification } from "@/shared/hooks/use-local-notification";
+import { generateSlug } from "@/shared/lib/utils";
 import { Chapter } from "@/types/types";
 import { Users } from "lucide-react";
 import Link from "next/link";
@@ -13,7 +13,7 @@ interface ChapterInfoProps {
 
 export default function ChapterInfo({ chapter }: ChapterInfoProps) {
   const { markAsRead, isUnread } = useLocalNotification();
-  
+
   // Move the state update to an effect hook
   useEffect(() => {
     if (isUnread(chapter.id)) {
@@ -32,7 +32,7 @@ export default function ChapterInfo({ chapter }: ChapterInfoProps) {
         {chapter.manga.title}
       </Link>
 
-      <div className="flex flex-wrap gap-0.5 items-center">
+      <div className="flex flex-wrap items-center gap-0.5">
         <Users size={20} className="shrink-0" />
         {chapter.group.length === 0 ? (
           <span className="px-1">No Group</span>
@@ -41,7 +41,7 @@ export default function ChapterInfo({ chapter }: ChapterInfoProps) {
             <Link
               key={group.id}
               href={`/group/${group.id}/${generateSlug(group.name)}`}
-              className="hover:bg-secondary hover:text-primary rounded-sm px-1 line-clamp-1 break-all"
+              className="hover:bg-secondary hover:text-primary line-clamp-1 rounded-sm px-1 break-all"
               prefetch={false}
             >
               {group.name}

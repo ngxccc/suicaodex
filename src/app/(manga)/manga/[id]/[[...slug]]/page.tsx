@@ -1,11 +1,11 @@
 import MangaNotFound from "@/features/manga/components/manga-notfound";
 import MangaDetails from "@/components/Pages/MangaDetails/manga-details";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import type { Manga } from "@/types/types";
 import type { Metadata } from "next";
 import { validate as isValidUUID } from "uuid";
 import { cache } from "react";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 import { fetchMangaDetail } from "@/features/manga/api/manga";
 
 // Revalidate the page every 24 hours (86400 seconds)

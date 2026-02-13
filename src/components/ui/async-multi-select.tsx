@@ -11,7 +11,7 @@ import {
   Loader2,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,13 +51,13 @@ const multiSelectVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 // Improved debounce function with proper cleanup
 function debounce<F extends (...args: any[]) => any>(
   func: F,
-  waitFor: number
+  waitFor: number,
 ): [(...args: Parameters<F>) => void, () => void] {
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -82,17 +82,20 @@ function debounce<F extends (...args: any[]) => any>(
  * Props for AsyncMultiSelect component
  */
 interface AsyncMultiSelectProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof multiSelectVariants> {
   /**
    * Async function to fetch options based on search query.
    * Returns a promise that resolves to an array of options.
    */
-  loadOptions: (inputValue: string) => Promise<{
-    label: string;
-    value: string;
-    icon?: React.ComponentType<{ className?: string }>;
-  }[]>;
+  loadOptions: (inputValue: string) => Promise<
+    {
+      label: string;
+      value: string;
+      icon?: React.ComponentType<{ className?: string }>;
+    }[]
+  >;
 
   /**
    * Debounce time in milliseconds for the search function.
@@ -221,45 +224,54 @@ export const AsyncMultiSelect = React.forwardRef<
       preloadedOptions = [],
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [selectedValues, setSelectedValues] = 
+    const [selectedValues, setSelectedValues] =
       React.useState<string[]>(defaultValue);
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const [options, setOptions] = React.useState<Array<{
-      label: string;
-      value: string;
-      icon?: React.ComponentType<{ className?: string }>;
-    }>>(preloadedOptions);
+    const [options, setOptions] = React.useState<
+      Array<{
+        label: string;
+        value: string;
+        icon?: React.ComponentType<{ className?: string }>;
+      }>
+    >(preloadedOptions);
     const [searchQuery, setSearchQuery] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
-    const [hasSearched, setHasSearched] = React.useState(preloadedOptions.length > 0);
+    const [hasSearched, setHasSearched] = React.useState(
+      preloadedOptions.length > 0,
+    );
 
     // Create a ref for selected options to maintain their labels
-    const selectedOptionsRef = React.useRef<Array<{
-      label: string;
-      value: string;
-      icon?: React.ComponentType<{ className?: string }>;
-    }>>(preloadedOptions);
+    const selectedOptionsRef = React.useRef<
+      Array<{
+        label: string;
+        value: string;
+        icon?: React.ComponentType<{ className?: string }>;
+      }>
+    >(preloadedOptions);
 
     // Create a ref for the timeout to handle debouncing
     const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Function to actually perform the search
-    const executeSearch = React.useCallback(async (query: string) => {
-      try {
-        setIsLoading(true);
-        const results = await loadOptions(query);
-        setOptions(results);
-        setHasSearched(true);
-      } catch (error) {
-        console.error("Error loading options:", error);
-        setOptions([]);
-      } finally {
-        setIsLoading(false);
-      }
-    }, [loadOptions]);
+    const executeSearch = React.useCallback(
+      async (query: string) => {
+        try {
+          setIsLoading(true);
+          const results = await loadOptions(query);
+          setOptions(results);
+          setHasSearched(true);
+        } catch (error) {
+          console.error("Error loading options:", error);
+          setOptions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      },
+      [loadOptions],
+    );
 
     // Load initial selected values if needed
     React.useEffect(() => {
@@ -268,10 +280,10 @@ export const AsyncMultiSelect = React.forwardRef<
           try {
             setIsLoading(true);
             const results = await loadOptions("");
-            const matchingOptions = results.filter(option => 
-              defaultValue.includes(option.value)
+            const matchingOptions = results.filter((option) =>
+              defaultValue.includes(option.value),
             );
-            
+
             if (matchingOptions.length > 0) {
               selectedOptionsRef.current = matchingOptions;
               setOptions(matchingOptions);
@@ -289,7 +301,7 @@ export const AsyncMultiSelect = React.forwardRef<
           setHasSearched(true);
         }
       };
-      
+
       fetchSelectedOptions();
     }, [defaultValue, loadOptions, preloadedOptions]);
 
@@ -297,10 +309,11 @@ export const AsyncMultiSelect = React.forwardRef<
     React.useEffect(() => {
       const newSelectedOptions = [
         ...selectedOptionsRef.current,
-        ...options.filter(option => 
-          selectedValues.includes(option.value) && 
-          !selectedOptionsRef.current.some(o => o.value === option.value)
-        )
+        ...options.filter(
+          (option) =>
+            selectedValues.includes(option.value) &&
+            !selectedOptionsRef.current.some((o) => o.value === option.value),
+        ),
       ];
       selectedOptionsRef.current = newSelectedOptions;
     }, [options, selectedValues]);
@@ -322,7 +335,7 @@ export const AsyncMultiSelect = React.forwardRef<
     }, [isPopoverOpen, executeSearch, searchQuery, hasSearched]);
 
     const handleInputKeyDown = (
-      event: React.KeyboardEvent<HTMLInputElement>
+      event: React.KeyboardEvent<HTMLInputElement>,
     ) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -351,7 +364,7 @@ export const AsyncMultiSelect = React.forwardRef<
     const handleTogglePopover = () => {
       const newIsOpen = !isPopoverOpen;
       setIsPopoverOpen(newIsOpen);
-      
+
       if (newIsOpen && !hasSearched) {
         executeSearch(searchQuery);
       }
@@ -366,12 +379,12 @@ export const AsyncMultiSelect = React.forwardRef<
     // Handle search input change with manual debounce
     const handleSearchInputChange = (value: string) => {
       setSearchQuery(value);
-      
+
       // Clear any existing timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-      
+
       // Setup a new debounced search
       timeoutRef.current = setTimeout(() => {
         executeSearch(value);
@@ -382,15 +395,19 @@ export const AsyncMultiSelect = React.forwardRef<
     const allVisibleOptions = React.useMemo(() => {
       const selectedOptions = selectedOptionsRef.current;
       const currentOptions = options;
-      
+
       // Combine current options with selected options that aren't in the current results
       const combinedOptions = [...currentOptions];
-      selectedOptions.forEach(selectedOption => {
-        if (!combinedOptions.some(option => option.value === selectedOption.value)) {
+      selectedOptions.forEach((selectedOption) => {
+        if (
+          !combinedOptions.some(
+            (option) => option.value === selectedOption.value,
+          )
+        ) {
           combinedOptions.push(selectedOption);
         }
       });
-      
+
       return combinedOptions;
     }, [options]);
 
@@ -409,38 +426,45 @@ export const AsyncMultiSelect = React.forwardRef<
             {...props}
             onClick={handleTogglePopover}
             className={cn(
-              "flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto",
-              className
+              "flex h-auto min-h-10 w-full items-center justify-between rounded-md border bg-inherit p-1 hover:bg-inherit [&_svg]:pointer-events-auto",
+              className,
             )}
           >
             {selectedValues.length > 0 ? (
-              <div className="flex justify-between items-center w-full">
+              <div className="flex w-full items-center justify-between">
                 {isCompact ? (
                   <div className="flex items-center overflow-hidden">
-                    <span className="text-sm truncate mx-3 text-muted-foreground">
+                    <span className="text-muted-foreground mx-3 truncate text-sm">
                       {selectedValues
                         .slice(0, maxCount)
-                        .map((value) => allVisibleOptions.find((o) => o.value === value)?.label)
+                        .map(
+                          (value) =>
+                            allVisibleOptions.find((o) => o.value === value)
+                              ?.label,
+                        )
                         .join(", ")}
-                      {selectedValues.length > maxCount && `, +${selectedValues.length - maxCount} more`}
+                      {selectedValues.length > maxCount &&
+                        `, +${selectedValues.length - maxCount} more`}
                     </span>
                   </div>
                 ) : (
                   <div className="flex flex-wrap items-center">
                     {selectedValues.slice(0, maxCount).map((value) => {
-                      const option = allVisibleOptions.find((o) => o.value === value);
+                      const option = allVisibleOptions.find(
+                        (o) => o.value === value,
+                      );
                       const IconComponent = option?.icon;
                       return (
                         <Badge
                           key={value}
                           className={cn(
                             isAnimating ? "animate-bounce" : "",
-                            multiSelectVariants({ variant })
+                            multiSelectVariants({ variant }),
                           )}
                           style={{ animationDuration: `${animation}s` }}
                         >
                           {IconComponent && (
-                            <IconComponent className="h-4 w-4 mr-2" />
+                            <IconComponent className="mr-2 h-4 w-4" />
                           )}
                           {option?.label}
                           <XCircle
@@ -456,9 +480,9 @@ export const AsyncMultiSelect = React.forwardRef<
                     {selectedValues.length > maxCount && (
                       <Badge
                         className={cn(
-                          "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
+                          "text-foreground border-foreground/1 bg-transparent hover:bg-transparent",
                           isAnimating ? "animate-bounce" : "",
-                          multiSelectVariants({ variant })
+                          multiSelectVariants({ variant }),
                         )}
                         style={{ animationDuration: `${animation}s` }}
                       >
@@ -476,7 +500,7 @@ export const AsyncMultiSelect = React.forwardRef<
                 )}
                 <div className="flex items-center justify-between">
                   <XIcon
-                    className="h-4 mx-2 cursor-pointer text-muted-foreground"
+                    className="text-muted-foreground mx-2 h-4 cursor-pointer"
                     onClick={(event) => {
                       event.stopPropagation();
                       handleClear();
@@ -484,17 +508,17 @@ export const AsyncMultiSelect = React.forwardRef<
                   />
                   <Separator
                     orientation="vertical"
-                    className="flex min-h-6 h-full"
+                    className="flex h-full min-h-6"
                   />
-                  <ChevronsUpDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  <ChevronsUpDown className="text-muted-foreground mx-2 h-4 cursor-pointer" />
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full mx-auto">
-                <span className="text-sm text-muted-foreground mx-3">
+              <div className="mx-auto flex w-full items-center justify-between">
+                <span className="text-muted-foreground mx-3 text-sm">
                   {placeholder}
                 </span>
-                <ChevronsUpDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <ChevronsUpDown className="text-muted-foreground mx-2 h-4 cursor-pointer" />
               </div>
             )}
           </Button>
@@ -517,22 +541,24 @@ export const AsyncMultiSelect = React.forwardRef<
                 className="border-none focus:ring-0"
               />
             )}
-            
+
             {showSelectedValue && selectedValues.length > 0 && (
-              <div className="flex flex-wrap gap-0.5 p-2 border-t border-b">
+              <div className="flex flex-wrap gap-0.5 border-t border-b p-2">
                 {selectedValues.map((value) => {
-                  const option = allVisibleOptions.find((o) => o.value === value);
+                  const option = allVisibleOptions.find(
+                    (o) => o.value === value,
+                  );
                   const IconComponent = option?.icon;
                   return (
                     <Badge
                       key={value}
                       className={cn(
                         "flex items-center",
-                        multiSelectVariants({ variant })
+                        multiSelectVariants({ variant }),
                       )}
                     >
                       {IconComponent && (
-                        <IconComponent className="h-4 w-4 mr-2" />
+                        <IconComponent className="mr-2 h-4 w-4" />
                       )}
                       {option?.label}
                       <XCircle
@@ -547,7 +573,7 @@ export const AsyncMultiSelect = React.forwardRef<
                 })}
               </div>
             )}
-            
+
             <CommandList>
               {isLoading ? (
                 <div className="flex items-center justify-center py-6">
@@ -569,15 +595,16 @@ export const AsyncMultiSelect = React.forwardRef<
                       >
                         <div
                           className={cn(
-                            "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                            "border-primary mr-2 flex h-4 w-4 items-center justify-center rounded-sm border",
                             isSelected
                               ? "bg-primary text-primary-foreground"
-                              : "opacity-50 [&_svg]:invisible"
-                          )}>
+                              : "opacity-50 [&_svg]:invisible",
+                          )}
+                        >
                           <CheckIcon className="h-4 w-4" />
                         </div>
                         {option.icon && (
-                          <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                          <option.icon className="text-muted-foreground mr-2 h-4 w-4" />
                         )}
                         <span>{option.label}</span>
                       </CommandItem>
@@ -593,19 +620,19 @@ export const AsyncMultiSelect = React.forwardRef<
                       <>
                         <CommandItem
                           onSelect={handleClear}
-                          className="flex-1 justify-center cursor-pointer"
+                          className="flex-1 cursor-pointer justify-center"
                         >
                           Clear
                         </CommandItem>
                         <Separator
                           orientation="vertical"
-                          className="flex min-h-6 h-full"
+                          className="flex h-full min-h-6"
                         />
                       </>
                     )}
                     <CommandItem
                       onSelect={() => setIsPopoverOpen(false)}
-                      className="flex-1 justify-center cursor-pointer max-w-full"
+                      className="max-w-full flex-1 cursor-pointer justify-center"
                     >
                       Close
                     </CommandItem>
@@ -618,15 +645,15 @@ export const AsyncMultiSelect = React.forwardRef<
         {animation > 0 && selectedValues.length > 0 && (
           <WandSparkles
             className={cn(
-              "cursor-pointer my-2 text-foreground bg-background w-3 h-3",
-              isAnimating ? "" : "text-muted-foreground"
+              "text-foreground bg-background my-2 h-3 w-3 cursor-pointer",
+              isAnimating ? "" : "text-muted-foreground",
             )}
             onClick={() => setIsAnimating(!isAnimating)}
           />
         )}
       </Popover>
     );
-  }
+  },
 );
 
 AsyncMultiSelect.displayName = "AsyncMultiSelect";

@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/shared/config/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { limiter, RateLimitError } from "@/lib/rate-limit";
+import { limiter, RateLimitError } from "@/shared/lib/rate-limit";
 
 interface RouteParams {
   params: Promise<{

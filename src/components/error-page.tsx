@@ -24,9 +24,9 @@ import {
   SiFacebook,
   SiGithub,
 } from "@icons-pack/react-simple-icons";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import { toast } from "sonner";
-import "@/styles/error-page.css";
+import "@/shared/styles/error-page.css";
 
 interface ErrorPageProps {
   error?: Error;

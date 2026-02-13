@@ -19,13 +19,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "../ui/badge";
-import { useLocalNotification } from "@/hooks/use-local-notification";
-import { cn } from "@/lib/utils";
+import { useLocalNotification } from "@/shared/hooks/use-local-notification";
+import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "@bprogress/next";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -48,7 +48,7 @@ export function NavUser() {
                 <>
                   <div className="relative inline-block">
                     {!!localNotification.unread.length && (
-                      <span className="absolute block rounded-full ring-2 ring-white top-0 left-0 bg-red-500 size-2.5 z-10 animate-bounce duration-250" />
+                      <span className="absolute top-0 left-0 z-10 block size-2.5 animate-bounce rounded-full bg-red-500 ring-2 ring-white duration-250" />
                     )}
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarImage
@@ -76,7 +76,7 @@ export function NavUser() {
                 <>
                   <div className="relative inline-block">
                     {!!localNotification.unread.length && (
-                      <span className="z-10 absolute block rounded-full ring-2 ring-white top-0 left-0 bg-red-500 size-2.5 animate-bounce duration-250" />
+                      <span className="absolute top-0 left-0 z-10 block size-2.5 animate-bounce rounded-full bg-red-500 ring-2 ring-white duration-250" />
                     )}
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarImage
@@ -143,13 +143,13 @@ export function NavUser() {
                 <Link href={"/notifications"}>
                   <Bell
                     className={cn(
-                      !!localNotification.unread.length && "animate-bell-shake"
+                      !!localNotification.unread.length && "animate-bell-shake",
                     )}
                   />
                   Thông báo
                   {!!localNotification.unread.length && (
                     <Badge
-                      className="rounded-full ml-auto min-w-4 h-4 justify-center p-1 text-xs font-normal"
+                      className="ml-auto h-4 min-w-4 justify-center rounded-full p-1 text-xs font-normal"
                       variant="destructive"
                     >
                       {localNotification.unread.length <= 10
@@ -168,8 +168,8 @@ export function NavUser() {
                 onClick={() => {
                   router.push(
                     `${process.env.NEXT_PUBLIC_BASE_URL}/login?callback=${encodeURIComponent(
-                      pathname
-                    )}`
+                      pathname,
+                    )}`,
                   );
                 }}
               >

@@ -1,5 +1,5 @@
 import { getRecentlyMangas } from "@/features/manga/api/manga";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 import { getServerSideSitemap } from "next-sitemap";
 
 export async function GET(

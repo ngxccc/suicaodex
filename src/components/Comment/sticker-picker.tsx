@@ -20,8 +20,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Smile } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { stickers, getCategories, getCategoryName } from "@/lib/stickers-fn";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
+import {
+  stickers,
+  getCategories,
+  getCategoryName,
+} from "@/shared/lib/stickers-fn";
 
 interface StickerPickerProps {
   onSelectSticker: (stickerName: string) => void;
@@ -44,16 +48,12 @@ export function StickerPicker({
   const renderStickers = () => (
     <>
       <Tabs defaultValue="all" className="w-full">
-        <TabsList className="w-full justify-start rounded-none border-b h-auto p-1 flex-wrap">
-          <TabsTrigger value="all" className="capitalize text-xs">
+        <TabsList className="h-auto w-full flex-wrap justify-start rounded-none border-b p-1">
+          <TabsTrigger value="all" className="text-xs capitalize">
             Tất cả
           </TabsTrigger>
           {categories.map((category) => (
-            <TabsTrigger
-              key={category}
-              value={category}
-              className="text-xs"
-            >
+            <TabsTrigger key={category} value={category} className="text-xs">
               {getCategoryName(category)}
             </TabsTrigger>
           ))}
@@ -66,13 +66,13 @@ export function StickerPicker({
                   key={sticker.title}
                   type="button"
                   onClick={() => handleSelectSticker(sticker.title)}
-                  className="aspect-square rounded-none hover:rounded-lg hover:bg-primary/20 overflow-hidden transition-all"
+                  className="hover:bg-primary/20 aspect-square overflow-hidden rounded-none transition-all hover:rounded-lg"
                   title={sticker.title}
                 >
                   <LazyLoadImage
                     src={sticker.url}
                     alt={sticker.title}
-                    className="w-full h-full object-contain"
+                    className="h-full w-full object-contain"
                     effect="blur"
                   />
                 </button>
@@ -91,13 +91,13 @@ export function StickerPicker({
                       key={sticker.title}
                       type="button"
                       onClick={() => handleSelectSticker(sticker.title)}
-                      className="aspect-square rounded-none hover:rounded-lg hover:bg-primary/20 overflow-hidden transition-all"
+                      className="hover:bg-primary/20 aspect-square overflow-hidden rounded-none transition-all hover:rounded-lg"
                       title={sticker.title}
                     >
                       <LazyLoadImage
                         src={sticker.url}
                         alt={sticker.title}
-                        className="w-full h-full object-contain"
+                        className="h-full w-full object-contain"
                         effect="blur"
                       />
                     </button>
@@ -157,9 +157,9 @@ export function StickerPicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[350px] p-0" align="end">
-        <div className="flex flex-col gap-0 px-3 py-2 border-b">
-          <p className="font-medium text-sm">Không thấy sticker bạn thích?</p>
-          <span className="text-xs text-muted-foreground">
+        <div className="flex flex-col gap-0 border-b px-3 py-2">
+          <p className="text-sm font-medium">Không thấy sticker bạn thích?</p>
+          <span className="text-muted-foreground text-xs">
             Đề xuất thêm sticker mới{" "}
             <a
               className="text-primary underline"

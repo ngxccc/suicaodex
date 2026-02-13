@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { initImageProxy } from "@/lib/axios";
+import { initImageProxy } from "@/shared/config/axios";
 
 export function ImageProxyInitializer() {
   useEffect(() => {

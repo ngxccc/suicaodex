@@ -1,5 +1,5 @@
 import { Manga, Tag, TagsGroup } from "@/types/types";
-import { axiosWithProxy } from "../axios";
+import { axiosWithProxy } from "../../shared/config/axios";
 import { MangaParser } from "./manga";
 
 export function TagsParser(data: any[]): Tag[] {

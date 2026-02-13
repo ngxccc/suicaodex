@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav-user";
 import { NavMain } from "./nav-main";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import { NavSupports } from "./nav-supports";
 import { NavSettings } from "./nav-settings";
 // import { signOut, useSession } from "next-auth/react";
@@ -132,7 +132,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="h-12 items-center justify-center">
-        <NavUser  />
+        <NavUser />
       </SidebarHeader>
       {/* <SidebarSeparator /> */}
       <SidebarContent>

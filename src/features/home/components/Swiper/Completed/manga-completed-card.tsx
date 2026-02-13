@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { cn, generateSlug, getCoverImageUrl } from "@/lib/utils";
+import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
 import type { Manga } from "@/types/types";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import GroupInfo from "@/components/Groups/group-info";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import { getGroup } from "@/lib/mangadex/group";
 import { Metadata } from "next";
 import { cache } from "react";

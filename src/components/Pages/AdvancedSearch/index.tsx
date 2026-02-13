@@ -17,10 +17,10 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Label } from "@/components/ui/label";
 import { getTags } from "@/lib/mangadex/tag";
-import useContentHeight from "@/hooks/use-content-height";
+import useContentHeight from "@/shared/hooks/use-content-height";
 import { TagsSelector } from "./tags-selector";
 import { AuthorsSelector } from "./authors-selector";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -66,10 +66,10 @@ interface AdvancedSearchProps {
 // Function to filter array values based on their type
 function filterByType<T extends string>(
   values: string[],
-  allowedValues: readonly T[]
+  allowedValues: readonly T[],
 ): T[] {
   return values.filter((value): value is T =>
-    allowedValues.includes(value as T)
+    allowedValues.includes(value as T),
   ) as T[];
 }
 
@@ -139,28 +139,28 @@ export default function AdvancedSearch({
 
   // Filter and set the selected values based on their types
   const [selectedStatus, setSelectedStatus] = useState<string[]>(
-    filterByType(toArray(status), allowedStatuses)
+    filterByType(toArray(status), allowedStatuses),
   );
   const [selectedDemos, setSelectedDemos] = useState<string[]>(
-    filterByType(toArray(demos), allowedDemos)
+    filterByType(toArray(demos), allowedDemos),
   );
   const [selectedContent, setSelectedContent] = useState<string[]>(
-    filterByType(toArray(content), allowedContentRatings)
+    filterByType(toArray(content), allowedContentRatings),
   );
   const [selectedLanguage, setSelectedLanguage] = useState<string[]>(
-    filterByType(toArray(translated), allowedTranslatedLanguages)
+    filterByType(toArray(translated), allowedTranslatedLanguages),
   );
   const [selectedOriginLanguage, setSelectedOriginLanguage] = useState<
     string[]
   >(filterByType(toArray(origin), allowedOriginLanguages));
   const [selectedAuthor, setSelectedAuthor] = useState<string[]>(
-    toArray(author)
+    toArray(author),
   );
   const [selectedInclude, setSelectedInclude] = useState<string[]>(
-    toArray(include) || []
+    toArray(include) || [],
   );
   const [selectedExclude, setSelectedExclude] = useState<string[]>(
-    toArray(exclude) || []
+    toArray(exclude) || [],
   );
   const [tagOptions, setTagOptions] = useState<
     { value: string; label: string }[]
@@ -289,8 +289,8 @@ export default function AdvancedSearch({
         origin,
         availableChapter,
         translated,
-        year
-      )
+        year,
+      ),
   );
 
   // Function to handle search button click
@@ -353,7 +353,7 @@ export default function AdvancedSearch({
     <>
       <section className="flex flex-col gap-4 transition-all">
         <div>
-          <hr className="w-9 h-1 bg-primary border-none" />
+          <hr className="bg-primary h-1 w-9 border-none" />
           <h1 className="text-2xl font-black uppercase">Tìm kiếm nâng cao</h1>
         </div>
 
@@ -364,7 +364,7 @@ export default function AdvancedSearch({
         >
           <div className="grid gap-2 md:grid-cols-[1fr_12rem]">
             <div className="relative">
-              <Search className="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2" />
+              <Search className="absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2 transform" />
               <Input
                 className="bg-secondary pl-7"
                 placeholder="Nhập từ khóa..."
@@ -377,7 +377,7 @@ export default function AdvancedSearch({
             <CollapsibleTrigger asChild>
               <Button
                 variant={isOpen ? "secondary" : "default"}
-                className="[&[data-state=open]>svg]:rotate-180 [&_svg]:transition-transform transition-all"
+                className="transition-all [&_svg]:transition-transform [&[data-state=open]>svg]:rotate-180"
               >
                 <ChevronDown />
                 {isOpen ? "Ẩn bộ lọc" : "Mở bộ lọc"}
@@ -392,22 +392,22 @@ export default function AdvancedSearch({
             <div ref={contentRef}>
               <CollapsibleContent
                 className={cn(
-                  "grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 py-4 px-0.5",
+                  "grid grid-cols-1 gap-4 px-0.5 py-4 md:grid-cols-3 xl:grid-cols-4",
                   "data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
-                  "transition-opacity duration-200"
+                  "transition-opacity duration-200",
                 )}
               >
                 <div className="flex flex-col gap-2">
                   <Label>
                     Thể loại
                     {selectedInclude.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedInclude.length}
                       </span>
                     )}
                     {selectedExclude.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         -{selectedExclude.length}
                       </span>
@@ -433,7 +433,7 @@ export default function AdvancedSearch({
                   <Label>
                     Tác giả
                     {selectedAuthor.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedAuthor.length}
                       </span>
@@ -454,7 +454,7 @@ export default function AdvancedSearch({
                   <Label>
                     Tình trạng
                     {selectedStatus.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedStatus.length}
                       </span>
@@ -478,7 +478,7 @@ export default function AdvancedSearch({
                   <Label>
                     Dành cho
                     {selectedDemos.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedDemos.length}
                       </span>
@@ -502,7 +502,7 @@ export default function AdvancedSearch({
                   <Label>
                     Giới hạn nội dung
                     {selectedContent.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedContent.length}
                       </span>
@@ -526,7 +526,7 @@ export default function AdvancedSearch({
                   <Label>
                     Ngôn ngữ gốc
                     {selectedOriginLanguage.length > 0 && (
-                      <span className="font-light text-primary">
+                      <span className="text-primary font-light">
                         {" "}
                         +{selectedOriginLanguage.length}
                       </span>
@@ -548,17 +548,17 @@ export default function AdvancedSearch({
 
                 <div className="flex flex-col gap-2">
                   <Label>Năm phát hành</Label>
-                  <div className="flex relative">
+                  <div className="relative flex">
                     <Input
-                      className="min-h-10 shadow-none font-medium text-sm pl-4 pr-14"
+                      className="min-h-10 pr-14 pl-4 text-sm font-medium shadow-none"
                       type="number"
                       placeholder="Mặc định"
                       value={selectedYear}
                       onChange={(e) => setSelectedYear(e.target.value)}
                     />
-                    <div className="flex absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <div className="absolute top-1/2 right-3 flex -translate-y-1/2 transform">
                       <Button
-                        className="h-10 w-5 bg-transparent hover:bg-transparent text-muted-foreground hover:text-primary"
+                        className="text-muted-foreground hover:text-primary h-10 w-5 bg-transparent hover:bg-transparent"
                         size="icon"
                         variant="ghost"
                         onClick={() => {
@@ -569,7 +569,7 @@ export default function AdvancedSearch({
                         <Minus />
                       </Button>
                       <Button
-                        className="h-10 w-5 bg-transparent hover:bg-transparent text-muted-foreground hover:text-primary"
+                        className="text-muted-foreground hover:text-primary h-10 w-5 bg-transparent hover:bg-transparent"
                         size="icon"
                         variant="ghost"
                         onClick={() =>
@@ -595,7 +595,7 @@ export default function AdvancedSearch({
                     <Label htmlFor="hasAvailableChapter">
                       Có bản dịch?
                       {selectedLanguage.length > 0 && (
-                        <span className="font-light text-primary">
+                        <span className="text-primary font-light">
                           {" "}
                           +{selectedLanguage.length}
                         </span>
@@ -626,7 +626,7 @@ export default function AdvancedSearch({
           <AdvancedSearchGuide />
 
           <Button
-            className="bg-[#FF4040]/20 hover:bg-[#FF4040]/10 text-[#FF4040]"
+            className="bg-[#FF4040]/20 text-[#FF4040] hover:bg-[#FF4040]/10"
             variant="default"
             onClick={resetFilter}
             disabled={
@@ -665,7 +665,7 @@ export default function AdvancedSearch({
           <Pagination className="mt-4">
             <PaginationContent>
               <PaginationPrevious
-                className="w-8 h-8"
+                className="h-8 w-8"
                 onClick={() => handlePageChange(page - 1)}
                 disabled={page === 1}
               />
@@ -675,7 +675,7 @@ export default function AdvancedSearch({
                 Array.from({ length: totalPages }, (_, i) => (
                   <PaginationItem key={i + 1}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={i + 1 === page}
                       onClick={() => handlePageChange(i + 1)}
                     >
@@ -689,7 +689,7 @@ export default function AdvancedSearch({
                   {[1, 2, 3, 4, 5].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -700,7 +700,7 @@ export default function AdvancedSearch({
                   <PaginationEllipsis />
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(totalPages)}
                     >
                       {totalPages}
@@ -712,7 +712,7 @@ export default function AdvancedSearch({
                 <>
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(1)}
                     >
                       1
@@ -728,7 +728,7 @@ export default function AdvancedSearch({
                   ].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -742,7 +742,7 @@ export default function AdvancedSearch({
                 <>
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(1)}
                     >
                       1
@@ -752,7 +752,7 @@ export default function AdvancedSearch({
                   {[page - 1, page, page + 1].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -763,7 +763,7 @@ export default function AdvancedSearch({
                   <PaginationEllipsis />
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(totalPages)}
                     >
                       {totalPages}
@@ -773,7 +773,7 @@ export default function AdvancedSearch({
               )}
 
               <PaginationNext
-                className="w-8 h-8"
+                className="h-8 w-8"
                 onClick={() => handlePageChange(page + 1)}
                 disabled={page === totalPages}
               />

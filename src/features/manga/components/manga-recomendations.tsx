@@ -1,6 +1,6 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getRecommendedMangas } from "@/features/manga/api/manga";
 import { Loader2, Terminal } from "lucide-react";
 import useSWR from "swr";
@@ -11,7 +11,7 @@ import {
 } from "../../../components/ui/alert";
 import NoPrefetchLink from "../../../components/Custom/no-prefetch-link";
 import RecentlyCard from "../../home/components/Recently/recently-card";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 interface MangaRecommendationsProps {
   id: string;

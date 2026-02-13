@@ -20,10 +20,10 @@ import {
 } from "lucide-react";
 import { ReactElement, useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { useScrollDirection } from "@/hooks/use-scroll-direction";
-import useScrollOffset from "@/hooks/use-scroll-offset";
-import { useConfig } from "@/hooks/use-config";
+import { cn } from "@/shared/lib/utils";
+import { useScrollDirection } from "@/shared/hooks/use-scroll-direction";
+import useScrollOffset from "@/shared/hooks/use-scroll-offset";
+import { useConfig } from "@/shared/hooks/use-config";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -64,7 +64,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
       chapterData.group.map((group) => group.id),
     ],
     ([, mangaId, language, groups]) =>
-      getChapterAggregate(mangaId, language, groups)
+      getChapterAggregate(mangaId, language, groups),
   );
 
   // Check if current chapter exists in the aggregate data
@@ -72,8 +72,8 @@ export default function Reader({ images, chapterData }: ReaderProps) {
     volume.chapters.some(
       (chapter) =>
         chapter.id === chapterData.id ||
-        chapter.other?.some((id) => id === chapterData.id)
-    )
+        chapter.other?.some((id) => id === chapterData.id),
+    ),
   );
 
   // Retry with exponential backoff
@@ -88,7 +88,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
       console.log(
         `Chapter not found in aggregate data, retry ${
           retryCount + 1
-        }/${MAX_RETRIES}...`
+        }/${MAX_RETRIES}...`,
       );
 
       // Calculate delay with exponential backoff
@@ -127,7 +127,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
         <LoadingNav
           button={
             <Button
-              className="w-full md:min-w-48 justify-start whitespace-normal! break-all! shrink!"
+              className="w-full shrink! justify-start break-all! whitespace-normal! md:min-w-48"
               variant="outline"
             >
               <Loader2 className="animate-spin" />
@@ -201,16 +201,16 @@ function LoadingNav({ button }: LoadingNavProps) {
     <Card
       className={cn(
         "overflow-x-auto",
-        `fixed bottom-0 left-1/2 transform -translate-x-1/2 md:-translate-x-[calc(50%+var(--sidebar-width-icon)/2)] z-10 transition-all duration-300`,
-        "mx-auto flex w-full translate-y-0 items-center justify-center rounded-none bg-background border-none",
-        "md:rounded-lg md:w-auto md:-translate-y-2",
+        `fixed bottom-0 left-1/2 z-10 -translate-x-1/2 transform transition-all duration-300 md:-translate-x-[calc(50%+var(--sidebar-width-icon)/2)]`,
+        "bg-background mx-auto flex w-full translate-y-0 items-center justify-center rounded-none border-none",
+        "md:w-auto md:-translate-y-2 md:rounded-lg",
         isAtBottom && "translate-y-full md:translate-y-full",
         scrollDirection === "down" &&
           !isAtBottom &&
-          "translate-y-full md:translate-y-full"
+          "translate-y-full md:translate-y-full",
       )}
     >
-      <CardContent className="flex gap-2 p-2 md:gap-1.5 md:p-1.5 w-full">
+      <CardContent className="flex w-full gap-2 p-2 md:gap-1.5 md:p-1.5">
         <Button
           disabled
           size="icon"
@@ -249,7 +249,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                     variant="outline"
                     className={cn(
                       config.reader.type === "single" &&
-                        "border-2 border-primary!"
+                        "border-primary! border-2",
                     )}
                     onClick={() => {
                       setConfig({
@@ -271,7 +271,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                     variant="outline"
                     className={cn(
                       config.reader.type === "long-strip" &&
-                        "border-2 border-primary!"
+                        "border-primary! border-2",
                     )}
                     onClick={() =>
                       setConfig({
@@ -342,7 +342,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                     variant="outline"
                     className={cn(
                       config.reader.imageFit === "height" &&
-                        "border-2 border-primary!"
+                        "border-primary! border-2",
                     )}
                     onClick={() =>
                       setConfig({
@@ -362,7 +362,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                     variant="outline"
                     className={cn(
                       config.reader.imageFit === "width" &&
-                        "border-2 border-primary!"
+                        "border-primary! border-2",
                     )}
                     onClick={() =>
                       setConfig({
@@ -386,7 +386,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                   <Button
                     variant="outline"
                     className={cn(
-                      !config.reader.header && "border-2 border-primary!"
+                      !config.reader.header && "border-primary! border-2",
                     )}
                     onClick={() =>
                       setConfig({
@@ -405,7 +405,7 @@ function LoadingNav({ button }: LoadingNavProps) {
                   <Button
                     variant="outline"
                     className={cn(
-                      !!config.reader.header && "border-2 border-primary!"
+                      !!config.reader.header && "border-primary! border-2",
                     )}
                     onClick={() =>
                       setConfig({

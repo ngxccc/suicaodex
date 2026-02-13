@@ -1,5 +1,5 @@
 import { Chapter, Manga } from "@/types/types";
-import { axiosWithProxy } from "../axios";
+import { axiosWithProxy } from "../../shared/config/axios";
 import { MangaParser } from "./manga";
 import { ChapterParser } from "./chapter";
 

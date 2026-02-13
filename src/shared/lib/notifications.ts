@@ -1,5 +1,5 @@
-import type { Chapter } from "@/types/types";
-import { getChaptersByIds, getMangasByIDs } from "./mangadex/history";
+import { getChaptersByIds, getMangasByIDs } from "../../lib/mangadex/history";
+import type { Chapter } from "../types/common";
 
 export async function getUnreadChapters(ids: string[]): Promise<Chapter[]> {
   if (ids.length === 0) return [];

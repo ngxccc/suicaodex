@@ -1,12 +1,12 @@
 "use client";
 import { MainNav } from "@/components/Navbar/main-nav";
 import { SidebarTrigger } from "../ui/sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
-import useScrollOffset from "@/hooks/use-scroll-offset";
+import useScrollOffset from "@/shared/hooks/use-scroll-offset";
 import QuickSearch from "../Search/quick-search";
 import { usePathname } from "next/navigation";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 
 export function SiteHeader() {
   const { isAtTop } = useScrollOffset();
@@ -21,19 +21,19 @@ export function SiteHeader() {
         "px-4 md:px-8 lg:px-12",
         isAtTop && "bg-transparent",
         !isAtTop &&
-          "bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60"
+          "bg-background/95 supports-backdrop-filter:bg-background/60 backdrop-blur-sm",
       )}
     >
       <div className="container-wrapper">
         <div className="flex h-12 items-center justify-between">
           <MainNav />
           {/* <MobileNav /> */}
-          <div className="flex grow items-center gap-2 justify-end">
+          <div className="flex grow items-center justify-end gap-2">
             <QuickSearch />
 
             <nav className="flex items-center gap-2">
               <ModeSwitcher />
-              <SidebarTrigger className="w-8 h-8 bg-muted/50 shadow-xs" />
+              <SidebarTrigger className="bg-muted/50 h-8 w-8 shadow-xs" />
             </nav>
           </div>
         </div>

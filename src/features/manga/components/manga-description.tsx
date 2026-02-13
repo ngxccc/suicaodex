@@ -1,11 +1,11 @@
 import { ChevronsDown, ChevronsUp, Loader2, Undo2 } from "lucide-react";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import { SiGoogletranslate } from "@icons-pack/react-simple-icons";
 import { Button } from "../../../components/ui/button";
-import useContentHeight from "@/hooks/use-content-height";
+import useContentHeight from "@/shared/hooks/use-content-height";
 import type { Manga } from "@/types/types";
 import MangaSubInfo from "./manga-subinfo";
 

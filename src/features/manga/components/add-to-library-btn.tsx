@@ -11,8 +11,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useConfig } from "@/hooks/use-config";
-import { cn, getCoverImageUrl } from "@/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
+import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 import type { LibraryType, Manga } from "@/types/types";
 import {
   Album,
@@ -37,10 +37,10 @@ import {
 } from "@/components/ui/select";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
-import { useLocalLibrary } from "@/hooks/use-local-library";
-import { useLocalNotification } from "@/hooks/use-local-notification";
+import { useLocalLibrary } from "@/shared/hooks/use-local-library";
+import { useLocalNotification } from "@/shared/hooks/use-local-notification";
 import { useSession } from "next-auth/react";
-import { updateMangaCategory } from "@/lib/suicaodex/db";
+import { updateMangaCategory } from "@/shared/config/db";
 
 interface AddToLibraryBtnProps {
   manga: Manga;

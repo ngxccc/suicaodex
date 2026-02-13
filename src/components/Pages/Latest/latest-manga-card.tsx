@@ -9,13 +9,13 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import {
   cn,
   formatTimeToNow,
   generateSlug,
   getCoverImageUrl,
-} from "@/lib/utils";
+} from "@/shared/lib/utils";
 import { Chapter, Manga } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import {

@@ -7,7 +7,7 @@ import type {
   MangaStats,
   Tag,
 } from "@/types/types";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import type { MangaDexApiResponse } from "@/types/mangadex-api";
 import type {
   AuthorAttributes,
@@ -16,9 +16,9 @@ import type {
   MangaTag,
   Relationship,
 } from "@/features/manga/types";
-import { axiosWithProxy } from "@/lib/axios";
+import { axiosWithProxy } from "@/shared/config/axios";
 import { ChaptersParser } from "@/lib/mangadex/chapter";
-import { cacheRequest } from "@/lib/cache-utils";
+import { cacheRequest } from "@/shared/lib/cache";
 
 function getPreferredTitle(
   titles: Record<string, string>,

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { serializeComment } from "@/lib/suicaodex/serializers";
-import { auth } from "@/auth";
-import { limiter, RateLimitError } from "@/lib/rate-limit";
-import { getContentLength } from "@/lib/utils";
+import { prisma } from "@/shared/config/prisma";
+import { serializeComment } from "@/shared/lib/serializers";
+import { auth } from "@/shared/config/authjs";
+import { limiter, RateLimitError } from "@/shared/lib/rate-limit";
+import { getContentLength } from "@/shared/lib/utils";
 
 interface RouteParams {
   params: Promise<{
@@ -96,23 +96,20 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   const contentLength = getContentLength(content || "");
 
   if (!id || !content || !title || !chapterNumber) {
-    return NextResponse.json(
-      { error: "Missing data" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Missing data" }, { status: 400 });
   }
 
   if (contentLength < 1) {
     return NextResponse.json(
       { error: "Comment must be at least 1 character" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (contentLength > 2000) {
     return NextResponse.json(
       { error: "Comment must not exceed 2000 characters" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

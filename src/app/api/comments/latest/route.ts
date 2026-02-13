@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { serializeComment } from "@/lib/suicaodex/serializers";
-import { limiter, RateLimitError } from "@/lib/rate-limit";
+import { prisma } from "@/shared/config/prisma";
+import { serializeComment } from "@/shared/lib/serializers";
+import { limiter, RateLimitError } from "@/shared/lib/rate-limit";
 
 export async function GET(req: NextRequest) {
   const headers = new Headers();
@@ -43,7 +43,10 @@ export async function GET(req: NextRequest) {
   }));
 
   const merged = [...taggedManga, ...taggedChapter]
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
     .slice(0, 10);
 
   return NextResponse.json(merged);

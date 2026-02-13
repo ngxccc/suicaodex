@@ -14,9 +14,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/popover";
-import { useConfig } from "@/hooks/use-config";
-import { cn, formatNumber } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useConfig } from "@/shared/hooks/use-config";
+import { cn, formatNumber } from "@/shared/lib/utils";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 
 interface MangaStatsProps {
   stats: MangaStats;

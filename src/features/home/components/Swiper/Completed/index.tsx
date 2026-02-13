@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import useSWR from "swr";
@@ -14,7 +14,7 @@ import DoroLoading from "#/images/doro-loading.gif";
 import { Marquee } from "@/components/ui/marquee";
 import RecentlyCard from "../../Recently/recently-card";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 import { getCompletedMangas } from "@/features/manga/api/manga";
 
 export default function CompletedSwiper() {

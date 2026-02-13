@@ -1,5 +1,5 @@
-import { BaseColor } from "@/config/base-colors";
-import { PresetTheme } from "@/config/preset-themes";
+import { BaseColor } from "@/shared/config/base-colors";
+import { PresetTheme } from "@/shared/config/preset-themes";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 

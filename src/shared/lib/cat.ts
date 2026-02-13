@@ -2,15 +2,6 @@ import z from "zod";
 
 export const CATAAS_BASE = "https://cataas.com";
 
-// export interface Cat {
-//   id: string;
-//   tags: string[];
-//   created_at: string;
-//   url?: string;
-//   mimetype: string;
-//   createdAt?: string;
-// }
-
 export const CatSchema = z.object({
   id: z.string(),
   tags: z.array(z.string()),

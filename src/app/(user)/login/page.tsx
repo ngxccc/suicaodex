@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/shared/config/authjs";
 import { LoginForm } from "@/components/login-form";
 import { WarpBackground } from "@/components/ui/warp-background";
 import { Metadata } from "next";
@@ -24,8 +24,8 @@ export default async function LoginPage({ searchParams }: pageProps) {
   }
 
   return (
-    <WarpBackground className="p-0 border-none!">
-      <div className="grid lg:grid-cols-2 h-[calc(100vh-80px)]">
+    <WarpBackground className="border-none! p-0">
+      <div className="grid h-[calc(100vh-80px)] lg:grid-cols-2">
         <div className="flex flex-col gap-4 p-6 md:p-10">
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-xs">

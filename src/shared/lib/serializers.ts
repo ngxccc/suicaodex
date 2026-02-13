@@ -1,4 +1,8 @@
-import type { User, MangaComment, ChapterComment } from "@prisma/client";
+import type {
+  User,
+  MangaComment,
+  ChapterComment,
+} from "prisma/generated/client";
 
 export function serializeUser(user: User) {
   return {

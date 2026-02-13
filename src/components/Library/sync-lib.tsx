@@ -1,7 +1,7 @@
 "use client";
 
 import { getMangasByIDs } from "@/lib/mangadex/history";
-import { getUserLibrary } from "@/lib/suicaodex/db";
+import { getUserLibrary } from "@/shared/config/db";
 import type { Manga } from "@/types/types";
 import { Album, BookmarkCheck, ListCheck, NotebookPen } from "lucide-react";
 import { useEffect, useState } from "react";

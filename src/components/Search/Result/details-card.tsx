@@ -7,7 +7,7 @@ import { Manga } from "@/types/types";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 interface DetailsCardProps {
   manga: Manga;

@@ -1,12 +1,12 @@
 "use client";
 
-import { cn, generateSlug, getCoverImageUrl } from "@/lib/utils";
+import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
 import type { Artist, Author, Manga } from "@/types/types";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import Tags from "@/features/manga/components/Tags";
 import MangaCover from "@/features/manga/components/manga-cover";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import Image from "next/image";
 

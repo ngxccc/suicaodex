@@ -1,12 +1,12 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { FirstChapters } from "@/features/manga/api/manga";
 import { getChapterAggregate } from "@/lib/mangadex/chapter";
 import { useState, memo } from "react";
 import { Button } from "../../../components/ui/button";
 import { BookOpen, BookX, Loader2 } from "lucide-react";
-import useReadingHistory from "@/hooks/use-reading-history";
+import useReadingHistory from "@/shared/hooks/use-reading-history";
 import useSWR from "swr";
 import {
   Dialog,

@@ -1,6 +1,6 @@
 import { Author, AuthorDetail, Manga } from "@/types/types";
 import { MangaParser } from "./manga";
-import { axiosWithProxy } from "../axios";
+import { axiosWithProxy } from "../../shared/config/axios";
 
 export function AuthorParser(data: any[]): Author[] {
   const authors = data.filter((item: any) => item.type === "author");

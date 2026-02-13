@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSwiper } from "swiper/react";
 

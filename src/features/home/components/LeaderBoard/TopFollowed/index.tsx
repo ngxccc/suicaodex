@@ -1,11 +1,11 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getTopFollowedMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import TopFollowedCard from "./top-followed-card";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import LeaderBoardCardSkeleton from "../leaderboard-card-skeleon";
 
 export default function TopFollowed() {

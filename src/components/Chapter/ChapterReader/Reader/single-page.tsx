@@ -2,8 +2,8 @@
 
 import MangaImage from "./manga-image";
 import { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/shared/lib/utils";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 
 interface SinglePageProps {
   images: string[];
@@ -53,11 +53,12 @@ export default function SinglePage({ images }: SinglePageProps) {
       <div className="mt-2 text-center">
         {currentPage + 1}/{images.length}
       </div>
-      <div className={cn("min-w-0 relative mt-2",
-        isMobile && "py-10"
-      )} ref={imageContainerRef}>
+      <div
+        className={cn("relative mt-2 min-w-0", isMobile && "py-10")}
+        ref={imageContainerRef}
+      >
         <div
-          className="overflow-x-auto flex items-center h-full select-none cursor-pointer"
+          className="flex h-full cursor-pointer items-center overflow-x-auto select-none"
           onClick={handleClick}
         >
           <MangaImage

@@ -3,8 +3,8 @@
 import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { META_THEME_COLORS } from "@/config/site";
-import { useMetaColor } from "@/hooks/use-meta-color";
+import { META_THEME_COLORS } from "@/shared/config/site";
+import { useMetaColor } from "@/shared/hooks/use-meta-color";
 import { Button } from "../ui/button";
 
 export function ModeSwitcher() {
@@ -16,14 +16,14 @@ export function ModeSwitcher() {
     setMetaColor(
       resolvedTheme === "dark"
         ? META_THEME_COLORS.light
-        : META_THEME_COLORS.dark
+        : META_THEME_COLORS.dark,
     );
   }, [resolvedTheme, setTheme, setMetaColor]);
 
   return (
     <Button
       variant="ghost"
-      className="group/toggle h-8 w-8 px-0 bg-muted/50 shadow-xs"
+      className="group/toggle bg-muted/50 h-8 w-8 px-0 shadow-xs"
       onClick={toggleTheme}
     >
       <SunIcon className="hidden [html.dark_&]:block" />

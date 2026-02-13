@@ -3,7 +3,7 @@
 import MangaCover from "@/features/manga/components/manga-cover";
 import StatusChip from "@/features/manga/components/Tags/status-tag";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Manga } from "@/types/types";
 import { Bookmark, MessageSquare, Star } from "lucide-react";
 

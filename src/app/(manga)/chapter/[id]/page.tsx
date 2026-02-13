@@ -1,5 +1,5 @@
 import ChapterPage from "@/components/Pages/Chapter/chapter";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import { getChapterDetail } from "@/lib/mangadex/chapter";
 import { Metadata } from "next";
 import { cache } from "react";

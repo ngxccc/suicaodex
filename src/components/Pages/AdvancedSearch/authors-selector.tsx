@@ -5,7 +5,7 @@ import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { SearchAuthor, SearchAuthorByIds } from "@/lib/mangadex/author";
 import { AsyncMultiSelect } from "@/components/ui/async-multi-select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Author } from "@/types/types";
 
 interface AuthorOption {
@@ -32,8 +32,11 @@ export const AuthorsSelector: React.FC<AuthorsSelectorProps> = ({
   disableFooter = false,
   showSelectedValue = false,
 }) => {
-  const [selectedAuthorIds, setSelectedAuthorIds] = useState<string[]>(defaultValue);
-  const [cachedAuthors, setCachedAuthors] = useState<Map<string, AuthorOption>>(new Map());
+  const [selectedAuthorIds, setSelectedAuthorIds] =
+    useState<string[]>(defaultValue);
+  const [cachedAuthors, setCachedAuthors] = useState<Map<string, AuthorOption>>(
+    new Map(),
+  );
   const [initialOptionsLoaded, setInitialOptionsLoaded] = useState(false);
   const [hasValidDefaultValues, setHasValidDefaultValues] = useState(true);
 
@@ -53,7 +56,7 @@ export const AuthorsSelector: React.FC<AuthorsSelectorProps> = ({
 
             // Store into our cached authors map
             const newCache = new Map(cachedAuthors);
-            options.forEach(opt => newCache.set(opt.value, opt));
+            options.forEach((opt) => newCache.set(opt.value, opt));
             setCachedAuthors(newCache);
           } else {
             // If SearchAuthorByIds returns empty, set flag to not use defaultValue
@@ -75,32 +78,35 @@ export const AuthorsSelector: React.FC<AuthorsSelectorProps> = ({
   const cachedAuthorsArray = Array.from(cachedAuthors.values());
 
   // Search authors and update the cache
-  const handleAuthorSearch = useCallback(async (query: string): Promise<AuthorOption[]> => {
-    // If no query, return all cached authors
-    if (!query.trim()) {
-      return cachedAuthorsArray;
-    }
-
-    try {
-      const data = await SearchAuthor(query);
-      const searchResults = data.map((author) => ({
-        value: author.id,
-        label: author.name,
-      }));
-
-      // Update our cache with the new search results
-      if (searchResults.length > 0) {
-        const newCache = new Map(cachedAuthors);
-        searchResults.forEach(opt => newCache.set(opt.value, opt));
-        setCachedAuthors(newCache);
+  const handleAuthorSearch = useCallback(
+    async (query: string): Promise<AuthorOption[]> => {
+      // If no query, return all cached authors
+      if (!query.trim()) {
+        return cachedAuthorsArray;
       }
 
-      return searchResults;
-    } catch (error) {
-      console.error("Error searching for authors:", error);
-      return cachedAuthorsArray; // Return cached authors on error
-    }
-  }, [cachedAuthors, cachedAuthorsArray]);
+      try {
+        const data = await SearchAuthor(query);
+        const searchResults = data.map((author) => ({
+          value: author.id,
+          label: author.name,
+        }));
+
+        // Update our cache with the new search results
+        if (searchResults.length > 0) {
+          const newCache = new Map(cachedAuthors);
+          searchResults.forEach((opt) => newCache.set(opt.value, opt));
+          setCachedAuthors(newCache);
+        }
+
+        return searchResults;
+      } catch (error) {
+        console.error("Error searching for authors:", error);
+        return cachedAuthorsArray; // Return cached authors on error
+      }
+    },
+    [cachedAuthors, cachedAuthorsArray],
+  );
 
   const handleValueChange = (ids: string[]) => {
     setSelectedAuthorIds(ids);

@@ -1,7 +1,7 @@
 import { Chapter, ChapterAggregate, Volume } from "@/types/types";
 import { GroupParser } from "./group";
-import { axiosWithProxy } from "../axios";
-import { getCurrentImageProxyUrl } from "../utils";
+import { axiosWithProxy } from "../../shared/config/axios";
+import { getCurrentImageProxyUrl } from "../../shared/lib/utils";
 
 export function ChaptersParser(data: any[]): Chapter[] {
   return data.map((item) => {

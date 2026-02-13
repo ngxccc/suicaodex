@@ -17,7 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import MyLibrary from "@/components/Pages/MyLibrary";
-import { auth } from "@/auth";
+import { auth } from "@/shared/config/authjs";
 import SyncLib from "@/components/Library/sync-lib";
 
 export function generateMetadata(): Metadata {
@@ -39,17 +39,17 @@ export default async function Page() {
   return (
     <>
       <div>
-        <hr className="w-9 h-1 bg-primary border-none" />
+        <hr className="bg-primary h-1 w-9 border-none" />
         <h1 className="text-2xl font-black uppercase">Thư viện</h1>
       </div>
 
       <Tabs defaultValue="local" className="mt-4">
         <TabsList className="w-full">
-          <TabsTrigger className="w-full flex items-center" value="local">
+          <TabsTrigger className="flex w-full items-center" value="local">
             <CloudOff size={16} className="mr-1" />
             Từ thiết bị
           </TabsTrigger>
-          <TabsTrigger className="w-full flex items-center" value="cloud">
+          <TabsTrigger className="flex w-full items-center" value="cloud">
             <CircleUser size={16} className="mr-1" />
             Từ tài khoản
           </TabsTrigger>
@@ -78,7 +78,7 @@ export default async function Page() {
           </Accordion>
 
           <Tabs defaultValue="following" className="mt-2">
-            <TabsList className="rounded-sm gap-1 h-10">
+            <TabsList className="h-10 gap-1 rounded-sm">
               {tabValues.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -101,7 +101,7 @@ export default async function Page() {
           {!!session ? (
             <SyncLib session={session} />
           ) : (
-            <Alert className="rounded-sm justify-center text-center">
+            <Alert className="justify-center rounded-sm text-center">
               <AlertTitle>Bạn cần đăng nhập để dùng chức năng này!</AlertTitle>
             </Alert>
           )}

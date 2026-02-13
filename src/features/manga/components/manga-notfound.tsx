@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "../../../components/ui/button";
 import Banner from "./manga-banner";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import ShutUp from "#/images/shutup.webp";
 import Image from "next/image";
 

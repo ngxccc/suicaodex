@@ -1,9 +1,6 @@
-"use server";
-
-import type { Category } from "@prisma/client";
-
-import { auth } from "@/auth";
-import { prisma } from "../prisma";
+import { auth } from "@/shared/config/authjs";
+import { prisma } from "./prisma";
+import type { Category } from "prisma/generated/enums";
 
 async function checkAuth(userID: string): Promise<boolean> {
   const session = await auth();
@@ -131,10 +128,12 @@ export async function getUserLibrary(userId: string): Promise<{
         acc[category].push(mangaId);
         return acc;
       },
-      { FOLLOWING: [], READING: [], PLAN: [], COMPLETED: [] } as Record<
-        Category,
-        string[]
-      >,
+      {
+        FOLLOWING: [],
+        READING: [],
+        PLAN: [],
+        COMPLETED: [],
+      } as unknown as Record<Category, string[]>,
     );
 
     return result;

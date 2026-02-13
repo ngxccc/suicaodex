@@ -2,7 +2,7 @@ import type { Tag } from "@/types/types";
 import StatusChip from "./status-tag";
 import ContentRatingChip from "./content-rating-tag";
 import NormalTag from "./normal-tag";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 interface TagsProps {
   tags: Tag[];

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
 import { signIn } from "next-auth/react";
@@ -28,7 +28,7 @@ export function LoginForm({ className, callback, ...props }: LoginFormProps) {
         </Button>
 
         <Button
-          className="text-white bg-stone-800  hover:bg-stone-800/80"
+          className="bg-stone-800 text-white hover:bg-stone-800/80"
           onClick={() =>
             void signIn("google", {
               redirectTo: callback,
@@ -39,7 +39,7 @@ export function LoginForm({ className, callback, ...props }: LoginFormProps) {
         </Button>
 
         <Button
-          className="bg-slate-700  text-white hover:bg-slate-700/80"
+          className="bg-slate-700 text-white hover:bg-slate-700/80"
           onClick={() =>
             void signIn("github", {
               redirectTo: callback,

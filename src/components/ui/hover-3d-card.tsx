@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface Hover3DCardProps {
   imageSrc: string;
@@ -33,7 +33,7 @@ export function Hover3DCard({
     const rotateY = ((x - centerX) / centerX) * 15;
 
     setTransform(
-      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`
+      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`,
     );
 
     // Glare effect
@@ -47,7 +47,7 @@ export function Hover3DCard({
 
   const handleMouseLeave = () => {
     setTransform(
-      "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
+      "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
     );
     setGlareStyle({ opacity: 0 });
   };
@@ -59,7 +59,7 @@ export function Hover3DCard({
       onMouseLeave={handleMouseLeave}
       className={cn(
         "relative cursor-pointer overflow-hidden rounded-xl shadow-xl transition-all duration-200 ease-out",
-        className
+        className,
       )}
       style={{
         transform,
@@ -79,7 +79,7 @@ export function Hover3DCard({
       />
       {/* Holographic shimmer effect */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 opacity-0 mix-blend-overlay transition-opacity duration-300"
         style={{
           background:
             "linear-gradient(135deg, rgba(255,0,150,0.1) 0%, rgba(0,255,255,0.1) 50%, rgba(255,255,0,0.1) 100%)",

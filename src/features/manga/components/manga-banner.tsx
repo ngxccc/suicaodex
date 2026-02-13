@@ -1,4 +1,4 @@
-import { cn, getCoverImageUrl } from "@/lib/utils";
+import { cn, getCoverImageUrl } from "@/shared/lib/utils";
 
 interface BannerProps {
   id?: string;

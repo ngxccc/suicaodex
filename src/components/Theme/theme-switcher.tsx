@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 
 export function ThemeSwitcher() {
   const [config] = useConfig();

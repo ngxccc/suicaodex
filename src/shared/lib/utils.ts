@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import { vi } from "date-fns/locale";
 import { load } from "cheerio";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import slugify from "slugify";
 
 interface FormatDistanceOptions {

@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/shared/config/site";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {

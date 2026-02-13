@@ -1,6 +1,6 @@
 "use client";
 
-import { getCatsList, getCatCount, type Cat } from "@/lib/cat";
+import { getCatsList, getCatCount, type Cat } from "@/shared/lib/cat";
 import useSWR from "swr";
 import {
   Pagination,
@@ -58,11 +58,11 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {[...Array(20)].map((_, index) => (
           <Skeleton
             key={index}
-            className="w-full rounded-sm aspect-5/7 bg-gray-500"
+            className="aspect-5/7 w-full rounded-sm bg-gray-500"
           />
         ))}
       </div>
@@ -82,7 +82,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
           <Pagination className="mt-4">
             <PaginationContent>
               <PaginationPrevious
-                className="w-8 h-8"
+                className="h-8 w-8"
                 onClick={() => handlePageChange(page - 1)}
                 disabled={page === 1}
               />
@@ -92,7 +92,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 Array.from({ length: totalPages }, (_, i) => (
                   <PaginationItem key={i + 1}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={i + 1 === page}
                       onClick={() => handlePageChange(i + 1)}
                     >
@@ -106,7 +106,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                   {[1, 2, 3, 4, 5].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -117,7 +117,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                   <PaginationEllipsis />
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(totalPages)}
                     >
                       {totalPages}
@@ -129,7 +129,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 <>
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(1)}
                     >
                       1
@@ -145,7 +145,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                   ].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -159,7 +159,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 <>
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(1)}
                     >
                       1
@@ -169,7 +169,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                   {[page - 1, page, page + 1].map((num) => (
                     <PaginationItem key={num}>
                       <PaginationLink
-                        className="w-8 h-8"
+                        className="h-8 w-8"
                         isActive={num === page}
                         onClick={() => handlePageChange(num)}
                       >
@@ -180,7 +180,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                   <PaginationEllipsis />
                   <PaginationItem>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       onClick={() => handlePageChange(totalPages)}
                     >
                       {totalPages}
@@ -190,7 +190,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
               )}
 
               <PaginationNext
-                className="w-8 h-8"
+                className="h-8 w-8"
                 onClick={() => handlePageChange(page + 1)}
                 disabled={page === totalPages}
               />
@@ -203,7 +203,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {cats.map((cat) => (
           <CatCard key={cat.id} cat={cat} />
         ))}
@@ -213,7 +213,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -223,7 +223,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -237,7 +237,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -248,7 +248,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -260,7 +260,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -276,7 +276,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -290,7 +290,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -300,7 +300,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -311,7 +311,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -321,7 +321,7 @@ export default function MeoPage({ page, limit }: MeoPageProps) {
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />

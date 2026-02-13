@@ -9,7 +9,7 @@ import {
   Minus,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -57,14 +57,15 @@ const tagSelectorVariants = cva(
     defaultVariants: {
       state: TagState.NONE,
     },
-  }
+  },
 );
 
 /**
  * Props for TagsSelector component
  */
 interface TagsSelectorProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof tagSelectorVariants> {
   /**
    * An array of tag objects to be displayed in the tags-selector component.
@@ -168,7 +169,7 @@ export const TagsSelector = React.forwardRef<
       isCompact = false,
       ...props
     },
-    ref
+    ref,
   ) => {
     // Store the state of each tag as a map of tag value to TagState
     const [tagStates, setTagStates] = React.useState<Record<string, TagState>>(
@@ -187,7 +188,7 @@ export const TagsSelector = React.forwardRef<
         });
 
         return states;
-      }
+      },
     );
 
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
@@ -199,7 +200,7 @@ export const TagsSelector = React.forwardRef<
         Object.entries(tagStates)
           .filter(([_, state]) => state === TagState.INCLUDE)
           .map(([value]) => value),
-      [tagStates]
+      [tagStates],
     );
 
     const excludedTags = React.useMemo(
@@ -207,13 +208,13 @@ export const TagsSelector = React.forwardRef<
         Object.entries(tagStates)
           .filter(([_, state]) => state === TagState.EXCLUDE)
           .map(([value]) => value),
-      [tagStates]
+      [tagStates],
     );
 
     // Calculate all selected tags (both included and excluded)
     const selectedTags = React.useMemo(
       () => [...includedTags, ...excludedTags],
-      [includedTags, excludedTags]
+      [includedTags, excludedTags],
     );
 
     // Update parent component when selections change
@@ -222,7 +223,7 @@ export const TagsSelector = React.forwardRef<
     }, [includedTags, excludedTags, onValueChange]);
 
     const handleInputKeyDown = (
-      event: React.KeyboardEvent<HTMLInputElement>
+      event: React.KeyboardEvent<HTMLInputElement>,
     ) => {
       if (event.key === "Enter") {
         setIsPopoverOpen(true);
@@ -311,15 +312,15 @@ export const TagsSelector = React.forwardRef<
             {...props}
             onClick={handleTogglePopover}
             className={cn(
-              "flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto",
-              className
+              "flex h-auto min-h-10 w-full items-center justify-between rounded-md border bg-inherit p-1 hover:bg-inherit [&_svg]:pointer-events-auto",
+              className,
             )}
           >
             {selectedTags.length > 0 ? (
-              <div className="flex justify-between items-center w-full">
+              <div className="flex w-full items-center justify-between">
                 {isCompact ? (
                   <div className="flex items-center overflow-hidden">
-                    <span className="text-sm truncate mx-3 text-muted-foreground">
+                    <span className="text-muted-foreground mx-3 truncate text-sm">
                       {selectedTags
                         .slice(0, maxCount)
                         .map((value) => {
@@ -345,13 +346,13 @@ export const TagsSelector = React.forwardRef<
                           key={value}
                           className={cn(
                             isAnimating ? "animate-bounce" : "",
-                            tagSelectorVariants({ state })
+                            tagSelectorVariants({ state }),
                           )}
                           style={{ animationDuration: `${animation}s` }}
                         >
                           {getStateIcon(state)}
                           {IconComponent && (
-                            <IconComponent className="h-4 w-4 mx-1" />
+                            <IconComponent className="mx-1 h-4 w-4" />
                           )}
                           {option?.label}
                           <XCircle
@@ -369,8 +370,8 @@ export const TagsSelector = React.forwardRef<
                     {selectedTags.length > maxCount && (
                       <Badge
                         className={cn(
-                          "bg-transparent text-foreground border-foreground/1 hover:bg-transparent",
-                          isAnimating ? "animate-bounce" : ""
+                          "text-foreground border-foreground/1 bg-transparent hover:bg-transparent",
+                          isAnimating ? "animate-bounce" : "",
                         )}
                         style={{ animationDuration: `${animation}s` }}
                       >
@@ -388,7 +389,7 @@ export const TagsSelector = React.forwardRef<
                 )}
                 <div className="flex items-center justify-between">
                   <XIcon
-                    className="h-4 mx-2 cursor-pointer text-muted-foreground"
+                    className="text-muted-foreground mx-2 h-4 cursor-pointer"
                     onClick={(event) => {
                       event.stopPropagation();
                       handleClear();
@@ -396,17 +397,17 @@ export const TagsSelector = React.forwardRef<
                   />
                   <Separator
                     orientation="vertical"
-                    className="flex min-h-6 h-full"
+                    className="flex h-full min-h-6"
                   />
-                  <ChevronsUpDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  <ChevronsUpDown className="text-muted-foreground mx-2 h-4 cursor-pointer" />
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full mx-auto">
-                <span className="text-sm text-muted-foreground mx-3">
+              <div className="mx-auto flex w-full items-center justify-between">
+                <span className="text-muted-foreground mx-3 text-sm">
                   {placeholder}
                 </span>
-                <ChevronsUpDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <ChevronsUpDown className="text-muted-foreground mx-2 h-4 cursor-pointer" />
               </div>
             )}
           </Button>
@@ -429,10 +430,10 @@ export const TagsSelector = React.forwardRef<
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {/* <div className="px-2 py-1.5 text-xs text-muted-foreground">
-                  Click to toggle: None → Include → Exclude → None  
+                  Click to toggle: None → Include → Exclude → None
                 </div> */}
                 {selectedTags.length > 0 && (
-                    <div className="flex flex-wrap items-center border-b pb-0.5">
+                  <div className="flex flex-wrap items-center border-b pb-0.5">
                     {selectedTags.map((value) => {
                       const option = options.find((o) => o.value === value);
                       const state = tagStates[value];
@@ -442,7 +443,7 @@ export const TagsSelector = React.forwardRef<
                           key={value}
                           className={cn(
                             isAnimating ? "animate-bounce" : "",
-                            tagSelectorVariants({ state })
+                            tagSelectorVariants({ state }),
                           )}
                           style={{ animationDuration: `${animation}s` }}
                         >
@@ -465,7 +466,7 @@ export const TagsSelector = React.forwardRef<
                     })}
                   </div>
                 )}
-                
+
                 {options.map((option) => {
                   const state = tagStates[option.value] || TagState.NONE;
                   return (
@@ -476,23 +477,23 @@ export const TagsSelector = React.forwardRef<
                     >
                       <div className="flex items-center justify-center">
                         {state === TagState.INCLUDE && (
-                          <Plus className="h-4 w-4 text-primary" />
+                          <Plus className="text-primary h-4 w-4" />
                         )}
                         {state === TagState.EXCLUDE && (
-                          <Minus className="h-4 w-4 text-destructive" />
+                          <Minus className="text-destructive h-4 w-4" />
                         )}
                         {state === TagState.NONE && (
                           <div className="h-4 w-4 opacity-50" />
                         )}
                       </div>
                       {option.icon && (
-                        <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                        <option.icon className="text-muted-foreground mr-2 h-4 w-4" />
                       )}
                       <span
                         className={cn(
                           state === TagState.INCLUDE && "text-primary",
                           state === TagState.EXCLUDE && "text-destructive",
-                          state === TagState.NONE && "text-muted-foreground"
+                          state === TagState.NONE && "text-muted-foreground",
                         )}
                       >
                         {option.label}
@@ -509,19 +510,19 @@ export const TagsSelector = React.forwardRef<
                       <>
                         <CommandItem
                           onSelect={handleClear}
-                          className="flex-1 justify-center cursor-pointer"
+                          className="flex-1 cursor-pointer justify-center"
                         >
                           Clear
                         </CommandItem>
                         <Separator
                           orientation="vertical"
-                          className="flex min-h-6 h-full"
+                          className="flex h-full min-h-6"
                         />
                       </>
                     )}
                     <CommandItem
                       onSelect={() => setIsPopoverOpen(false)}
-                      className="flex-1 justify-center cursor-pointer max-w-full"
+                      className="max-w-full flex-1 cursor-pointer justify-center"
                     >
                       Close
                     </CommandItem>
@@ -534,15 +535,15 @@ export const TagsSelector = React.forwardRef<
         {animation > 0 && selectedTags.length > 0 && (
           <WandSparkles
             className={cn(
-              "cursor-pointer my-2 text-foreground bg-background w-3 h-3",
-              isAnimating ? "" : "text-muted-foreground"
+              "text-foreground bg-background my-2 h-3 w-3 cursor-pointer",
+              isAnimating ? "" : "text-muted-foreground",
             )}
             onClick={() => setIsAnimating(!isAnimating)}
           />
         )}
       </Popover>
     );
-  }
+  },
 );
 
 TagsSelector.displayName = "TagsSelector";

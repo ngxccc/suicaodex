@@ -1,5 +1,5 @@
 import { Artist } from "@/types/types";
-import { axiosWithProxy } from "../axios";
+import { axiosWithProxy } from "../../shared/config/axios";
 
 export function ArtistParser(data: any): Artist[] {
   const artists = data.filter((item: any) => item.type === "artist");

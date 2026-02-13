@@ -1,18 +1,11 @@
 "use client";
 
 import * as React from "react";
-import {
-  Check,
-  MonitorCog,
-  Moon,
-  Palette,
-  Repeat,
-  Sun,
-} from "lucide-react";
+import { Check, MonitorCog, Moon, Palette, Repeat, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
-import { useConfig } from "@/hooks/use-config";
-import "@/styles/mdx.css";
+import { cn } from "@/shared/lib/utils";
+import { useConfig } from "@/shared/hooks/use-config";
+import "@/shared/styles/mdx.css";
 import {
   Drawer,
   DrawerContent,
@@ -25,9 +18,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ThemeWrapper } from "./theme-wrapper";
 import { Label } from "../ui/label";
 import { Skeleton } from "../ui/skeleton";
-import { baseColors } from "@/config/base-colors";
+import { baseColors } from "@/shared/config/base-colors";
 import { SidebarMenuButton } from "../ui/sidebar";
-import { presetThemes } from "@/config/preset-themes";
+import { presetThemes } from "@/shared/config/preset-themes";
 
 export function ThemeCustomizer() {
   // const [config, setConfig] = useConfig();
@@ -55,7 +48,7 @@ export function ThemeCustomizer() {
           <Customizer />
         </DrawerContent>
       </Drawer>
-      <div className="hidden items-center md:flex grow">
+      <div className="hidden grow items-center md:flex">
         <Popover>
           <PopoverTrigger asChild>
             <SidebarMenuButton
@@ -71,7 +64,7 @@ export function ThemeCustomizer() {
           </PopoverTrigger>
           <PopoverContent
             align="start"
-            className="z-40 w-[380px] rounded-xl bg-white p-6 dark:bg-zinc-950 mr-2"
+            className="z-40 mr-2 w-[380px] rounded-xl bg-white p-6 dark:bg-zinc-950"
           >
             <Customizer />
           </PopoverContent>
@@ -101,10 +94,10 @@ function Customizer() {
     >
       <div className="flex items-start pt-4 md:pt-0">
         <div className="space-y-1 pr-2">
-          <div className="font-semibold leading-none tracking-tight">
+          <div className="leading-none font-semibold tracking-tight">
             Tuỳ chỉnh giao diện
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div className="text-muted-foreground text-xs">
             Chọn màu bạn thích
           </div>
         </div>
@@ -130,7 +123,7 @@ function Customizer() {
           <div className="grid grid-cols-3 gap-2">
             {baseColors
               .filter(
-                (theme) => !["stone", "gray", "neutral"].includes(theme.name)
+                (theme) => !["stone", "gray", "neutral"].includes(theme.name),
               )
               .map((theme) => {
                 const isActive = config.theme === theme.name;
@@ -148,7 +141,7 @@ function Customizer() {
                     }}
                     className={cn(
                       "justify-start",
-                      isActive && "border-2 border-primary!"
+                      isActive && "border-primary! border-2",
                     )}
                     style={
                       {
@@ -160,7 +153,7 @@ function Customizer() {
                   >
                     <span
                       className={cn(
-                        "flex size-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-(--theme-primary)"
+                        "flex size-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-(--theme-primary)",
                       )}
                     >
                       {isActive && <Check className="size-3 text-white" />}
@@ -192,7 +185,7 @@ function Customizer() {
                   }}
                   className={cn(
                     "justify-start",
-                    isActive && "border-2 border-primary!"
+                    isActive && "border-primary! border-2",
                   )}
                   style={
                     {
@@ -204,7 +197,7 @@ function Customizer() {
                 >
                   <span
                     className={cn(
-                      "flex size-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-(--theme-primary)"
+                      "flex size-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-(--theme-primary)",
                     )}
                   >
                     {isActive && <Check className="size-3 text-white" />}
@@ -228,7 +221,7 @@ function Customizer() {
                   size="sm"
                   onClick={() => setMode("light")}
                   className={cn(
-                    unResolvedTheme === "light" && "border-2 border-primary!"
+                    unResolvedTheme === "light" && "border-primary! border-2",
                   )}
                 >
                   <Sun />
@@ -239,7 +232,7 @@ function Customizer() {
                   size="sm"
                   onClick={() => setMode("dark")}
                   className={cn(
-                    unResolvedTheme === "dark" && "border-2 border-primary!"
+                    unResolvedTheme === "dark" && "border-primary! border-2",
                   )}
                 >
                   <Moon />
@@ -250,7 +243,7 @@ function Customizer() {
                   size="sm"
                   onClick={() => setMode("system")}
                   className={cn(
-                    unResolvedTheme === "system" && "border-2 border-primary!"
+                    unResolvedTheme === "system" && "border-primary! border-2",
                   )}
                 >
                   <MonitorCog />

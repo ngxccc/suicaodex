@@ -1,7 +1,4 @@
-import NextAuth from "next-auth";
-import authConfig from "./auth.config";
-
-const { auth } = NextAuth(authConfig);
+import { auth } from "./shared/config/authjs";
 
 const authRoutes = ["/login"];
 const protectedRoutes = ["/user", "/settings"];

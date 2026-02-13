@@ -1,7 +1,7 @@
 "use client";
 
 import ResultTabs from "@/components/Search/Result/result-tabs";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getRecentlyMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import {

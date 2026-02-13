@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocalNotification } from "@/hooks/use-local-notification";
-import { getUnreadChapters } from "@/lib/notifications";
+import { useLocalNotification } from "@/shared/hooks/use-local-notification";
+import { getUnreadChapters } from "@/shared/lib/notifications";
 import useSWR from "swr";
 import { Button } from "../ui/button";
 import { BellOff, CheckCheck, Loader2 } from "lucide-react";
@@ -35,7 +35,7 @@ export default function Notifications({ page }: NotificationsProps) {
   const idsPerPage = unreadIds.slice((page - 1) * LIMIT, page * LIMIT);
 
   const { data, error, isLoading } = useSWR(["noti", idsPerPage], ([, ids]) =>
-    getUnreadChapters(ids)
+    getUnreadChapters(ids),
   );
 
   const handlePageChange = (newPage: number) => {
@@ -44,32 +44,32 @@ export default function Notifications({ page }: NotificationsProps) {
 
   return (
     <>
-      <div className="w-full flex flex-wrap gap-2 justify-end">
+      <div className="flex w-full flex-wrap justify-end gap-2">
         <Button
-          className="w-full md:w-auto whitespace-normal! break-all! shrink! line-clamp-1 flex"
+          className="line-clamp-1 flex w-full shrink! break-all! whitespace-normal! md:w-auto"
           size="sm"
           onClick={clearAllLocalNotifications}
           variant="secondary"
         >
           <BellOff />
-          <span className="break-all line-clamp-1">
+          <span className="line-clamp-1 break-all">
             Hủy nhận thông báo tất cả
           </span>
         </Button>
         <Button
-          className="w-full md:w-auto whitespace-normal! break-all! shrink! line-clamp-1 flex"
+          className="line-clamp-1 flex w-full shrink! break-all! whitespace-normal! md:w-auto"
           size="sm"
           onClick={markAllAsRead}
           variant="secondary"
         >
           <CheckCheck />
-          <span className="break-all line-clamp-1">
+          <span className="line-clamp-1 break-all">
             Đánh dấu tất cả là đã đọc
           </span>
         </Button>
       </div>
 
-      <div className="flex flex-col gap-2 mt-2">
+      <div className="mt-2 flex flex-col gap-2">
         <NotificationSection isLoading={isLoading} error={error} data={data} />
       </div>
 
@@ -77,7 +77,7 @@ export default function Notifications({ page }: NotificationsProps) {
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -87,7 +87,7 @@ export default function Notifications({ page }: NotificationsProps) {
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -101,7 +101,7 @@ export default function Notifications({ page }: NotificationsProps) {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -112,7 +112,7 @@ export default function Notifications({ page }: NotificationsProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -124,7 +124,7 @@ export default function Notifications({ page }: NotificationsProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -140,7 +140,7 @@ export default function Notifications({ page }: NotificationsProps) {
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -154,7 +154,7 @@ export default function Notifications({ page }: NotificationsProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -164,7 +164,7 @@ export default function Notifications({ page }: NotificationsProps) {
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -175,7 +175,7 @@ export default function Notifications({ page }: NotificationsProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -185,7 +185,7 @@ export default function Notifications({ page }: NotificationsProps) {
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />
@@ -219,7 +219,7 @@ function NotificationSection({
 
   if (error) {
     return (
-      <Alert className="rounded-sm bg-secondary">
+      <Alert className="bg-secondary rounded-sm">
         <AlertDescription className="flex justify-center">
           Lỗi mất rồi 😭
         </AlertDescription>
@@ -229,7 +229,7 @@ function NotificationSection({
 
   if (!data || data.length === 0) {
     return (
-      <Alert className="rounded-sm bg-secondary">
+      <Alert className="bg-secondary rounded-sm">
         <AlertDescription className="flex justify-center">
           Không có thông báo nào
         </AlertDescription>

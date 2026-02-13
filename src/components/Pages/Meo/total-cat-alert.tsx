@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CATAAS_BASE, getCatCount } from "@/lib/cat";
+import { CATAAS_BASE, getCatCount } from "@/shared/lib/cat";
 import { IdCardIcon } from "lucide-react";
 import useSWR from "swr";
 
@@ -15,8 +15,8 @@ export function TotalCatAlert() {
   return (
     <Alert>
       <IdCardIcon />
-      <AlertTitle className="font-medium line-clamp-none">
-        Xem ảnh mồn lèo giải trí - 
+      <AlertTitle className="line-clamp-none font-medium">
+        Xem ảnh mồn lèo giải trí -
         {totalCats && !isLoading && !error && ` Hiện có ${totalCats} con mèo.`}
       </AlertTitle>
       <AlertDescription>
@@ -26,7 +26,7 @@ export function TotalCatAlert() {
             href={CATAAS_BASE}
             target="_blank"
             rel="noreferrer"
-            className="underline hover:text-primary"
+            className="hover:text-primary underline"
           >
             cataas.com
           </a>

@@ -2,7 +2,7 @@ import { ChapterTitle } from "@/components/Chapter/ChapterReader/chapter-info";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import { formatTimeToNow } from "@/lib/utils";
+import { formatTimeToNow } from "@/shared/lib/utils";
 import { Chapter } from "@/types/types";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { Clock, Users } from "lucide-react";
@@ -18,28 +18,30 @@ export default function HistoryCompactCard({
   const title = ChapterTitle(chapter);
   const router = useRouter();
   return (
-    <Card className="rounded-sm shadow-xs transition-colors duration-200 w-full">
-      <CardHeader className="px-2 py-1 border-b font-bold line-clamp-2 md:line-clamp-1 break-all">
-        <NoPrefetchLink href={`/manga/${chapter.manga.id}`}>{chapter.manga.title}</NoPrefetchLink>
+    <Card className="w-full rounded-sm shadow-xs transition-colors duration-200">
+      <CardHeader className="line-clamp-2 border-b px-2 py-1 font-bold break-all md:line-clamp-1">
+        <NoPrefetchLink href={`/manga/${chapter.manga.id}`}>
+          {chapter.manga.title}
+        </NoPrefetchLink>
       </CardHeader>
-      <CardFooter className="py-1 px-2 w-full hover:bg-secondary">
+      <CardFooter className="hover:bg-secondary w-full px-2 py-1">
         <NoPrefetchLink
-          className="flex flex-col gap-1 w-full"
+          className="flex w-full flex-col gap-1"
           href={`/chapter/${chapter.id}`}
         >
-          <div className="items-center flex gap-1">
+          <div className="flex items-center gap-1">
             {chapter.language === "vi" ? (
               <VN className="size-4 shrink-0" />
             ) : (
               <GB className="size-4 shrink-0" />
             )}
-            <span className="font-bold text-sm">{title}</span>
+            <span className="text-sm font-bold">{title}</span>
           </div>
           <div className="flex justify-between">
             <div className="flex items-center justify-self-start">
               <Users size={15} className="shrink-0" />
               {chapter.group.length === 0 ? (
-                <span className="line-clamp-1 font-normal text-xs px-1">
+                <span className="line-clamp-1 px-1 text-xs font-normal">
                   No Group
                 </span>
               ) : (
@@ -48,7 +50,7 @@ export default function HistoryCompactCard({
                     <Button
                       key={group.id}
                       variant="ghost"
-                      className="whitespace-normal! text-xs font-normal text-start line-clamp-1 rounded-sm h-4 py-0 px-1 hover:underline hover:text-primary break-all! shrink!"
+                      className="hover:text-primary line-clamp-1 h-4 shrink! rounded-sm px-1 py-0 text-start text-xs font-normal break-all! whitespace-normal! hover:underline"
                       size="sm"
                       onClick={(e: React.MouseEvent) => {
                         e.preventDefault();
@@ -62,9 +64,9 @@ export default function HistoryCompactCard({
                 </div>
               )}
             </div>
-            <div className="flex items-center space-x-1 w-full max-w-max justify-end pr-1">
+            <div className="flex w-full max-w-max items-center justify-end space-x-1 pr-1">
               <time
-                className="text-xs font-light line-clamp-1 break-all"
+                className="line-clamp-1 text-xs font-light break-all"
                 dateTime={new Date(chapter.updatedAt).toDateString()}
               >
                 {formatTimeToNow(new Date(chapter.updatedAt))}

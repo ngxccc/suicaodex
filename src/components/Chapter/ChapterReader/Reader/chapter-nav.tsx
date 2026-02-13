@@ -11,11 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useKeyDown from "@/hooks/use-keydown";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrollDirection } from "@/hooks/use-scroll-direction";
-import useScrollOffset from "@/hooks/use-scroll-offset";
-import { cn } from "@/lib/utils";
+import useKeyDown from "@/shared/hooks/use-keydown";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
+import { useScrollDirection } from "@/shared/hooks/use-scroll-direction";
+import useScrollOffset from "@/shared/hooks/use-scroll-offset";
+import { cn } from "@/shared/lib/utils";
 import { Chapter, ChapterAggregate } from "@/types/types";
 import {
   ArrowLeft,
@@ -42,7 +42,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { Input } from "@/components/ui/input";
 
 interface ChapterNavProps {
@@ -60,14 +60,14 @@ export default function ChapterNav({
   const [config, setConfig] = useConfig();
 
   let currentVolIndex = chapterAggregate.findIndex((aggregate) =>
-    aggregate.chapters.some((chapter) => chapter.id === chapterData.id)
+    aggregate.chapters.some((chapter) => chapter.id === chapterData.id),
   );
 
   if (currentVolIndex === -1) {
     currentVolIndex = chapterAggregate.findIndex((aggregate) =>
       aggregate.chapters.some((chapter) =>
-        chapter.other?.some((id) => id === chapterData.id)
-      )
+        chapter.other?.some((id) => id === chapterData.id),
+      ),
     );
   }
 
@@ -118,7 +118,7 @@ export default function ChapterNav({
   return (
     <>
       {config.reader.type === "long-strip" && (
-        <div className="grid grid-cols-1 gap-2 mt-4 mx-auto">
+        <div className="mx-auto mt-4 grid grid-cols-1 gap-2">
           {!!nextChapter && (
             <Button asChild size="lg" className="[&>svg]:size-5!">
               <Link href={`/chapter/${nextChapter}`}>
@@ -149,16 +149,16 @@ export default function ChapterNav({
       <Card
         className={cn(
           "overflow-x-auto",
-          `fixed bottom-0 left-1/2 transform -translate-x-1/2 md:-translate-x-[calc(50%+var(--sidebar-width-icon)/2)] z-10 transition-all duration-300`,
-          "mx-auto flex w-full translate-y-0 items-center justify-center rounded-none bg-background border-none",
-          "md:rounded-lg md:w-auto md:-translate-y-2",
+          `fixed bottom-0 left-1/2 z-10 -translate-x-1/2 transform transition-all duration-300 md:-translate-x-[calc(50%+var(--sidebar-width-icon)/2)]`,
+          "bg-background mx-auto flex w-full translate-y-0 items-center justify-center rounded-none border-none",
+          "md:w-auto md:-translate-y-2 md:rounded-lg",
           isAtBottom && "translate-y-full md:translate-y-full",
           scrollDirection === "down" &&
             !isAtBottom &&
-            "translate-y-full md:translate-y-full"
+            "translate-y-full md:translate-y-full",
         )}
       >
-        <CardContent className="flex gap-2 p-2 md:gap-1.5 md:p-1.5 w-full">
+        <CardContent className="flex w-full gap-2 p-2 md:gap-1.5 md:p-1.5">
           <Button
             asChild={!!prevChapter}
             disabled={!prevChapter}
@@ -175,7 +175,7 @@ export default function ChapterNav({
             onValueChange={(id) => router.push(`/chapter/${id}`)}
           >
             <SelectTrigger
-              className="focus:ring-0 min-w-min md:min-w-48 [&_svg]:size-5 [&[data-state=open]>svg]:rotate-180 bg-card shadow-xs"
+              className="bg-card min-w-min shadow-xs focus:ring-0 md:min-w-48 [&_svg]:size-5 [&[data-state=open]>svg]:rotate-180"
               // disabled={!chapterData.chapter}
             >
               <SelectValue placeholder={ChapterTitle(chapterData)} />
@@ -240,7 +240,7 @@ export default function ChapterNav({
                       variant="outline"
                       className={cn(
                         config.reader.type === "single" &&
-                          "border-2 border-primary!"
+                          "border-primary! border-2",
                       )}
                       onClick={() => {
                         setConfig({
@@ -267,7 +267,7 @@ export default function ChapterNav({
                       variant="outline"
                       className={cn(
                         config.reader.type === "long-strip" &&
-                          "border-2 border-primary!"
+                          "border-primary! border-2",
                       )}
                       onClick={() =>
                         setConfig({
@@ -338,7 +338,7 @@ export default function ChapterNav({
                       variant="outline"
                       className={cn(
                         config.reader.imageFit === "height" &&
-                          "border-2 border-primary!"
+                          "border-primary! border-2",
                       )}
                       onClick={() =>
                         setConfig({
@@ -358,7 +358,7 @@ export default function ChapterNav({
                       variant="outline"
                       className={cn(
                         config.reader.imageFit === "width" &&
-                          "border-2 border-primary!"
+                          "border-primary! border-2",
                       )}
                       onClick={() =>
                         setConfig({
@@ -382,7 +382,7 @@ export default function ChapterNav({
                     <Button
                       variant="outline"
                       className={cn(
-                        !config.reader.header && "border-2 border-primary!"
+                        !config.reader.header && "border-primary! border-2",
                       )}
                       onClick={() =>
                         setConfig({
@@ -401,7 +401,7 @@ export default function ChapterNav({
                     <Button
                       variant="outline"
                       className={cn(
-                        !!config.reader.header && "border-2 border-primary!"
+                        !!config.reader.header && "border-primary! border-2",
                       )}
                       onClick={() =>
                         setConfig({

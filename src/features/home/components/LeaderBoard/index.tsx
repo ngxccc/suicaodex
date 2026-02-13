@@ -5,7 +5,7 @@ import TopFollowed from "./TopFollowed";
 import TopRated from "./TopRated";
 import { Bookmark, ChevronsDown, ChevronsUp, Star } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export default function LeaderBoard() {

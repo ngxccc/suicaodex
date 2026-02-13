@@ -1,6 +1,6 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getMangasByTag } from "@/lib/mangadex/tag";
 import useSWR from "swr";
 import ResultTabs from "@/components/Search/Result/result-tabs";
@@ -28,7 +28,7 @@ export default function TagPage({ id, page }: TagPageProps) {
   const { data, error, isLoading } = useSWR(
     ["tag", id, 32, offset, config.translatedLanguage, config.r18],
     ([, id, limit, offset, language, r18]) =>
-      getMangasByTag(id, limit, offset, language, r18)
+      getMangasByTag(id, limit, offset, language, r18),
   );
   const totalPages = Math.ceil((data?.total || 0) / 32);
   const handlePageChange = (newPage: number) => {
@@ -42,7 +42,7 @@ export default function TagPage({ id, page }: TagPageProps) {
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationPrevious
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 1}
             />
@@ -52,7 +52,7 @@ export default function TagPage({ id, page }: TagPageProps) {
               Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i + 1}>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     isActive={i + 1 === page}
                     onClick={() => handlePageChange(i + 1)}
                   >
@@ -66,7 +66,7 @@ export default function TagPage({ id, page }: TagPageProps) {
                 {[1, 2, 3, 4, 5].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -77,7 +77,7 @@ export default function TagPage({ id, page }: TagPageProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -89,7 +89,7 @@ export default function TagPage({ id, page }: TagPageProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -105,7 +105,7 @@ export default function TagPage({ id, page }: TagPageProps) {
                 ].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -119,7 +119,7 @@ export default function TagPage({ id, page }: TagPageProps) {
               <>
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(1)}
                   >
                     1
@@ -129,7 +129,7 @@ export default function TagPage({ id, page }: TagPageProps) {
                 {[page - 1, page, page + 1].map((num) => (
                   <PaginationItem key={num}>
                     <PaginationLink
-                      className="w-8 h-8"
+                      className="h-8 w-8"
                       isActive={num === page}
                       onClick={() => handlePageChange(num)}
                     >
@@ -140,7 +140,7 @@ export default function TagPage({ id, page }: TagPageProps) {
                 <PaginationEllipsis />
                 <PaginationItem>
                   <PaginationLink
-                    className="w-8 h-8"
+                    className="h-8 w-8"
                     onClick={() => handlePageChange(totalPages)}
                   >
                     {totalPages}
@@ -150,7 +150,7 @@ export default function TagPage({ id, page }: TagPageProps) {
             )}
 
             <PaginationNext
-              className="w-8 h-8"
+              className="h-8 w-8"
               onClick={() => handlePageChange(page + 1)}
               disabled={page === totalPages}
             />

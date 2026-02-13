@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NoPrefetchLink from "@/components/Custom/no-prefetch-link";
-import { generateSlug } from "@/lib/utils";
+import { generateSlug } from "@/shared/lib/utils";
 
 interface SemiCardProps {
   manga: Manga;

@@ -3,7 +3,7 @@
 import CommentList from "./comment-list";
 import CommentFormSimple from "./comment-form-simple"; // New simple form with stickers
 import { useRef } from "react";
-import { useCommentCount } from "@/hooks/use-comment-count";
+import { useCommentCount } from "@/shared/hooks/use-comment-count";
 
 interface CommentSectionProps {
   id: string;
@@ -35,7 +35,7 @@ export default function CommentSection({
   };
 
   return (
-    <div className="mt-2 grid grid-cols-1 gap-4 w-full">
+    <div className="mt-2 grid w-full grid-cols-1 gap-4">
       <CommentFormSimple
         id={id}
         title={title}

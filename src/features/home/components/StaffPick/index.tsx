@@ -1,10 +1,10 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useConfig } from "@/shared/hooks/use-config";
 import { getStaffPickMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import RecentlyCard from "../Recently/recently-card";
-import { cn, generateSlug } from "@/lib/utils";
+import { cn, generateSlug } from "@/shared/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronsDown, ChevronsUp } from "lucide-react";

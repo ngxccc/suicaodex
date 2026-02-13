@@ -1,5 +1,5 @@
 import type { Group, GroupStats, Manga, OriginalGroup } from "@/types/types";
-import { axiosWithProxy } from "../axios";
+import { axiosWithProxy } from "../../shared/config/axios";
 import { MangaParser } from "@/features/manga/api/manga";
 
 export function GroupParser(data: OriginalGroup): Group {
