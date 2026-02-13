@@ -1,5 +1,6 @@
 import { prisma } from "@/shared/config/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { limiter, RateLimitError } from "@/shared/lib/rate-limit";
 
 interface RouteParams {
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   const headers = new Headers();
 
   try {
-    const identifier = req.headers.get("x-forwarded-for") || "anonymous";
+    const identifier = req.headers.get("x-forwarded-for") ?? "anonymous";
     await limiter.check(headers, 50, identifier); // 50 req/min
   } catch (err) {
     if (err instanceof RateLimitError) {

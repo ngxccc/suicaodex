@@ -1,11 +1,10 @@
-import type {
-  Group,
-  GroupStats,
-  Manga,
-  OriginalGroup,
-} from "@/shared/types/common";
+import type { Group, GroupStats, Manga } from "@/shared/types/common";
 import { axiosWithProxy } from "@/shared/config/axios";
-import { MangaParser } from "@/features/manga/api/manga";
+import { MangaParser } from "@/features/manga/utils/parsers";
+import type {
+  Relationship,
+  ScanlationGroupAttributes,
+} from "@/features/manga/types";
 
 export function GroupParser(data: OriginalGroup): Group {
   const id = data.id;
@@ -51,6 +50,41 @@ export function GroupParser(data: OriginalGroup): Group {
       : null,
   };
   return group;
+}
+
+export function GroupRelationshipParser(data: Relationship): Group {
+  const id = data.id;
+
+  // Ép kiểu attributes về ScanlationGroupAttributes nếu nó tồn tại
+  // Vì Relationship type chung là union, ta cần check an toàn
+  const attributes = data.attributes as ScanlationGroupAttributes | undefined;
+
+  if (!attributes) {
+    return {
+      id: id,
+      name: "Unknown Group", // Default khi không có include
+      // Các trường khác để rỗng cho nhẹ data
+      description: null,
+      website: null,
+      discord: null,
+      email: null,
+      twitter: null,
+      language: [],
+      leader: null,
+    };
+  }
+
+  return {
+    id,
+    name: attributes.name || "No Name",
+    description: attributes.description,
+    website: attributes.website,
+    discord: attributes.discord,
+    email: attributes.contactEmail ?? null,
+    twitter: attributes.twitter,
+    language: attributes.focusedLanguages ?? [],
+    leader: null, // Relationship trong Chapter KHÔNG bao giờ trả về Leader
+  };
 }
 
 export async function getGroup(id: string): Promise<Group> {

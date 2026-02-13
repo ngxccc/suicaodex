@@ -16,7 +16,7 @@ import {
   generateSlug,
   getCoverImageUrl,
 } from "@/shared/lib/utils";
-import { Chapter, Manga } from "@/shared/types/common";
+import type { Chapter, Manga } from "@/shared/types/common";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import {
   ChevronsDown,
@@ -44,14 +44,14 @@ export default function LatestMangaCard({
   const isMobile = useIsMobile();
   const maxCount = isMobile ? 2 : 3;
   const [expanded, setExpanded] = useState(false);
-  const src = getCoverImageUrl(manga.id || "", manga.cover || "", "512");
+  const src = getCoverImageUrl(manga.id ?? "", manga.cover ?? "", "512");
   const [loaded, setLoaded] = useState(false);
 
   if (type === "cover") {
     return (
       <Card className="bg-background relative h-full w-full rounded-sm border-none shadow-none transition-colors duration-200">
         <NoPrefetchLink
-          href={`/manga/${manga.id}/${generateSlug(manga.title || "")}`}
+          href={`/manga/${manga.id}/${generateSlug(manga.title ?? "")}`}
         >
           <CardContent className="relative rounded-sm p-0">
             <LazyLoadImage
@@ -74,7 +74,9 @@ export default function LatestMangaCard({
         </NoPrefetchLink>
 
         <CardFooter className="flex w-full flex-col items-start gap-0 p-0 pt-1">
-          <SingleCard key={chapters[0].id} chapter={chapters[0]} hideIcons />
+          {chapters[0] && (
+            <SingleCard key={chapters[0].id} chapter={chapters[0]} hideIcons />
+          )}
         </CardFooter>
       </Card>
     );
@@ -84,7 +86,7 @@ export default function LatestMangaCard({
     <Card className="rounded-sm shadow-xs transition-colors duration-200">
       <CardHeader className="p-1 md:hidden">
         <NoPrefetchLink
-          href={`/manga/${manga.id}/${generateSlug(manga.title || "")}`}
+          href={`/manga/${manga.id}/${generateSlug(manga.title ?? "")}`}
           className="line-clamp-1 border-b text-lg font-bold break-all"
         >
           {manga.title}
@@ -92,12 +94,12 @@ export default function LatestMangaCard({
       </CardHeader>
       <CardContent className="flex gap-1.5 p-1 md:p-1.5">
         <NoPrefetchLink
-          href={`/manga/${manga.id}/${generateSlug(manga.title || "")}`}
+          href={`/manga/${manga.id}/${generateSlug(manga.title ?? "")}`}
         >
           <MangaCover
-            id={manga.id || ""}
-            cover={manga.cover || ""}
-            alt={manga.title || ""}
+            id={manga.id ?? ""}
+            cover={manga.cover ?? ""}
+            alt={manga.title ?? ""}
             placeholder="/images/place-doro.webp"
             wrapper="w-20 md:w-[140px] h-auto border"
             className="h-28! w-20! object-cover! md:h-[200px]! md:w-[140px]!"
@@ -107,7 +109,7 @@ export default function LatestMangaCard({
         </NoPrefetchLink>
         <div className="flex w-full flex-col">
           <NoPrefetchLink
-            href={`/manga/${manga.id}/${generateSlug(manga.title || "")}`}
+            href={`/manga/${manga.id}/${generateSlug(manga.title ?? "")}`}
             className="line-clamp-1 hidden border-b px-1.5 text-lg font-bold break-all md:flex md:pb-1"
           >
             {manga.title}
@@ -167,9 +169,7 @@ const SingleCard = ({ chapter, hideIcons = false }: SingleCardProps) => {
     <NoPrefetchLink
       key={chapter.id}
       suppressHydrationWarning
-      href={
-        chapter.externalUrl ? chapter.externalUrl : `/chapter/${chapter.id}`
-      }
+      href={chapter.externalUrl ?? `/chapter/${chapter.id}`}
       target={chapter.externalUrl ? "_blank" : "_self"}
       className="w-full"
     >

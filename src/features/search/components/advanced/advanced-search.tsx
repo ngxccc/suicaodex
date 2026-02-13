@@ -19,20 +19,18 @@ import { useEffect, useState } from "react";
 import { MultiSelect } from "@/shared/components/ui/multi-select";
 import { cn } from "@/shared/lib/utils";
 import { Label } from "@/shared/components/ui/label";
-import { getTags } from "@/lib/mangadex/tag";
 import useContentHeight from "@/shared/hooks/use-content-height";
 import { TagsSelector } from "./tags-selector";
 import { AuthorsSelector } from "./authors-selector";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { useRouter } from "next/navigation";
-import {
+import type {
   ContentRating,
   Status,
   OriginLanguge,
   Demosgraphic,
   TranslatedLanguage,
 } from "@/shared/types/common";
-import { AdvancedSearchManga } from "@/lib/mangadex/search";
 import useSWRMutation from "swr/mutation";
 import ResultTabs from "@/features/search/components/Result/result-tabs";
 import {
@@ -46,6 +44,8 @@ import {
 } from "@/shared/components/ui/pagination";
 import AdvancedSearchGuide from "./advanded-search-guide";
 import { CN, GB, JP, KR, VN } from "country-flag-icons/react/3x2";
+import { AdvancedSearchManga } from "../../api/search";
+import { getTags } from "@/features/tag/api/tag";
 
 interface AdvancedSearchProps {
   page: number;
@@ -70,7 +70,7 @@ function filterByType<T extends string>(
 ): T[] {
   return values.filter((value): value is T =>
     allowedValues.includes(value as T),
-  ) as T[];
+  );
 }
 
 // Convert comma-separated string to array and optionally filter by allowed values
@@ -138,29 +138,29 @@ export default function AdvancedSearch({
   const allowedTranslatedLanguages: TranslatedLanguage[] = ["en", "vi"];
 
   // Filter and set the selected values based on their types
-  const [selectedStatus, setSelectedStatus] = useState<string[]>(
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(() =>
     filterByType(toArray(status), allowedStatuses),
   );
-  const [selectedDemos, setSelectedDemos] = useState<string[]>(
+  const [selectedDemos, setSelectedDemos] = useState<string[]>(() =>
     filterByType(toArray(demos), allowedDemos),
   );
-  const [selectedContent, setSelectedContent] = useState<string[]>(
+  const [selectedContent, setSelectedContent] = useState<string[]>(() =>
     filterByType(toArray(content), allowedContentRatings),
   );
-  const [selectedLanguage, setSelectedLanguage] = useState<string[]>(
+  const [selectedLanguage, setSelectedLanguage] = useState<string[]>(() =>
     filterByType(toArray(translated), allowedTranslatedLanguages),
   );
   const [selectedOriginLanguage, setSelectedOriginLanguage] = useState<
     string[]
-  >(filterByType(toArray(origin), allowedOriginLanguages));
-  const [selectedAuthor, setSelectedAuthor] = useState<string[]>(
+  >(() => filterByType(toArray(origin), allowedOriginLanguages));
+  const [selectedAuthor, setSelectedAuthor] = useState<string[]>(() =>
     toArray(author),
   );
   const [selectedInclude, setSelectedInclude] = useState<string[]>(
-    toArray(include) || [],
+    () => toArray(include) || [],
   );
   const [selectedExclude, setSelectedExclude] = useState<string[]>(
-    toArray(exclude) || [],
+    () => toArray(exclude) || [],
   );
   const [tagOptions, setTagOptions] = useState<
     { value: string; label: string }[]
@@ -213,7 +213,7 @@ export default function AdvancedSearch({
     }));
   };
   useEffect(() => {
-    tagsList().then((data) => setTagOptions(data));
+    void tagsList().then((data) => setTagOptions(data));
   }, []);
 
   // Parse author string to array of IDs on component mount
@@ -316,7 +316,7 @@ export default function AdvancedSearch({
     router.push(`/advanced-search?${params.toString()}`);
 
     // Trigger the search
-    trigger();
+    void trigger();
   };
 
   const handlePageChange = (newPage: number) => {
@@ -337,17 +337,17 @@ export default function AdvancedSearch({
       year: selectedYear,
     });
     router.push(`/advanced-search?${params.toString()}`);
-    trigger();
+    void trigger();
   };
 
   //initial load
   useEffect(() => {
     if (!data) {
-      trigger();
+      void trigger();
     }
   }, [data, trigger]);
 
-  const totalPages = Math.ceil((data?.total || 0) / limit);
+  const totalPages = Math.ceil((data?.total ?? 0) / limit);
 
   return (
     <>

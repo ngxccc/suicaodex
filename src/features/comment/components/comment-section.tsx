@@ -30,7 +30,7 @@ export default function CommentSection({
       commentListRef.current.mutate();
     }
     if (type === "manga") {
-      commentCount.refresh();
+      void commentCount.refresh();
     }
   };
 

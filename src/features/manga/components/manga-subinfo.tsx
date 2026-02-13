@@ -76,7 +76,7 @@ export default function MangaSubInfo({ manga }: MangaSubInfoProps) {
           <Label className="text-base font-bold">Tên khác</Label>
           <div className="-mt-2 flex w-full flex-col">
             {manga.altTitles.map((name, index) => (
-              <div className="flex flex-col" key={index}>
+              <div className="flex flex-col" key={name}>
                 <span className="py-2 text-sm wrap-break-word">{name}</span>
 
                 {index !== manga.altTitles.length - 1 && (

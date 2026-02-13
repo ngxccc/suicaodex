@@ -1,10 +1,8 @@
-import AdvancedSearch from "@/features/search/components/advanced";
-import { Metadata } from "next";
+import AdvancedSearch from "@/features/search/components/advanced/advanced-search";
+import type { Metadata } from "next";
 
 interface pageProps {
-  searchParams: Promise<{
-    [key: string]: string | undefined;
-  }>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }
 
 export async function generateMetadata({
@@ -14,9 +12,7 @@ export async function generateMetadata({
 
   return {
     title:
-      page === 1
-        ? "Tìm kiếm nâng cao - SuicaoDex"
-        : `Trang ${page} - Tìm kiếm nâng cao - SuicaoDex`,
+      page === 1 ? "Tìm kiếm nâng cao" : `Trang ${page} - Tìm kiếm nâng cao`,
     description: "Công cụ tìm kiếm nâng cao",
     keywords: [
       "Tìm kiếm nâng cao",
@@ -66,24 +62,24 @@ export default async function Page({ searchParams }: pageProps) {
 const getSearchParams = async ({ searchParams }: pageProps) => {
   const params = await searchParams;
 
-  let page = params["page"] ? parseInt(params["page"]) : 1;
-  let limit = params["limit"] ? parseInt(params["limit"]) : 30;
+  let page = params.page ? parseInt(params.page) : 1;
+  let limit = params.limit ? parseInt(params.limit) : 30;
 
   //Non-feed limit query param may not be >100
   if (limit > 100) limit = 100;
   if (page < 1) page = 1;
 
-  const author = params["author"] || "";
-  const q = params["q"] || "";
-  const content = params["content"] || "";
-  const status = params["status"] || "";
-  const demos = params["demos"] || "";
-  const include = params["include"] || "";
-  const exclude = params["exclude"] || "";
-  const origin = params["origin"] || "";
-  const availableChapter = params["availableChapter"] === "true";
-  const translated = params["translated"] || "";
-  const year = params["year"] || "";
+  const author = params.author ?? "";
+  const q = params.q ?? "";
+  const content = params.content ?? "";
+  const status = params.status ?? "";
+  const demos = params.demos ?? "";
+  const include = params.include ?? "";
+  const exclude = params.exclude ?? "";
+  const origin = params.origin ?? "";
+  const availableChapter = params.availableChapter === "true";
+  const translated = params.translated ?? "";
+  const year = params.year ?? "";
 
   return {
     page,

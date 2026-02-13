@@ -20,7 +20,7 @@
     "hooks": "@/shared/hooks"
   },
   "registries": {
-    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json",
-    "@magicui": "https://magicui.design/r/{name}.json"
+    "@magicui": "https://magicui.design/r/{name}",
+    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json"
   }
 }

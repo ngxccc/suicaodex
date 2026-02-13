@@ -1,7 +1,7 @@
 import MangaCover from "@/features/manga/components/manga-cover";
-import ContentRatingChip from "@/features/manga/components/Tags/content-rating-tag";
-import NormalTag from "@/features/manga/components/Tags/normal-tag";
-import StatusChip from "@/features/manga/components/Tags/status-tag";
+import ContentRatingChip from "@/features/manga/components/tags/content-rating-tag";
+import NormalTag from "@/features/manga/components/tags/normal-tag";
+import StatusChip from "@/features/manga/components/tags/status-tag";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import type { Artist, Author, Manga } from "@/shared/types/common";
 import remarkGfm from "remark-gfm";

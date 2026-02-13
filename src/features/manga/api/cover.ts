@@ -1,5 +1,5 @@
-import { Cover } from "@/shared/types/common";
-import { axiosWithProxy } from "../../shared/config/axios";
+import { axiosWithProxy } from "@/shared/config/axios";
+import type { Cover } from "@/shared/types/common";
 
 export function CoverParser(data: any): Cover {
   return {

@@ -1,18 +1,18 @@
 "use client";
 
 import { useConfig } from "@/shared/hooks/use-config";
-import { getTopFollowedMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import TopFollowedCard from "./top-followed-card";
 import { Separator } from "@/shared/components/ui/separator";
 import { cn } from "@/shared/lib/utils";
 import LeaderBoardCardSkeleton from "../leaderboard-card-skeleon";
+import { getCachedTopFollowedMangas } from "@/features/manga/api/manga";
 
 export default function TopFollowed() {
   const [config] = useConfig();
   const { data, error, isLoading } = useSWR(
     ["follow", config.translatedLanguage, config.r18],
-    ([, language, r18]) => getTopFollowedMangas(language, r18),
+    ([, language, r18]) => getCachedTopFollowedMangas(language, r18),
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,

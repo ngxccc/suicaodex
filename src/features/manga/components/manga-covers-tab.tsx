@@ -1,6 +1,5 @@
 "use client";
 
-import { getCovers } from "@/lib/mangadex/cover";
 import { Expand, Globe, Loader2 } from "lucide-react";
 import useSWR from "swr";
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
@@ -20,6 +19,7 @@ import { MultiSelect } from "@/shared/components/ui/multi-select";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import type { Cover } from "@/shared/types/common";
 import Image from "next/image";
+import { getCovers } from "../api/cover";
 
 interface MangaCoversTabProps {
   id: string;
@@ -28,8 +28,8 @@ interface MangaCoversTabProps {
 export default function MangaCoversTab({ id }: MangaCoversTabProps) {
   const isMobile = useIsMobile();
   const { data, error, isLoading } = useSWR(
-    ["manga-covers", [id]],
-    ([, [id]]) => getCovers([id]),
+    ["manga-covers", id],
+    ([, mangaId]) => getCovers([mangaId]),
     {
       refreshInterval: 1000 * 60 * 30,
       revalidateOnFocus: false,

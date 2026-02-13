@@ -1,7 +1,7 @@
 "use client";
 
 import MangaCover from "@/features/manga/components/manga-cover";
-import StatusChip from "@/features/manga/components/Tags/status-tag";
+import StatusChip from "@/features/manga/components/tags/status-tag";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { cn } from "@/shared/lib/utils";
 import { Manga } from "@/shared/types/common";

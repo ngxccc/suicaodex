@@ -1,18 +1,19 @@
-import { GroupParser } from "@/features/groups/api/group";
+import {
+  GroupParser,
+  GroupRelationshipParser,
+} from "@/features/groups/api/group";
+import type { ChapterItem } from "@/features/manga/types";
 import { axiosWithProxy } from "@/shared/config/axios";
 import { getCurrentImageProxyUrl } from "@/shared/lib/utils";
-import type { ChapterAggregate, Volume } from "@/shared/types/common";
-import type { Chapter } from "prisma/generated/client";
+import type { Chapter, ChapterAggregate, Volume } from "@/shared/types/common";
 
-export function ChaptersParser(data: any[]): Chapter[] {
+export function ChaptersParser(data: ChapterItem[]): Chapter[] {
   return data.map((item) => {
-    const mangaData = item.relationships.find(
-      (item: any) => item.type === "manga",
-    );
+    const mangaRel = item.relationships.find((r) => r.type === "manga");
 
     const groups = item.relationships
-      .filter((item: any) => item.type === "scanlation_group")
-      .map((item: any) => GroupParser(item));
+      .filter((r) => r.type === "scanlation_group")
+      .map((r) => GroupRelationshipParser(r));
 
     return {
       id: item.id,
@@ -24,9 +25,11 @@ export function ChaptersParser(data: any[]): Chapter[] {
       language: item.attributes.translatedLanguage,
       group: groups,
       manga: {
-        id: mangaData.id,
+        id: mangaRel?.id ?? "",
       },
       isUnavailable: item.attributes.isUnavailable,
+      pages: item.attributes.pages,
+      publishAt: item.attributes.publishAt,
     };
   });
 }

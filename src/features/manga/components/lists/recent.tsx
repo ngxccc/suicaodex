@@ -31,7 +31,7 @@ export default function Recent({ page }: RecentProps) {
       refreshInterval: 1000 * 60 * 10,
     },
   );
-  const totalPages = Math.ceil((data?.total || 0) / 32);
+  const totalPages = Math.ceil((data?.total ?? 0) / 32);
 
   const handlePageChange = (newPage: number) => {
     router.push(`/recent?page=${newPage}`);

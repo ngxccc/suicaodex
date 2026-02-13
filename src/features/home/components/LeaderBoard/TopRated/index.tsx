@@ -1,18 +1,18 @@
 "use client";
 
 import { useConfig } from "@/shared/hooks/use-config";
-import { getTopRatedMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import { Separator } from "@/shared/components/ui/separator";
 import TopRatedCard from "./top-rated-card";
 import { cn } from "@/shared/lib/utils";
 import LeaderBoardCardSkeleton from "../leaderboard-card-skeleon";
+import { getCachedTopRatedMangas } from "@/features/manga/api/manga";
 
 export default function TopRated() {
   const [config] = useConfig();
   const { data, error, isLoading } = useSWR(
     ["rating", config.translatedLanguage, config.r18],
-    ([, language, r18]) => getTopRatedMangas(language, r18),
+    ([, language, r18]) => getCachedTopRatedMangas(language, r18),
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,

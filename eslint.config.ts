@@ -1,13 +1,14 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import eslint from "@eslint/js";
+import eslintJs from "@eslint/js";
 import tseslint from "typescript-eslint";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import eslintConfigPrettier from "eslint-config-prettier";
+import eslintReact from "@eslint-react/eslint-plugin";
+import eslintConfigPrettier from "eslint-config-prettier/flat";
+import globals from "globals";
 
 const eslintConfig = defineConfig([
-  eslint.configs.recommended,
+  eslintJs.configs.recommended,
   tseslint.configs.recommendedTypeChecked, // Check cả type
   tseslint.configs.stylisticTypeChecked, // Check type để quyết định phong cách
   nextVitals,
@@ -24,24 +25,31 @@ const eslintConfig = defineConfig([
   ]),
 
   // Đặt ở cuối để tự động tắt các rule xung đột và bật rule prettier
-  eslintPluginPrettierRecommended,
+  eslintReact.configs["recommended-type-checked"],
   {
     languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
+      globals: {
+        ...globals.browser,
+      },
     },
-    rules: {
-      ...eslintConfigPrettier.rules,
 
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+
+    rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-
-      "prettier/prettier": "warn",
 
       "@typescript-eslint/consistent-type-imports": [
         "error",
@@ -50,8 +58,13 @@ const eslintConfig = defineConfig([
           fixStyle: "separate-type-imports", // Tự động fix thành: import type { Metadata } ...
         },
       ],
+
+      "react/react-in-jsx-scope": "off", // Next.js không cần import React
+      "react/prop-types": "off", // Dùng TS nên không cần Prop-types
     },
   },
+
+  eslintConfigPrettier,
 ]);
 
 export default eslintConfig;

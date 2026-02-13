@@ -2,7 +2,7 @@ import { ChapterTitle } from "@/features/chapter/components/ChapterReader/chapte
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { Card, CardContent, CardFooter } from "@/shared/components/ui/card";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
-import { Chapter } from "@/shared/types/common";
+import type { Chapter } from "@/shared/types/common";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";

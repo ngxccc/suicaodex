@@ -1,6 +1,5 @@
 "use client";
 
-import { Chapter } from "@/shared/types/common";
 import ChapterNav from "./chapter-nav";
 import LongStrip from "./long-strip";
 import { getChapterAggregate } from "@/features/chapter/api/chapter";
@@ -18,7 +17,8 @@ import {
   Settings,
   Square,
 } from "lucide-react";
-import { ReactElement, useEffect, useState } from "react";
+import type { ReactElement } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { cn } from "@/shared/lib/utils";
 import { useScrollDirection } from "@/shared/hooks/use-scroll-direction";
@@ -37,9 +37,10 @@ import { Label } from "@/shared/components/ui/label";
 import { toast } from "sonner";
 import { Input } from "@/shared/components/ui/input";
 import useSWRMutation from "swr/mutation";
-import CommentSection from "@/components/Comment/comment-section";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import SinglePage from "./single-page";
+import type { Chapter } from "@/features/chapter/types";
+import CommentSection from "@/features/comment/components/comment-section";
 
 interface ReaderProps {
   images: string[];
@@ -80,7 +81,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
   useEffect(() => {
     if (!data) {
       // Initial load
-      trigger();
+      void trigger();
       return;
     }
 
@@ -96,7 +97,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
 
       const timer = setTimeout(() => {
         setRetryCount((prev) => prev + 1);
-        trigger();
+        void trigger();
       }, delay);
 
       return () => clearTimeout(timer);
@@ -117,7 +118,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
   const handleManualRetry = () => {
     setRetryCount(0);
     setReachedMaxRetries(false);
-    trigger();
+    void trigger();
   };
 
   if (isMutating || (data && !chapterExists && !reachedMaxRetries)) {
@@ -180,7 +181,7 @@ export default function Reader({ images, chapterData }: ReaderProps) {
           <CommentSection
             id={chapterData.id}
             type="chapter"
-            title={chapterData.manga.title || ""}
+            title={chapterData.manga.title ?? ""}
             chapterNumber={chapterNumber}
           />
         </LazyLoadComponent>

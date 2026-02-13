@@ -1,159 +1,282 @@
 import type {
-  Artist,
-  Author,
   Chapter,
   Manga,
   MangasStats,
   MangaStats,
-  Tag,
 } from "@/shared/types/common";
 import { siteConfig } from "@/shared/config/site";
-import type { MangaDexApiResponse } from "@/types/mangadex-api";
 import type {
-  AuthorAttributes,
-  CoverArtAttributes,
-  MangaData,
-  MangaTag,
-  Relationship,
+  CustomListResponse,
+  MangaDexBatchStatisticsResponse,
+  MangaDexFeedResponse,
+  MangaDexStatisticsResponse,
+  MangaListResponse,
+  MangaRecommendationResponse,
 } from "@/features/manga/types";
 import { axiosWithProxy } from "@/shared/config/axios";
 import { ChaptersParser } from "@/features/chapter/api/chapter";
 import { cacheRequest } from "@/shared/lib/cache";
+import type { MangaDexApiResponse } from "@/shared/types/mangadex-api";
+import {
+  MangaParser,
+  MangasStatsParser,
+  MangaStatsParser,
+} from "../utils/parsers";
 
-function getPreferredTitle(
-  titles: Record<string, string>,
-  altTitles: Record<string, string>[],
-) {
-  const allTitles: Record<string, string> = { ...titles };
-  altTitles.forEach((t) => {
-    const key = Object.keys(t)[0];
-    allTitles[key] = t[key];
-  });
+const CONTENT_RATING_ALL = ["safe", "suggestive", "erotica", "pornographic"];
+const CONTENT_RATING_SAFE = ["safe", "suggestive", "erotica"];
 
-  const vi = allTitles.vi;
-  const en = allTitles.en;
-  const jaRo = allTitles["ja-ro"]; // Romaji
-  const ja = allTitles.ja;
-  const original = Object.values(titles)[0]; // Title gốc (key bất kỳ)
-
-  // Ưu tiên: Tiếng Việt > Tiếng Anh > Romaji > Gốc
-  const mainTitle = vi ?? en ?? jaRo ?? original ?? "Untitled";
-
-  // Nếu main là Vi -> Alt là En hoặc Romaji
-  // Nếu main là En -> Alt là Romaji hoặc Ja
-  let subTitle: string | null = null;
-
-  if (mainTitle === vi) subTitle = en ?? jaRo ?? ja;
-  else if (mainTitle === en) subTitle = jaRo ?? ja;
-  else if (mainTitle === jaRo) subTitle = ja;
-
-  return { mainTitle, subTitle };
-}
-
-// Helper: Parse Author/Artist từ Relationships
-function getCreators(
-  relationships: Relationship[],
-  type: "author" | "artist",
-): Author[] | Artist[] {
-  return relationships
-    .filter((r) => r.type === type)
-    .map((r) => ({
-      id: r.id,
-      name: (r.attributes as AuthorAttributes).name,
-    }));
-}
-
-// Helper: Parse Tags
-function getTags(rawTags: MangaTag[]): Tag[] {
-  return rawTags.map((tag) => ({
-    id: tag.id,
-    name: tag.attributes.name.en ?? "Unknown",
-    group: tag.attributes.group,
-  }));
-}
-
-export function MangaParser(data: MangaData): Manga {
-  const attr = data.attributes;
-  const rels = data.relationships;
-
-  // Xử lý Title
-  const { mainTitle, subTitle } = getPreferredTitle(attr.title, attr.altTitles);
-
-  // Xử lý Description (Ưu tiên Vi -> En -> Fallback)
-  const descContent =
-    attr.description.vi ??
-    attr.description.en ??
-    Object.values(attr.description)[0] ??
-    "";
-
-  // Xác định language của description
-  const descLang: "vi" | "en" = attr.description.vi ? "vi" : "en";
-
-  // Xử lý Cover Art
-  const coverRel = rels.find((r) => r.type === "cover_art");
-  const coverFileName = coverRel?.attributes
-    ? (coverRel.attributes as CoverArtAttributes).fileName
-    : null;
-
-  return {
-    id: data.id,
-    title: mainTitle,
-    altTitle: subTitle,
-    // Flat map lấy tất cả value của altTitles
-    altTitles: attr.altTitles.map((t) => Object.values(t)[0]),
-
-    language: attr.availableTranslatedLanguages,
-
-    description: {
-      language: descLang,
-      content: descContent,
+const fetchFirstChapter = async (
+  id: string,
+  r18: boolean,
+): Promise<{ en: string | null; vi: string | null }> => {
+  const params = {
+    limit: 1,
+    contentRating: r18
+      ? ["safe", "suggestive", "erotica", "pornographic"]
+      : ["safe", "suggestive", "erotica"],
+    order: {
+      volume: "asc", // Quan trọng: Lấy volume nhỏ nhất
+      chapter: "asc", // Lấy chapter nhỏ nhất
     },
-
-    tags: getTags(attr.tags),
-    author: getCreators(rels, "author"),
-    artist: getCreators(rels, "artist"),
-
-    cover: coverFileName,
-
-    contentRating: attr.contentRating,
-    status: attr.status,
-
-    raw: attr.links?.raw ?? undefined,
-
-    finalChapter: attr.lastChapter ?? undefined,
-
-    latestChapter: attr.latestUploadedChapter ?? undefined,
+    includes: ["scanlation_group", "manga"],
   };
-}
 
-export function MangaStatsParser(data: any, id: string): MangaStats {
-  const distribution = data.statistics[id].rating.distribution;
+  try {
+    const [enRes, viRes] = await Promise.all([
+      axiosWithProxy<MangaDexFeedResponse>({
+        url: `/manga/${id}/feed`,
+        method: "get",
+        params: { ...params, translatedLanguage: ["en"] },
+      }),
+      axiosWithProxy<MangaDexFeedResponse>({
+        url: `/manga/${id}/feed`,
+        method: "get",
+        params: { ...params, translatedLanguage: ["vi"] },
+      }),
+    ]);
 
-  // Find the max value in the distribution
-  const max = Math.max(...Object.values(distribution));
+    return {
+      en: enRes.data[0]?.id ?? null,
+      vi: viRes.data[0]?.id ?? null,
+    };
+  } catch (error) {
+    console.error(`[FirstChapter] Error fetching for ${id}:`, error);
+    return { en: null, vi: null };
+  }
+};
 
-  return {
-    rating: {
-      bayesian: data.statistics[id].rating.bayesian,
-      distribution: {
-        "1": distribution["1"],
-        "2": distribution["2"],
-        "3": distribution["3"],
-        "4": distribution["4"],
-        "5": distribution["5"],
-        "6": distribution["6"],
-        "7": distribution["7"],
-        "8": distribution["8"],
-        "9": distribution["9"],
-        "10": distribution["10"],
+async function fetchFirstChapterByLang(
+  id: string,
+  r18: boolean,
+  lang: "vi" | "en",
+): Promise<Chapter | null> {
+  try {
+    const data = await axiosWithProxy<MangaDexFeedResponse>({
+      url: `/manga/${id}/feed`, // Dùng feed của manga chuẩn hơn
+      method: "get",
+      params: {
+        limit: 1,
+        translatedLanguage: [lang],
+        contentRating: r18
+          ? ["safe", "suggestive", "erotica", "pornographic"]
+          : ["safe", "suggestive", "erotica"],
+        order: {
+          volume: "asc", // Volume nhỏ nhất
+          chapter: "asc", // Chapter nhỏ nhất
+        },
+        includes: ["scanlation_group", "manga", "user"], // Include đủ info
       },
-      max: max,
-    },
-    follows: data.statistics[id].follows,
-    comments: data.statistics[id].comments
-      ? data.statistics[id].comments.repliesCount
-      : 0,
-  };
+    });
+
+    // Parse data
+    const chapters = ChaptersParser(data.data);
+
+    // Check an toàn
+    const firstChapter = chapters[0];
+    return firstChapter ? (firstChapter as unknown as Chapter) : null;
+  } catch (error) {
+    console.error(`Error fetching first ${lang} chapter for ${id}`, error);
+    return null;
+  }
+}
+
+async function fetchTopFollowedMangas(
+  language: ("vi" | "en")[],
+  r18: boolean,
+): Promise<Manga[]> {
+  try {
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit: 10,
+        includes: ["cover_art", "author", "artist"],
+        availableTranslatedLanguage: language,
+        hasAvailableChapters: "true",
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        order: { followedCount: "desc" },
+      },
+    });
+
+    const mangas = data.data.map((item) => MangaParser(item));
+    
+    // Fetch stats riêng (Batch)
+    const stats = await getMangasStats(mangas.map((m) => m.id));
+
+    return mangas.map((manga, index) => ({
+      ...manga,
+      stats: stats[index],
+    }));
+  } catch (error) {
+    console.error("[TopFollowed] Error:", error);
+    return [];
+  }
+}
+
+async function fetchTopRatedMangas(
+  language: ("vi" | "en")[],
+  r18: boolean,
+): Promise<Manga[]> {
+  try {
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit: 10,
+        includes: ["cover_art", "author", "artist"],
+        hasAvailableChapters: "true",
+        availableTranslatedLanguage: language,
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        order: { rating: "desc" },
+      },
+    });
+
+    const mangas = data.data.map((item) => MangaParser(item));
+    const stats = await getMangasStats(mangas.map((m) => m.id));
+
+    return mangas.map((manga, index) => ({
+      ...manga,
+      stats: stats[index],
+    }));
+  } catch (error) {
+    console.error("[TopRated] Error:", error);
+    return [];
+  }
+}
+
+async function fetchStaffPickMangas(r18: boolean): Promise<Manga[]> {
+  try {
+    const { staffPickList, seasonalList } = siteConfig.mangadexAPI;
+    const selectedList = Math.random() < 0.5 ? staffPickList : seasonalList;
+
+    // 1. Lấy danh sách ID từ CustomList
+    const listRes = await axiosWithProxy<CustomListResponse>({
+      url: `/list/${selectedList}`,
+      method: "get",
+    });
+
+    const mangaIds = listRes.data.relationships
+      .filter((rel) => rel.type === "manga")
+      .map((rel) => rel.id);
+
+    if (mangaIds.length === 0) return [];
+
+    // 2. Lấy chi tiết Manga (Random offset để đổi gió)
+    const limit = Math.min(32, mangaIds.length);
+    // Lưu ý: Offset random này làm cho việc Cache hơi khó đoán. 
+    // Tốt nhất nên cache kết quả cuối cùng trong thời gian ngắn (vd: 30p)
+    const maxOffset = Math.max(mangaIds.length - limit, 0);
+    const randomOffset = selectedList === seasonalList
+          ? Math.floor(Math.random() * (maxOffset + 1))
+          : 0;
+
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit,
+        offset: 0, // MangaDex CustomList fetch theo IDs array thì không cần offset API
+        ids: mangaIds.slice(randomOffset, randomOffset + limit), // Slice ID ở client
+        includes: ["cover_art", "author", "artist"],
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        // Staff pick không cần sort rating, random shuffle ở dưới là đủ
+      },
+    });
+
+    const mangaResults = data.data.map((item) => MangaParser(item));
+
+    // Shuffle
+    for (let i = mangaResults.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = mangaResults[i];
+      if (temp && mangaResults[j]) {
+        mangaResults[i] = mangaResults[j];
+        mangaResults[j] = temp;
+      }
+    }
+
+    return mangaResults;
+  } catch (error) {
+    console.error("[StaffPick] Error:", error);
+    return [];
+  }
+}
+
+async function fetchCompletedMangas(
+  language: ("vi" | "en")[],
+  r18: boolean,
+): Promise<Manga[]> {
+  try {
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit: 32,
+        includes: ["cover_art", "author", "artist"],
+        hasAvailableChapters: "true",
+        availableTranslatedLanguage: language,
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        status: ["completed"],
+        order: { createdAt: "desc" }, // Nên sort để list ổn định
+      },
+    });
+
+    return data.data.map((item) => MangaParser(item));
+  } catch (error) {
+    console.error("[Completed] Error:", error);
+    return [];
+  }
+}
+
+async function fetchPopularMangas(
+  language: ("vi" | "en")[],
+  r18: boolean,
+): Promise<Manga[]> {
+  try {
+    // Ngày này tháng trước
+    const lastMonth = new Date();
+    lastMonth.setDate(lastMonth.getDate() - 30);
+
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit: 10,
+        includes: ["cover_art", "author", "artist"],
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        hasAvailableChapters: "true",
+        availableTranslatedLanguage: language,
+        order: { followedCount: "desc" },
+        createdAtSince: lastMonth.toISOString().slice(0, 19),
+      },
+    });
+
+    return data.data.map((item) => MangaParser(item));
+  } catch (error) {
+    console.error("[Popular] Error:", error);
+    return [];
+  }
 }
 
 export async function fetchMangaDetail(id: string): Promise<Manga> {
@@ -180,10 +303,11 @@ export async function fetchMangaDetail(id: string): Promise<Manga> {
 
 export async function getMangaStats(id: string): Promise<MangaStats> {
   try {
-    const data = await axiosWithProxy({
+    const data = await axiosWithProxy<MangaDexStatisticsResponse>({
       url: `/statistics/manga/${id}`,
       method: "get",
     });
+
     return MangaStatsParser(data, id);
   } catch (error) {
     console.log(error);
@@ -212,32 +336,21 @@ export async function getMangaStats(id: string): Promise<MangaStats> {
 
 export async function getMangasStats(ids: string[]): Promise<MangasStats[]> {
   try {
-    const data = await axiosWithProxy({
-      url: `/statistics/manga?`,
+    const data = await axiosWithProxy<MangaDexBatchStatisticsResponse>({
+      url: `/statistics/manga`,
       method: "get",
       params: {
         manga: ids,
       },
     });
-    return ids.map((id: any) => MangasStatsParser(data, id));
+
+    return ids.map((id) => MangasStatsParser(data, id));
   } catch (error) {
-    console.log(error);
+    console.error("Failed to fetch batch stats:", error);
+
     return ids.map(() => ({
       rating: {
         bayesian: 0,
-        distribution: {
-          "1": 0,
-          "2": 0,
-          "3": 0,
-          "4": 0,
-          "5": 0,
-          "6": 0,
-          "7": 0,
-          "8": 0,
-          "9": 0,
-          "10": 0,
-        },
-        max: 0,
       },
       follows: 0,
       comments: 0,
@@ -245,416 +358,220 @@ export async function getMangasStats(ids: string[]): Promise<MangasStats[]> {
   }
 }
 
-export function MangasStatsParser(data: any, id: string): MangasStats {
-  return {
-    rating: {
-      bayesian: data.statistics[id].rating.bayesian,
-    },
-    follows: data.statistics[id].follows,
-    comments: data.statistics[id].comments
-      ? data.statistics[id].comments.repliesCount
-      : 0,
-  };
-}
-
-export async function getFirstChapter(
-  id: string,
-  r18: boolean,
-): Promise<{
-  en: string;
-  vi: string;
-}> {
-  const params = {
-    limit: 1,
-    contentRating: r18
-      ? ["safe", "suggestive", "erotica", "pornographic"]
-      : ["safe", "suggestive", "erotica"],
-    order: {
-      volume: "asc",
-      chapter: "asc",
-    },
-  };
-  const [{ data: en }, { data: vi }] = await Promise.all([
-    axiosWithProxy({
-      url: `/manga/${id}/feed`,
-      method: "get",
-      params: {
-        ...params,
-        translatedLanguage: ["en"],
-      },
-    }),
-    axiosWithProxy({
-      url: `/manga/${id}/feed`,
-      method: "get",
-      params: {
-        ...params,
-        translatedLanguage: ["vi"],
-      },
-    }),
-  ]);
-
-  return {
-    en: en.data[0]?.id,
-    vi: vi.data[0]?.id,
-  };
-}
+export const getCachedFirstChapter = cacheRequest(
+  fetchFirstChapter,
+  ["first-chapter"],
+  ["chapter"],
+  60 * 60 * 24 * 7,
+);
 
 export async function FirstViChapter(
   id: string,
   r18: boolean,
-): Promise<Chapter> {
-  const data = await axiosWithProxy({
-    url: `/manga/${id}/feed`,
-    method: "get",
-    params: {
-      limit: 1,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      order: {
-        volume: "asc",
-        chapter: "asc",
-      },
-      translatedLanguage: ["vi"],
-      includes: ["scanlation_group", "manga"],
-    },
-  });
-  return ChaptersParser(data.data)[0];
+): Promise<Chapter | null> {
+  return fetchFirstChapterByLang(id, r18, "vi");
 }
 
 export async function FirstEnChapter(
   id: string,
   r18: boolean,
-): Promise<Chapter> {
-  const data = await axiosWithProxy({
-    url: `/manga/${id}/feed`,
-    method: "get",
-    params: {
-      limit: 1,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      order: {
-        volume: "asc",
-        chapter: "asc",
-      },
-      translatedLanguage: ["en"],
-      includes: ["scanlation_group", "manga"],
-    },
-  });
-  return ChaptersParser(data.data)[0];
+): Promise<Chapter | null> {
+  return fetchFirstChapterByLang(id, r18, "en");
 }
 
 export async function FirstChapters(
-  id: string, //manga id
+  id: string, // Manga ID
   r18: boolean,
   translatedLanguage: ("vi" | "en")[],
   volume?: string,
   chapter?: string,
 ): Promise<Chapter[]> {
-  const data = await axiosWithProxy({
-    url: `/chapter`,
-    method: "get",
-    params: {
-      manga: id,
-      volume: volume ?? "none",
-      chapter: chapter ?? "none",
-      limit: 100,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      order: {
-        volume: "asc",
-        chapter: "asc",
+  try {
+    const data = await axiosWithProxy<MangaDexFeedResponse>({
+      url: `/chapter`,
+      method: "get",
+      params: {
+        manga: id,
+        ...(volume && { volume }),
+        ...(chapter && { chapter }),
+
+        limit: 100,
+        contentRating: r18
+          ? ["safe", "suggestive", "erotica", "pornographic"]
+          : ["safe", "suggestive", "erotica"],
+        order: {
+          volume: "asc",
+          chapter: "asc",
+        },
+        translatedLanguage: translatedLanguage,
+        includes: ["scanlation_group", "manga", "user"],
       },
-      translatedLanguage: translatedLanguage,
-      includes: ["scanlation_group", "manga"],
-    },
-  });
-  return ChaptersParser(data.data);
+    });
+
+    return ChaptersParser(data.data);
+  } catch (error) {
+    console.error(`Error fetching specific chapters for ${id}`, error);
+    return [];
+  }
 }
 
 export async function SearchManga(
   query: string,
   r18: boolean,
 ): Promise<Manga[]> {
-  const data = await axiosWithProxy({
-    url: "/manga?",
-    method: "get",
-    params: {
-      limit: 20,
-      title: query,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      includes: ["author", "artist", "cover_art"],
-      order: {
-        relevance: "desc",
+  try {
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: "/manga",
+      method: "get",
+      params: {
+        limit: 20,
+        title: query,
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        includes: ["author", "artist", "cover_art"],
+        order: { relevance: "desc" },
       },
-    },
-  });
-  const mangas = data.data.map((item: any) => MangaParser(item));
-  if (mangas.length === 0) return [];
+    });
 
-  const stats = await getMangasStats(mangas.map((manga: Manga) => manga.id));
+    const mangas = data.data.map((item) => MangaParser(item));
+    if (mangas.length === 0) return [];
 
-  return mangas.map((manga: Manga, index: number) => ({
-    ...manga,
-    stats: stats[index],
-  }));
-}
+    // Search thường cần hiện Stats (Rating) ngay để user chọn
+    const stats = await getMangasStats(mangas.map((m) => m.id));
 
-export async function getPopularMangas(
-  language: ("vi" | "en")[],
-  r18: boolean,
-): Promise<Manga[]> {
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params: {
-      limit: 10,
-      includes: ["cover_art", "author", "artist"],
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      hasAvailableChapters: "true",
-      availableTranslatedLanguage: language,
-      order: {
-        followedCount: "desc",
-      },
-      createdAtSince: new Date(new Date().setDate(new Date().getDate() - 30))
-        .toISOString()
-        .slice(0, 19),
-    },
-  });
-
-  return data.data.map((item: any) => MangaParser(item));
+    return mangas.map((manga, index) => ({
+      ...manga,
+      stats: stats[index],
+    }));
+  } catch (error) {
+    console.error("[Search] Error:", error);
+    return [];
+  }
 }
 
 export const getCachedPopularMangas = cacheRequest(
-  getPopularMangas,
-  ["popular-mangas"], // Key định danh duy nhất cho cache file system
-  ["manga"], // Tag để sau này dùng revalidateTag('manga') nếu muốn xóa cache
-  60 * 60, // Cache 1 tiếng (60 * 60 giây)
+  fetchPopularMangas,
+  ["popular-mangas"],
+  ["manga"],
+  60 * 60
 );
 
 export async function getRecentlyMangas(
   limit: number,
   language: ("vi" | "en")[],
   r18: boolean,
-  offset?: number,
-): Promise<{
-  mangas: Manga[];
-  total: number;
-}> {
+  offset = 0,
+): Promise<{ mangas: Manga[]; total: number }> {
   const max_total = 10000;
-  const safeOffset = offset || 0;
-  if (limit + safeOffset > max_total) {
-    limit = max_total - safeOffset;
-  }
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params: {
-      limit: limit,
-      offset: safeOffset,
-      includes: ["cover_art", "author", "artist"],
-      availableTranslatedLanguage: language,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      order: {
-        createdAt: "desc",
-      },
-    },
-  });
-  const total = data.total > max_total ? max_total : data.total;
-
-  return {
-    mangas: data.data.map((item: any) => MangaParser(item)),
-    total: total,
-  };
-}
-
-export async function getTopFollowedMangas(
-  language: ("vi" | "en")[],
-  r18: boolean,
-): Promise<Manga[]> {
-  const params: any = {
-    limit: 10,
-    includes: ["cover_art", "author", "artist"],
-    availableTranslatedLanguage: language,
-    hasAvailableChapters: "true",
-    contentRating: r18
-      ? ["safe", "suggestive", "erotica", "pornographic"]
-      : ["safe", "suggestive", "erotica"],
-    order: {
-      followedCount: "desc",
-    },
-  };
-
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params,
-  });
-
-  const mangas = data.data.map((item: any) => MangaParser(item));
-  const stats = await getMangasStats(mangas.map((manga: Manga) => manga.id));
-
-  return mangas.map((manga: Manga, index: number) => ({
-    ...manga,
-    stats: stats[index],
-  }));
-}
-
-export async function getTopRatedMangas(
-  language: ("vi" | "en")[],
-  r18: boolean,
-): Promise<Manga[]> {
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params: {
-      limit: 10,
-      includes: ["cover_art", "author", "artist"],
-      hasAvailableChapters: "true",
-      availableTranslatedLanguage: language,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      order: {
-        rating: "desc",
-      },
-    },
-  });
-
-  const mangas = data.data.map((item: any) => MangaParser(item));
-  const stats = await getMangasStats(mangas.map((manga: Manga) => manga.id));
-
-  return mangas.map((manga: Manga, index: number) => ({
-    ...manga,
-    stats: stats[index],
-  }));
-}
-
-export async function getStaffPickMangas(r18: boolean): Promise<Manga[]> {
-  const staffPickList = siteConfig.mangadexAPI.staffPickList;
-  const seasonalList = siteConfig.mangadexAPI.seasonalList;
-
-  // Randomly choose between staffPickList and seasonalList
-  const selectedList = Math.random() < 0.5 ? staffPickList : seasonalList;
-
-  const StaffPickID = await axiosWithProxy({
-    url: `/list/${selectedList}`,
-    method: "get",
-  }).then((res) =>
-    res.data.relationships
-      .filter((item: any) => item.type === "manga")
-      .map((item: any) => item.id),
-  );
-
-  if (StaffPickID.length === 0) return [];
-
-  const limit = Math.min(32, StaffPickID.length);
-  const maxOffset = Math.max(StaffPickID.length - limit, 0);
-
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params: {
-      limit,
-      offset:
-        selectedList === seasonalList
-          ? Math.floor(Math.random() * (maxOffset + 1))
-          : 0,
-      includes: ["cover_art", "author", "artist"],
-      // hasAvailableChapters: "true",
-      // availableTranslatedLanguage: ["vi"],
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      ids: StaffPickID,
-      order: {
-        rating: "desc",
-      },
-    },
-  });
-
-  // Parse the data and then shuffle the results before returning
-  const mangaResults = data.data.map((item: any) => MangaParser(item));
-
-  // Fisher-Yates shuffle algorithm to randomize the order
-  for (let i = mangaResults.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [mangaResults[i], mangaResults[j]] = [mangaResults[j], mangaResults[i]];
+  
+  // Logic giới hạn offset
+  if (limit + offset > max_total) {
+    limit = Math.max(0, max_total - offset);
   }
 
-  return mangaResults;
+  try {
+    const data = await axiosWithProxy<MangaListResponse>({
+      url: `/manga`,
+      method: "get",
+      params: {
+        limit: limit,
+        offset: offset,
+        includes: ["cover_art", "author", "artist"],
+        availableTranslatedLanguage: language,
+        contentRating: r18 ? CONTENT_RATING_ALL : CONTENT_RATING_SAFE,
+        order: { createdAt: "desc" },
+      },
+    });
+
+    return {
+      mangas: data.data.map((item) => MangaParser(item)),
+      total: Math.min(data.total, max_total),
+    };
+  } catch (error) {
+    console.error("[RecentlyMangas] Error:", error);
+    return { mangas: [], total: 0 };
+  }
 }
 
-export async function getCompletedMangas(
-  language: ("vi" | "en")[],
-  r18: boolean,
-): Promise<Manga[]> {
-  const data = await axiosWithProxy({
-    url: `/manga?`,
-    method: "get",
-    params: {
-      limit: 32,
-      includes: ["cover_art", "author", "artist"],
-      hasAvailableChapters: "true",
-      availableTranslatedLanguage: language,
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-      status: ["completed"],
-    },
-  });
+export const getCachedTopFollowedMangas = cacheRequest(
+  fetchTopFollowedMangas,
+  ["top-followed-mangas"],
+  ["manga"],
+  60 * 60
+);
 
-  return data.data.map((item: any) => MangaParser(item));
-}
+export const getCachedTopRatedMangas = cacheRequest(
+  fetchTopRatedMangas,
+  ["top-rated-mangas"],
+  ["manga"],
+  60 * 60
+);
+
+export const getCachedStaffPickMangas = cacheRequest(
+  fetchStaffPickMangas,
+  ["staff-pick-mangas"],
+  ["manga"],
+  60 * 30 // 30 phút đổi 1 lần
+);
+
+export const getCachedCompletedMangas = cacheRequest(
+  fetchCompletedMangas,
+  ["completed-mangas"],
+  ["manga"],
+  60 * 60
+);
 
 export async function getRecommendedMangas(
   id: string,
   r18: boolean,
 ): Promise<Manga[]> {
-  const rcmData = await axiosWithProxy({
-    url: `/manga/${id}/recommendation`,
-    method: "get",
-  });
+  try {
+    const rcmData = await axiosWithProxy<MangaRecommendationResponse>({
+      url: `/manga/${id}/recommendation`,
+      method: "get",
+      params: {
+        includes: ["manga"],
+      },
+    });
 
-  //filter "type": "manga_recommendation"
-  const mangaIDs = rcmData.data
-    .filter((item: any) => item.type === "manga_recommendation")
-    .map((item: any) => item.id.split("_")[1]);
+    const mangaIDs = rcmData.data
+      .map((item) => {
+        const mangaRel = item.relationships.find((rel) => rel.type === "manga");
+        return mangaRel ? mangaRel.id : null;
+      })
+      .filter((id): id is string => id !== null);
 
-  if (mangaIDs.length === 0) return [];
+    if (mangaIDs.length === 0) return [];
 
-  const mangasData = await axiosWithProxy({
-    url: "/manga",
-    method: "get",
-    params: {
-      limit: 100,
-      ids: mangaIDs,
-      includes: ["cover_art", "author", "artist"],
-      contentRating: r18
-        ? ["safe", "suggestive", "erotica", "pornographic"]
-        : ["safe", "suggestive", "erotica"],
-    },
-  });
+    const mangasData = await axiosWithProxy<MangaListResponse>({
+      url: "/manga",
+      method: "get",
+      params: {
+        limit: 100,
+        ids: mangaIDs,
+        includes: ["cover_art", "author", "artist"],
+        contentRating: r18
+          ? ["safe", "suggestive", "erotica", "pornographic"]
+          : ["safe", "suggestive", "erotica"],
+      },
+    });
 
-  return mangasData.data.map((m: any) => MangaParser(m));
+    return mangasData.data.map((m) => MangaParser(m));
+  } catch (error) {
+    console.error(`[Recommended] Error fetching for ${id}:`, error);
+    return [];
+  }
 }
 
 export async function getTotalMangas(): Promise<number> {
-  const data = await axiosWithProxy({
+  const data = await axiosWithProxy<MangaListResponse>({
     url: `/manga`,
     method: "get",
     params: {
+      limit: 0,
       availableTranslatedLanguage: ["vi"],
     },
   });
+
   if (data.total > 10000) return 10000;
 
   return data.total;

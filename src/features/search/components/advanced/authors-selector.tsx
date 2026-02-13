@@ -3,10 +3,10 @@
 
 import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
-import { SearchAuthor, SearchAuthorByIds } from "@/lib/mangadex/author";
 import { AsyncMultiSelect } from "@/shared/components/ui/async-multi-select";
 import { cn } from "@/shared/lib/utils";
-import { Author } from "@/shared/types/common";
+import type { Author } from "@/shared/types/common";
+import { SearchAuthor, SearchAuthorByIds } from "@/features/author/api/author";
 
 interface AuthorOption {
   value: string;
@@ -35,7 +35,7 @@ export const AuthorsSelector: React.FC<AuthorsSelectorProps> = ({
   const [selectedAuthorIds, setSelectedAuthorIds] =
     useState<string[]>(defaultValue);
   const [cachedAuthors, setCachedAuthors] = useState<Map<string, AuthorOption>>(
-    new Map(),
+    () => new Map(),
   );
   const [initialOptionsLoaded, setInitialOptionsLoaded] = useState(false);
   const [hasValidDefaultValues, setHasValidDefaultValues] = useState(true);
@@ -71,8 +71,8 @@ export const AuthorsSelector: React.FC<AuthorsSelectorProps> = ({
       setInitialOptionsLoaded(true);
     };
 
-    loadInitialData();
-  }, [defaultValue]);
+    void loadInitialData();
+  }, [cachedAuthors, defaultValue]);
 
   // Convert the cached authors Map to an array for use with AsyncMultiSelect
   const cachedAuthorsArray = Array.from(cachedAuthors.values());

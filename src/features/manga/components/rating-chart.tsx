@@ -54,7 +54,7 @@ export function RatingChart({ stats }: RatingStats) {
           tickMargin={10}
           axisLine={false}
           interval={0}
-          tickFormatter={(value) => value}
+          tickFormatter={(value: string | number) => String(value)}
           className="text-xs"
         />
 
@@ -64,7 +64,7 @@ export function RatingChart({ stats }: RatingStats) {
           dataKey="count"
           type="category"
           tickLine={false}
-          tickFormatter={(value) =>
+          tickFormatter={(value: number) =>
             `(${
               value > 10000
                 ? millify(value, {

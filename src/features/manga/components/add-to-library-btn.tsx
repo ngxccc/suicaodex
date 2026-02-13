@@ -14,7 +14,6 @@ import {
 import { Label } from "@/shared/components/ui/label";
 import { useConfig } from "@/shared/hooks/use-config";
 import { cn, getCoverImageUrl } from "@/shared/lib/utils";
-import type { LibraryType, Manga } from "@/shared/types/common";
 import {
   Album,
   BellOff,
@@ -27,7 +26,7 @@ import {
   Loader2,
   NotebookPen,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import {
   Select,
@@ -40,7 +39,10 @@ import { toast } from "sonner";
 import { useLocalLibrary } from "@/shared/hooks/use-local-library";
 import { useLocalNotification } from "@/shared/hooks/use-local-notification";
 import { useSession } from "next-auth/react";
-import { updateMangaCategory } from "@/shared/config/db";
+import { updateMangaCategoryAction } from "@/shared/config/db";
+import type { Category } from "prisma/generated/enums";
+import type { Manga } from "../types";
+import type { LibraryType } from "@/features/library/types";
 
 interface AddToLibraryBtnProps {
   manga: Manga;
@@ -54,35 +56,29 @@ export default function AddToLibraryBtn({ manga }: AddToLibraryBtnProps) {
 
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
 
-  const {
-    localLibrary,
-    addToLocalCategory,
-    removeFromLocalLibrary,
-    getLocalCategoryOfId,
-  } = useLocalLibrary();
+  const { addToLocalCategory, removeFromLocalLibrary, getLocalCategoryOfId } =
+    useLocalLibrary();
 
   const {
-    localNotification,
     addToLocalNotification,
     removeFromLocalNotification,
     isInLocalNotification,
   } = useLocalNotification();
 
   const [value, setValue] = useState<LibraryType | "none">(
-    getLocalCategoryOfId(manga.id) || "none",
+    () => getLocalCategoryOfId(manga.id) ?? "none",
   );
-  // Cập nhật giá trị mặc định của dropdown dựa trên danh mục hiện tại của truyện
-  useEffect(() => {
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      return;
+    }
     const currentCategory = getLocalCategoryOfId(manga.id);
-    setValue(currentCategory || "none");
-  }, [manga.id, localLibrary]);
+    setValue(currentCategory ?? "none");
+    setIsNotificationEnabled(isInLocalNotification(manga.id));
+  };
 
-  useEffect(() => {
-    const isInNotification = isInLocalNotification(manga.id);
-    setIsNotificationEnabled(isInNotification);
-  }, [manga.id, localNotification]);
-
-  const src = getCoverImageUrl(manga.id, manga.cover, "512");
+  const src = getCoverImageUrl(manga.id, manga.cover ?? "", "512");
 
   const options = [
     {
@@ -139,18 +135,25 @@ export default function AddToLibraryBtn({ manga }: AddToLibraryBtnProps) {
     );
   };
 
+  const toCategory = (category: LibraryType | "none"): Category | "NONE" => {
+    if (category === "none") {
+      return "NONE";
+    }
+    return category.toUpperCase() as Category;
+  };
+
   const handleLibraryAdd = async (v: LibraryType | "none") => {
-    if (!session || !session.user || !session.user.id) {
+    if (!session?.user?.id) {
       toast.info("Bạn cần đăng nhập để sử dụng chức năng này!");
       return;
     }
     setIsLoading(true);
     try {
-      const res = await updateMangaCategory(
+      const res = await updateMangaCategoryAction(
         session.user.id,
         manga.id,
-        v.toUpperCase() as any,
-        manga.latestChapter || "none",
+        toCategory(v),
+        manga.latestChapter ?? "none",
       );
       if (res.status === 200 || res.status === 201) {
         toast.success(res.message);
@@ -162,19 +165,17 @@ export default function AddToLibraryBtn({ manga }: AddToLibraryBtnProps) {
       toast.error("Có lỗi xảy ra, vui lòng thử lại sau!");
     } finally {
       setIsLoading(false);
-
-      return;
     }
   };
 
   const handleCancel = () => {
     // Reset value to default when dialog is closed
-    setValue(getLocalCategoryOfId(manga.id) || "none");
+    setValue(getLocalCategoryOfId(manga.id) ?? "none");
     setIsNotificationEnabled(isInLocalNotification(manga.id));
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleDialogOpenChange}>
       <DialogTrigger asChild>
         <Button className="size-9 rounded-sm md:h-10 md:w-auto md:px-6 md:has-[>svg]:px-4">
           {options.find((opt) => opt.value === value)?.icon}
@@ -364,8 +365,7 @@ export default function AddToLibraryBtn({ manga }: AddToLibraryBtnProps) {
                 toast.info("Bạn cần đăng nhập để sử dụng chức năng này!");
                 return;
               }
-              // toast.info("Chức năng đang phát triển!");
-              handleLibraryAdd(value);
+              void handleLibraryAdd(value);
             }}
           >
             {isLoading ? <Loader2 className="animate-spin" /> : <CircleUser />}

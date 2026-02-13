@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +13,7 @@ import {
 } from "@/shared/components/ui/tabs";
 import { CircleHelp, MonitorCog, NotepadText } from "lucide-react";
 import { Alert } from "@/shared/components/ui/alert";
-import Notifications from "@/components/Notifications/notifications";
+import Notifications from "@/features/notification/components/notifications";
 
 interface pageProps {
   searchParams: Promise<{
@@ -23,7 +23,7 @@ interface pageProps {
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Thông báo - SuicaoDex",
+    title: "Thông báo",
   };
 }
 

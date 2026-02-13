@@ -15,13 +15,13 @@ import { Marquee } from "@/shared/components/ui/marquee";
 import RecentlyCard from "../../Recently/recently-card";
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { generateSlug } from "@/shared/lib/utils";
-import { getCompletedMangas } from "@/features/manga/api/manga";
+import { getCachedCompletedMangas } from "@/features/manga/api/manga";
 
 export default function CompletedSwiper() {
   const [config] = useConfig();
   const { data, error, isLoading } = useSWR(
     ["completed", config.translatedLanguage, config.r18],
-    ([, language, r18]) => getCompletedMangas(language, r18),
+    ([, language, r18]) => getCachedCompletedMangas(language, r18),
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,

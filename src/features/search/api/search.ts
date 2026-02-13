@@ -1,6 +1,6 @@
-import { Manga } from "@/shared/types/common";
-import { axiosWithProxy } from "../../shared/config/axios";
-import { MangaParser } from "./manga";
+import { MangaParser } from "@/features/manga/api/manga";
+import { axiosWithProxy } from "@/shared/config/axios";
+import type { Manga } from "@/shared/types/common";
 
 export async function AdvancedSearchManga(
   title: string,
@@ -24,7 +24,7 @@ export async function AdvancedSearchManga(
   if (limit + offset > max_total) {
     limit = max_total - offset;
   }
-  const searchParams: { [key: string]: any } = {
+  const searchParams: Record<string, any> = {
     title: title,
     limit: limit,
     offset: offset,
@@ -32,35 +32,35 @@ export async function AdvancedSearchManga(
   };
 
   if (content.length > 0) {
-    searchParams["contentRating"] = content;
+    searchParams.contentRating = content;
   }
   if (status.length > 0) {
-    searchParams["status"] = status;
+    searchParams.status = status;
   }
   if (include_tags.length > 0) {
-    searchParams["includedTags"] = include_tags;
+    searchParams.includedTags = include_tags;
   }
   if (exclude_tags.length > 0) {
-    searchParams["excludedTags"] = exclude_tags;
+    searchParams.excludedTags = exclude_tags;
   }
   if (author.length > 0) {
-    searchParams["authors"] = author;
+    searchParams.authors = author;
   }
   if (graphic.length > 0) {
-    searchParams["publicationDemographic"] = graphic;
+    searchParams.publicationDemographic = graphic;
   }
   if (origin.length > 0) {
-    searchParams["originalLanguage"] = origin;
+    searchParams.originalLanguage = origin;
   }
   if (available_chapter) {
-    searchParams["hasAvailableChapters"] = "true";
+    searchParams.hasAvailableChapters = "true";
   }
   if (available_chapter && translated.length > 0) {
-    searchParams["availableTranslatedLanguage"] = translated;
+    searchParams.availableTranslatedLanguage = translated;
   }
 
-  if (!!year) {
-    searchParams["year"] = year;
+  if (year) {
+    searchParams.year = year;
   }
 
   const data = await axiosWithProxy({

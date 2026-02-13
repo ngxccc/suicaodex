@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { Alert, AlertTitle } from "@/shared/components/ui/alert";
 import {
   Album,
@@ -23,11 +23,11 @@ import {
 } from "@/shared/components/ui/accordion";
 import MyLibrary from "@/features/library/components/my-library";
 import { auth } from "@/shared/config/authjs";
-import SyncLib from "@/shared/components/library/sync-lib";
+import SyncLib from "@/features/library/components/sync-lib";
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Thư viện - SuicaoDex",
+    title: "Thư viện",
     // description: "Thư viện",
     // keywords: ["Lịch sử", "History", "SuicaoDex"],
   };

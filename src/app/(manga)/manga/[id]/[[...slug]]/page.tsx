@@ -37,7 +37,7 @@ export async function generateMetadata({
       manga.description.content || `Đọc truyện ${manga.title} - SuicaoDex`;
 
     return {
-      title: `${manga.title} - SuicaoDex`,
+      title: `${manga.title}`,
       description,
       keywords: [`Manga`, manga.title, "SuicaoDex", manga.altTitle ?? ""],
       openGraph: {
@@ -82,12 +82,9 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       {!!manga && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateJsonLd(manga)),
-          }}
-        ></script>
+        <script type="application/ld+json">
+          {JSON.stringify(generateJsonLd(manga))}
+        </script>
       )}
       <MangaDetails id={id} initialData={manga} />
     </>

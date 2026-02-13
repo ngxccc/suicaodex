@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/shared/config/prisma";
 import { serializeComment } from "@/shared/lib/serializers";
 import { auth } from "@/shared/config/authjs";
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   const headers = new Headers();
 
   try {
-    const identifier = req.headers.get("x-forwarded-for") || "anonymous";
+    const identifier = req.headers.get("x-forwarded-for") ?? "anonymous";
     await limiter.check(headers, 50, identifier); // 50 req/min
   } catch (err) {
     if (err instanceof RateLimitError) {
@@ -93,7 +94,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   }
 
   const { content, title } = await req.json();
-  const contentLength = getContentLength(content || "");
+  const contentLength = getContentLength(content ?? "");
 
   if (!id || !content || !title) {
     return NextResponse.json({ error: "Missing data" }, { status: 400 });

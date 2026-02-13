@@ -21,7 +21,7 @@ export async function generateMetadata({
   try {
     const group = await getCachedGroupData(id);
     return {
-      title: `${group.name} - SuicaoDex`,
+      title: `${group.name}`,
       description: group.description
         ? group.description
         : `Thông tin nhóm dịch ${group.name} - SuicaoDex`,

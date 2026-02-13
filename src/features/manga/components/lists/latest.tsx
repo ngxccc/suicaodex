@@ -3,8 +3,7 @@
 import { useConfig } from "@/shared/hooks/use-config";
 import { getLatestManga } from "@/features/manga/api/latest";
 import useSWR from "swr";
-import LatestMangaCard from "../../../auth/components/Pages/Latest/latest-manga-card";
-import { Chapter } from "@/shared/types/common";
+import type { Chapter } from "@/shared/types/common";
 import {
   Pagination,
   PaginationContent,
@@ -23,6 +22,7 @@ import {
 import { useRouter } from "next/navigation";
 import { LayoutGrid, List, Loader2 } from "lucide-react";
 import { Card } from "@/shared/components/ui/card";
+import LatestMangaCard from "./latest-manga-card";
 
 interface LatestProps {
   page: number;
@@ -237,11 +237,11 @@ function DefaultTabs({ children, compactView, coverView }: DefaultTabsProps) {
       </TabsList>
 
       <TabsContent className="w-full justify-items-center" value="compact">
-        {compactView || children}
+        {compactView ?? children}
       </TabsContent>
 
       <TabsContent className="w-full justify-items-center" value="cover">
-        {coverView || children}
+        {coverView ?? children}
       </TabsContent>
     </Tabs>
   );

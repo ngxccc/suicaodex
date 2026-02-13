@@ -4,7 +4,7 @@ import { cn, generateSlug, getCoverImageUrl } from "@/shared/lib/utils";
 import type { Artist, Author, Manga } from "@/shared/types/common";
 import remarkGfm from "remark-gfm";
 import Markdown from "react-markdown";
-import Tags from "@/features/manga/components/Tags";
+import Tags from "@/features/manga/components/tags";
 import MangaCover from "@/features/manga/components/manga-cover";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";

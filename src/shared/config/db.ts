@@ -1,10 +1,78 @@
+"use server";
+
 import { auth } from "@/shared/config/authjs";
 import { prisma } from "./prisma";
 import type { Category } from "prisma/generated/enums";
+import { revalidatePath } from "next/cache";
 
 async function checkAuth(userID: string): Promise<boolean> {
   const session = await auth();
   return session?.user?.id === userID || false;
+}
+
+export async function updateMangaCategoryAction(
+  userId: string,
+  mangaId: string,
+  category: Category | "NONE",
+  latestChapterId: string,
+) {
+  try {
+    // 1. Check Auth (Bảo mật 2 lớp)
+    const session = await auth();
+    if (session?.user?.id !== userId) {
+      return { message: "Unauthorized", status: 401 };
+    }
+
+    // 2. Logic Update Database (Copy logic cũ vào đây)
+
+    // Đảm bảo Manga tồn tại
+    await prisma.manga.upsert({
+      where: { mangadexId: mangaId },
+      create: { mangadexId: mangaId, latestChapterId },
+      update: { latestChapterId },
+    });
+
+    // Lấy Library ID
+    const library = await prisma.library.upsert({
+      where: { userId },
+      create: { userId },
+      update: {},
+      select: { id: true },
+    });
+
+    if (category === "NONE") {
+      // Xóa khỏi thư viện
+      await prisma.libraryManga.deleteMany({
+        where: { libraryId: library.id, mangaId },
+      });
+
+      // Refresh cache để UI cập nhật ngay lập tức
+      revalidatePath(`/manga/${mangaId}`);
+      return { message: "Đã xóa khỏi thư viện!", status: 200 };
+    } else {
+      // Thêm/Update thư viện
+      await prisma.libraryManga.upsert({
+        where: {
+          libraryId_mangaId: {
+            libraryId: library.id,
+            mangaId: mangaId,
+          },
+        },
+        create: {
+          libraryId: library.id,
+          mangaId: mangaId,
+          category: category,
+        },
+        update: { category: category },
+      });
+
+      revalidatePath(`/manga/${mangaId}`);
+      return { message: "Cập nhật thành công!", status: 200 };
+    }
+  } catch (error) {
+    console.error("Action Error:", error);
+    return { message: "Lỗi hệ thống", status: 500 };
+  }
 }
 
 export async function getMangaCategory(
@@ -27,7 +95,7 @@ export async function getMangaCategory(
     return result?.category ?? "NONE";
   } catch (error) {
     console.error("Error fetching manga category:", error);
-    throw new Error("Failed to fetch manga category.");
+    throw new Error("Failed to fetch manga category.", { cause: error });
   }
 }
 
@@ -139,6 +207,6 @@ export async function getUserLibrary(userId: string): Promise<{
     return result;
   } catch (error) {
     console.error("Error fetching user library:", error);
-    throw new Error("Failed to fetch user library.");
+    throw new Error("Failed to fetch user library.", { cause: error });
   }
 }

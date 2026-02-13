@@ -51,15 +51,22 @@ export function MangaReadNowButton({ id, language }: MangaReadNowButtonProps) {
       }
 
       const oldestVolume = aggregate[aggregate.length - 1];
-      const oldestChapter =
+      if (!oldestVolume?.chapters || oldestVolume.chapters.length === 0) {
+        return [];
+      }
+
+      const lastChapter =
         oldestVolume.chapters[oldestVolume.chapters.length - 1];
+      if (!lastChapter) {
+        return [];
+      }
 
       const result = await FirstChapters(
         id,
         config.r18,
         config.translatedLanguage,
         oldestVolume.vol,
-        oldestChapter.chapter,
+        lastChapter.chapter,
       );
       return result;
     },
@@ -70,7 +77,7 @@ export function MangaReadNowButton({ id, language }: MangaReadNowButtonProps) {
         if (!data || data.length === 0) return;
 
         if (data.length === 1) {
-          router.push(`/chapter/${data[0].id}`);
+          router.push(`/chapter/${data[0]?.id}`);
         } else {
           setShowDialog(true);
         }
@@ -81,7 +88,7 @@ export function MangaReadNowButton({ id, language }: MangaReadNowButtonProps) {
   const handleReadNow = () => {
     if (chapters && chapters.length > 0) {
       if (chapters.length === 1) {
-        router.push(`/chapter/${chapters[0].id}`);
+        router.push(`/chapter/${chapters[0]?.id}`);
       } else {
         setShowDialog(true);
       }

@@ -48,6 +48,9 @@ const MangaDescription = ({
           content,
         )}`,
       );
+
+      console.log("response translate.googleapis: ", response);
+
       const data = await response.json();
       const translatedText = data[0].map((part: any) => part[0]).join("");
       setState((prev) => ({
@@ -126,7 +129,7 @@ const MangaDescription = ({
             <Button
               size="sm"
               className="mt-2 rounded-sm text-xs opacity-50 transition hover:opacity-100"
-              onClick={handleTranslate}
+              onClick={void handleTranslate}
               variant="ghost"
             >
               {state.isLoading ? (
@@ -141,7 +144,7 @@ const MangaDescription = ({
           )}
 
           {!!manga && (
-            <div className={cn("xl:hidden", !!content ? "py-4" : "pb-2")}>
+            <div className={cn("xl:hidden", content ? "py-4" : "pb-2")}>
               <MangaSubInfo manga={manga} />
             </div>
           )}

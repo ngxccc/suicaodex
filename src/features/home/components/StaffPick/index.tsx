@@ -1,7 +1,6 @@
 "use client";
 
 import { useConfig } from "@/shared/hooks/use-config";
-import { getStaffPickMangas } from "@/features/manga/api/manga";
 import useSWR from "swr";
 import RecentlyCard from "../Recently/recently-card";
 import { cn, generateSlug } from "@/shared/lib/utils";
@@ -10,6 +9,7 @@ import { Button } from "@/shared/components/ui/button";
 import { ChevronsDown, ChevronsUp } from "lucide-react";
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import StaffPickSkeleton from "./staffpick-skeleton";
+import { getCachedStaffPickMangas } from "@/features/manga/api/manga";
 
 export default function StaffPick() {
   const [config] = useConfig();
@@ -49,7 +49,7 @@ export default function StaffPick() {
 
   const { data, error, isLoading } = useSWR(
     ["staffpick", config.r18],
-    ([, r18]) => getStaffPickMangas(r18),
+    ([, r18]) => getCachedStaffPickMangas(r18),
     {
       refreshInterval: 1000 * 60 * 10,
       revalidateOnFocus: false,

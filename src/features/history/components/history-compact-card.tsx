@@ -3,7 +3,7 @@ import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardFooter, CardHeader } from "@/shared/components/ui/card";
 import { formatTimeToNow } from "@/shared/lib/utils";
-import { Chapter } from "@/shared/types/common";
+import type { Chapter } from "@/shared/types/common";
 import { GB, VN } from "country-flag-icons/react/3x2";
 import { Clock, Users } from "lucide-react";
 import { useRouter } from "next/navigation";

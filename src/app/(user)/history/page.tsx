@@ -1,15 +1,15 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@/shared/components/ui/alert";
 import { Terminal } from "lucide-react";
-import History from "@/components/Pages/History";
+import History from "@/features/history/components/history";
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Lịch sử đọc truyện - SuicaoDex",
+    title: "Lịch sử đọc truyện",
     description: "Lịch sử đọc truyện",
     keywords: ["Lịch sử", "History", "SuicaoDex"],
   };

@@ -7,7 +7,7 @@ import MangaDescription from "@/features/manga/components/manga-description";
 import MangaMaintain from "@/features/manga/components/manga-maintain";
 import MangaNotFound from "@/features/manga/components/manga-notfound";
 import { MangaStatsComponent } from "@/features/manga/components/manga-stats";
-import Tags from "@/features/manga/components/Tags";
+import Tags from "@/features/manga/components/tags";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,7 +36,6 @@ import { siteConfig } from "@/shared/config/site";
 import { useConfig } from "@/shared/hooks/use-config";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { fetchMangaDetail } from "@/features/manga/api/manga";
-import type { Artist, Author, Manga } from "@/shared/types/common";
 import {
   Archive,
   Bug,
@@ -57,7 +56,6 @@ import MangaDetailsSkeleton from "./manga-details-skeleton";
 import AddToLibraryBtn from "@/features/manga/components/add-to-library-btn";
 import MangaCoversTab from "@/features/manga/components/manga-covers-tab";
 import MangaSubInfo from "@/features/manga/components/manga-subinfo";
-import CommentSection from "@/components/Comment/comment-section";
 import { useCommentCount } from "@/shared/hooks/use-comment-count";
 import MangaRecommendations from "@/features/manga/components/manga-recomendations";
 import NoPrefetchLink from "@/shared/components/custom/no-prefetch-link";
@@ -70,6 +68,9 @@ import {
 } from "@/shared/components/ui/card";
 import { RainbowButton } from "@/shared/components/ui/rainbow-button";
 import { MangaReadNowButton } from "@/features/manga/components/manga-readnow-button";
+import type { Manga } from "../../types";
+import CommentSection from "@/features/comment/components/comment-section";
+import type { Artist, Author } from "@/features/author/types";
 
 interface MangaDetailsProps {
   id: string;
@@ -139,7 +140,7 @@ export default function MangaDetails({ id, initialData }: MangaDetailsProps) {
       )}
 
       {/* Banner */}
-      <Banner id={manga.id} src={manga.cover} />
+      <Banner id={manga.id} src={manga.cover ?? ""} />
 
       {/* Content */}
       <div className="grid grid-cols-1 gap-4">
@@ -147,7 +148,7 @@ export default function MangaDetails({ id, initialData }: MangaDetailsProps) {
           <div className="relative">
             <MangaCover
               id={manga.id}
-              cover={manga.cover}
+              cover={manga.cover ?? ""}
               alt={manga.title}
               placeholder="/images/place-doro.webp"
               className="shadow-md drop-shadow-md"

@@ -90,16 +90,14 @@ model Library {
 }
 
 model Manga {
-  mangadexId      String @id
-  latestChapterId String?
+  mangadexId String @id
 
-  libraries LibraryManga[]
-  comments  MangaComment[]
+  comments   MangaComment[]
+  library    LibraryManga[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt  DateTime @updatedAt
 
-  @@index([mangadexId])
+  chapters Chapter[]
 }
 
 model LibraryManga {
@@ -152,14 +150,12 @@ model MangaComment {
 }
 
 model Chapter {
-  mangadexId String   @id
+  mangadexId String @id
+
+  mangaId    String
+  manga      Manga  @relation(fields: [mangaId], references: [mangadexId])
 
   comments   ChapterComment[]
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  @@index([mangadexId])
 }
 
 model ChapterComment {
